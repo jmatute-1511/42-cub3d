@@ -6,12 +6,21 @@
 #    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2022/10/22 21:23:39 by jmatute-         ###   ########.fr        #
+#    Updated: 2022/10/22 21:43:48 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #OS
 OS = $(shell uname -s)
+
+ifeq ($(OS), Darwin)
+	LIBS =	-I include -lglfw -L "/Users/$(USER)/.brew/opt/glfw/lib/"
+else
+	LIBS =	-I include -lglfw -ldl -I ./MLX42/include/MLX42
+endif
+
+#COLOR
+YELLOW	= \033[33;1m
 
 #SOURCES
 SRC_C= main.c
@@ -25,6 +34,11 @@ LIBFT_DIR= libft/
 
 #INCLUDES
 HEADERS_I = cub3d.h 
+
+#LIBRARYS COMPILE
+MLX = MLX42/libmlx42.a
+LIBFT = libft/libft.a
+GNL = get_next_line/get_next_line.a
 
 #OBJECTS
 OBJS = $(SRC_C:.c=.o)
@@ -42,23 +56,15 @@ CC = gcc
 RM = rm -rf
 CFLAGS	= -Wall -Wextra -Werror #-fsanitize=addressç
 
-ifeq ($(OS), Darwin)
-	LIBS =	-I include -lglfw -L "/Users/${USER}/.brew/opt/glfw/lib/"
-else
-	LIBS =	-I include -lglfw -ldl -I ./MLX42/include/MLX42
-endif
-
 $(NAME) :	$(OBJ) 
 			@make -sC $(LIBFT_DIR)
 			@make -sC $(GNL_DIR)
 			@make -sC ./MLX42
-			@mkdir -p $(OBJ_DIR)
-			@cp ./get_next_line/get_next_line.a .
-			@cp ./libft/libft.a .
-			@cp ./MLX42/libmlx42.a .
-			@$(CC) $(CFLAGS) $(OBJ) libmlx42.a $(LIBS) libft.a -o $(NAME)
+			@$(CC) $(CFLAGS) $(OBJ) $(MLX) $(LIBS) $(LIBFT) $(GNL) -o $(NAME)
+			@echo "$(YELLOW)YOUR CUB3D IS READY"
 
 $(OBJS_DIR)%.o:	$(SRC)
+				@mkdir -p $(OBJ_DIR)
 				@$(CC) $(CFLAGS) -I $(LIBFT_DIR)  -c $< -o $@
 
 all:		$(NAME)

@@ -3,16 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
+#    By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2022/10/20 18:28:04 by jmatute-         ###   ########.fr        #
+#    Updated: 2022/10/22 17:28:49 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #SOURCES
 SRC_C= main.c
-USER_42 = $(USER)
 
 #DIRECTORYS
 SRC_DIR = src/
@@ -38,26 +37,34 @@ NAME = cub3d
 CC = gcc
 RM = rm -rf
 CFLAGS	= -Wall -Wextra -Werror #-fsanitize=addressç
-LIBS =  MLX42/libmlx42.a -I include -lglfw -L "/Users/$(USER_42)/.brew/opt/glfw/lib/"
 
+ifeq ($(OS), Darwin)
+	LIBS =	-I include -lglfw -L "/Users/${USER}/.brew/opt/glfw/lib/"
+else
+	LIBS	=	-I include -lglfw -ldl -I ./MLX42/include/MLX42
+endif
 
-$(NAME) :	$(OBJ) Makefile
+$(NAME) :	$(OBJ) 
 			@make -sC $(LIBFT_DIR)
+			@make -sC ./MLX42
 			@cp ./libft/libft.a .
-			$(CC) $(CFLAGS) $(LIBS) $(OBJ) -o $(NAME) libft.a
+			@cp ./MLX42/libmlx42.a .
+			$(CC) $(CFLAGS) $(OBJ) libmlx42.a $(LIBS) libft.a -o $(NAME)
 
 $(OBJS_DIR)%.o:	$(SRC)
-				$(CC) $(CFLAGS) -I$(LIBFT_DIR) -I $(HEADER_DIR)  -c $< -o $@
+				$(CC) $(CFLAGS) $(LIBFT_DIR)  -c $< -o $@
 
 all:		$(NAME)
 
 clean:
 			@make -sC $(LIBFT_DIR) clean
-			$(RM) $(OBJ) libft.a
+			@make -sC ./MLX42 clean
+			$(RM) $(OBJ) libft.a libmlx42.a
 
 fclean:		clean
 			$(RM) $(NAME)
 			@make -sC $(LIBFT_DIR) fclean
+			@make -sC ./MLX42 fclean
 
 re:			fclean all
 

@@ -6,7 +6,7 @@
 #    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2022/10/22 21:43:48 by jmatute-         ###   ########.fr        #
+#    Updated: 2022/10/22 21:47:39 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,11 +72,13 @@ all:		$(NAME)
 clean:
 			@make -sC $(LIBFT_DIR) clean
 			@make -sC ./MLX42 fclean
+			@make -sC $(GNL_DIR) clean
 			$(RM) $(OBJ) libft.a libmlx42.a get_next_line.a
 
 fclean:		clean
 			$(RM) $(NAME)
 			@make -sC $(LIBFT_DIR) fclean
+			@make -sC $(GNL_DIR) fclean
 
 re:			fclean all
 

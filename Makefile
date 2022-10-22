@@ -6,13 +6,12 @@
 #    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2022/10/22 20:42:00 by jmatute-         ###   ########.fr        #
+#    Updated: 2022/10/22 20:48:45 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #OS
 OS = $(shell uname -s)
-
 
 #SOURCES
 SRC_C= main.c
@@ -45,7 +44,7 @@ CFLAGS	= -Wall -Wextra -Werror #-fsanitize=addressç
 ifeq ($(OS), Darwin)
 	LIBS =	-I include -lglfw -L "/Users/${USER}/.brew/opt/glfw/lib/"
 else
-	LIBS	=	-I include -lglfw -ldl -I ./MLX42/include/MLX42
+	LIBS =	-I include -lglfw -ldl -I ./MLX42/include/MLX42
 endif
 
 $(NAME) :	$(OBJ) 

@@ -3,12 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+         #
+#    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2022/10/22 17:28:49 by jmatute-         ###   ########.fr        #
+#    Updated: 2022/10/22 20:42:00 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+#OS
+OS = $(shell uname -s)
+
 
 #SOURCES
 SRC_C= main.c
@@ -49,10 +53,10 @@ $(NAME) :	$(OBJ)
 			@make -sC ./MLX42
 			@cp ./libft/libft.a .
 			@cp ./MLX42/libmlx42.a .
-			$(CC) $(CFLAGS) $(OBJ) libmlx42.a $(LIBS) libft.a -o $(NAME)
+			@$(CC) $(CFLAGS) $(OBJ) libmlx42.a $(LIBS) libft.a -o $(NAME)
 
 $(OBJS_DIR)%.o:	$(SRC)
-				$(CC) $(CFLAGS) $(LIBFT_DIR)  -c $< -o $@
+				@$(CC) $(CFLAGS) -I $(LIBFT_DIR)  -c $< -o $@
 
 all:		$(NAME)
 

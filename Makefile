@@ -6,7 +6,7 @@
 #    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2022/10/22 20:48:45 by jmatute-         ###   ########.fr        #
+#    Updated: 2022/10/22 21:23:39 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,9 @@ SRC_C= main.c
 #DIRECTORYS
 SRC_DIR = src/
 OBJ_DIR = obj/
+GNL_DIR = get_next_line/
 HEADER_DIR = includes/
-LIBFT_DIR	= libft/ 
+LIBFT_DIR= libft/ 
 
 #INCLUDES
 HEADERS_I = cub3d.h 
@@ -49,7 +50,10 @@ endif
 
 $(NAME) :	$(OBJ) 
 			@make -sC $(LIBFT_DIR)
+			@make -sC $(GNL_DIR)
 			@make -sC ./MLX42
+			@mkdir -p $(OBJ_DIR)
+			@cp ./get_next_line/get_next_line.a .
 			@cp ./libft/libft.a .
 			@cp ./MLX42/libmlx42.a .
 			@$(CC) $(CFLAGS) $(OBJ) libmlx42.a $(LIBS) libft.a -o $(NAME)
@@ -61,13 +65,12 @@ all:		$(NAME)
 
 clean:
 			@make -sC $(LIBFT_DIR) clean
-			@make -sC ./MLX42 clean
-			$(RM) $(OBJ) libft.a libmlx42.a
+			@make -sC ./MLX42 fclean
+			$(RM) $(OBJ) libft.a libmlx42.a get_next_line.a
 
 fclean:		clean
 			$(RM) $(NAME)
 			@make -sC $(LIBFT_DIR) fclean
-			@make -sC ./MLX42 fclean
 
 re:			fclean all
 

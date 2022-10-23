@@ -6,7 +6,7 @@
 #    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2022/10/22 21:47:39 by jmatute-         ###   ########.fr        #
+#    Updated: 2022/10/23 20:09:58 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,14 +20,15 @@ else
 endif
 
 #COLOR
-YELLOW	= \033[33;1m
+BLUE	:= \033[34;1m
+RESET	:= \033[0m
 
 #SOURCES
 SRC_C= main.c
 
 #DIRECTORYS
 SRC_DIR = src/
-OBJ_DIR = obj/
+OBJ_DIR = $(SRC_DIR)obj/
 GNL_DIR = get_next_line/
 HEADER_DIR = includes/
 LIBFT_DIR= libft/ 
@@ -56,19 +57,24 @@ CC = gcc
 RM = rm -rf
 CFLAGS	= -Wall -Wextra -Werror #-fsanitize=addressç
 
-$(NAME) :	$(OBJ) 
-			@make -sC $(LIBFT_DIR)
-			@make -sC $(GNL_DIR)
-			@make -sC ./MLX42
-			@$(CC) $(CFLAGS) $(OBJ) $(MLX) $(LIBS) $(LIBFT) $(GNL) -o $(NAME)
-			@echo "$(YELLOW)YOUR CUB3D IS READY"
+all: libs obj $(NAME)
 
-$(OBJS_DIR)%.o:	$(SRC)
+$(NAME) :	$(OBJ) 
+
+			@$(CC) $(CFLAGS) $(OBJ) $(MLX) $(LIBS) $(LIBFT) $(GNL) -o $(NAME)
+			@echo "$(BLUE)YOUR CUB3D🧊 IS READY"
+obj:
+
+$(OBJ_DIR)%.o:	$(SRC_DIR)%.c
 				@mkdir -p $(OBJ_DIR)
+				@echo "$(BLUE)Compiling:$(RESET) $(notdir $<)"
 				@$(CC) $(CFLAGS) -I $(LIBFT_DIR)  -c $< -o $@
 
-all:		$(NAME)
 
+libs:
+		@make -sC $(LIBFT_DIR)
+		@make -sC $(GNL_DIR)
+		@make -sC ./MLX42
 clean:
 			@make -sC $(LIBFT_DIR) clean
 			@make -sC ./MLX42 fclean

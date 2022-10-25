@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
+#    By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2022/10/23 20:09:58 by jmatute-         ###   ########.fr        #
+#    Updated: 2022/10/24 22:39:52 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,13 +55,13 @@ NAME = cub3d
 # RULES OF COMPILE
 CC = gcc
 RM = rm -rf
-CFLAGS	= -Wall -Wextra -Werror #-fsanitize=addressç
+CFLAGS	=  #-fsanitize=addressç
 
 all: libs obj $(NAME)
 
 $(NAME) :	$(OBJ) 
 
-			@$(CC) $(CFLAGS) $(OBJ) $(MLX) $(LIBS) $(LIBFT) $(GNL) -o $(NAME)
+			@$(CC) $(CFLAGS) $(OBJ) $(MLX) $(LIBS) $(LIBFT) $(GNL) -lm  -o $(NAME)
 			@echo "$(BLUE)YOUR CUB3D🧊 IS READY"
 obj:
 

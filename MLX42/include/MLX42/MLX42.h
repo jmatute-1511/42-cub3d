@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   MLX42.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/28 00:33:01 by W2Wizard          #+#    #+#             */
-/*   Updated: 2022/10/24 21:03:28 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/10/25 16:35:04 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -644,7 +644,7 @@ mlx_image_t* mlx_new_image(mlx_t* mlx, uint32_t width, uint32_t height);
  * NOT the pointer! It will become invalid!
  * 
  * WARNING: Try to display as few images onto the window as possible,
- * drawing too many images will cause a loss in peformance!
+ * drawing too many images will cause a loss in peformance!	
  * 
  * @param[in] mlx The MLX instance handle.
  * @param[in] img The image to draw onto the screen.

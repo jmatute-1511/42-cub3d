@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/10/22 17:26:11 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:59:49 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,31 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <memory.h>
+
+typedef struct s_dcords
+{
+	double	dx;
+	double	dy;
+	double	incx;
+	double	incy;
+	double	x;
+	double	y;
+	double	p;
+}			t_dcords;
+
+typedef struct	s_player
+{
+	mlx_image_t	*img_p;
+	
+}				t_player;
+
+typedef struct	s_env
+{
+	mlx_t		*mlx;
+	mlx_image_t	*found;
+	t_player	*player;
+
+}				t_env;
+
 
 #endif

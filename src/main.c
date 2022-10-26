@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 00:40:08 by W2Wizard          #+#    #+#             */
-/*   Updated: 2022/10/25 20:05:58 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/10/26 17:00:34 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,29 @@ void	hook(void *param)
 		
 	}
 }
-void plotLine(int x0, int y0, int x1, int y1, mlx_image_t *floor, uint32_t color)
+void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *floor, uint32_t color)
 {
-   int dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
-   int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1; 
-   int err = dx+dy, e2; /* error value e_xy */
 	
-   for(int i = 0; i < 500; i++ ){  /* loop */
-      mlx_put_pixel(floor, x0, y0, color);
-      if (x0==x1 && y0==y1) break;
-      e2 = 2*err;
-      if (e2 >= dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
-      if (e2 <= dx) { err += dx; y0 += sy; } /* e_xy+e_y < 0 */
-   }
+	t_dcords	dcords;
+	int			i;
+	
+	i = 0;
+	dcords.dx = xf - xi;
+	dcords.dy = yf - yi;
+	if (fabs(dcords.dx) >= fabs(dcords.dy))
+		dcords.p = fabs(dcords.dx);
+	else
+		dcords.p = fabs(dcords.dy);
+	dcords.incx = dcords.dx / dcords.p;
+	dcords.incy = dcords.dy / dcords.p;
+	dcords.x = xi;
+	dcords.y = yi;
+	while(i <= dcords.p){
+		 mlx_put_pixel(floor, dcords.x, dcords.y, color);
+		 dcords.x += dcords.incx;
+		 dcords.y += dcords.incy;
+		 i++;
+	}
 }
 
 int32_t	main(void)
@@ -105,13 +115,13 @@ int32_t	main(void)
 	mlx_image_to_window(mlx, g_img, 100, 100);
 	int x = 500;
 	for (int i = 250; i < 500; i++){
-		plotLine(100, 100,i,  x--, floor, 14149279);
+		dda_line(100, 100,i,  x--, floor, 14149279);
 		
 	}
-	plotLine(100, 100,500, 500, floor, 16711680);
-	plotLine(100, 100,250, 500, floor, 16711680);
-	plotLine(100, 100,500, 250, floor, 16711680);
-	plotLine(100, 100 ,500 ,250, floor, 16711680);
+	dda_line(100, 100,500, 500, floor, 16711680);
+	dda_line(100, 100,250, 500, floor, 16711680);
+	dda_line(100, 100,500, 250, floor, 16711680);
+	dda_line(100, 100 ,500 ,250, floor, 16711680);
 	// // for(int i = 100; i < 500; i++)
 	// // 	mlx_put_pixel(floor, i, i, 14149279);
 	// for(int i = 500; i < 600; i++)

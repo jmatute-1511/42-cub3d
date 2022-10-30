@@ -3,54 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 00:40:08 by W2Wizard          #+#    #+#             */
-/*   Updated: 2022/10/26 17:00:34 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/10/28 13:44:53 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-#include <math.h>
-#define PI 3.14159265358979323846
-
-
-float dx, dy, pa;
-int x = 0;
-int y = 0;
 
 #define WIDTH (1200 * 2) 
 #define HEIGHT (300 * 2)
-#define X 600
-#define Y 150
+#define LENGHT_RAY 15
 
-mlx_image_t	*g_img;
 
-void	hook(void *param)
-{
-	mlx_t	*mlx;
-
-	mlx = param;
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-		g_img->instances[0].y -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-		g_img->instances[0].y += 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-		g_img->instances[0].x -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT)){
-		pa+= 0.1;
-		if (pa > 2 *PI){
-			pa-=2 *PI;
-		}
-		dx = cos(pa) *5;
-		dy = sin(pa) *5;
-		g_img->instances[0].x += 5;
-		
-	}
-}
-void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *floor, uint32_t color)
+void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color)
 {
 	
 	t_dcords	dcords;
@@ -68,66 +35,119 @@ void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *floor, uint32_t color
 	dcords.x = xi;
 	dcords.y = yi;
 	while(i <= dcords.p){
-		 mlx_put_pixel(floor, dcords.x, dcords.y, color);
+		 mlx_put_pixel(flor, dcords.x, dcords.y, color);
 		 dcords.x += dcords.incx;
 		 dcords.y += dcords.incy;
 		 i++;
 	}
 }
 
-int32_t	main(void)
+void vortice_hook(void *param){
+	t_env *env;
+	env = param;
+	
+	if (mlx_is_key_down(env->mlx, MLX_KEY_A)){
+		env->pa -= 0.1;
+		if (env->pa < 0)
+			env->pa += 2 *PI;
+		env->dx = cos(env->pa) * 5;
+		env->dy = sin(env->pa) * 5;
+		mlx_delete_image(env->mlx, env->found);
+		env->found = mlx_new_image(env->mlx, 1220 * 2, 305 * 2);
+		memset(env->found->pixels, 200, env->found->width * env->found->height * sizeof(int));
+		mlx_image_to_window(env->mlx, env->found, 0, 0);
+		env->found->instances->z = env->player->instances[0].z -1;
+		dda_line(env->x + 5, env->y + 5,((env->x + 5) + (env->dx * LENGHT_RAY)) , (env->y +5 + (env->dy * LENGHT_RAY)), env->found, 14149279);
+	}
+	if (mlx_is_key_down(env->mlx, MLX_KEY_D)){
+		env->pa += 0.1;
+		if (env->pa > 2 *PI)
+			env->pa -= 2 *PI;
+		env->dx = cos(env->pa) * 5;
+		env->dy = sin(env->pa) * 5;
+		mlx_delete_image(env->mlx, env->found);
+		env->found = mlx_new_image(env->mlx, 1220 * 2, 305 * 2);
+		memset(env->found->pixels, 200, env->found->width * env->found->height * sizeof(int));
+		mlx_image_to_window(env->mlx, env->found, 0, 0);
+		env->found->instances->z = env->player->instances[0].z -1;
+		dda_line(env->x + 5, env->y + 5,((env->x + 5) + (env->dx * LENGHT_RAY)) , (env->y + 5 + (env->dy * LENGHT_RAY)), env->found, 14149279);
+	}	
+}
+
+void	hook(void *param)
 {
-	mlx_t	*mlx;
+	t_env *env;
+	env = param;
+	if (mlx_is_key_down(env->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(env->mlx);
+	if (mlx_is_key_down(env->mlx, MLX_KEY_UP)){
+		env->player->instances[0].y -= 5;
+		mlx_delete_image(env->mlx, env->found);
+		env->found = mlx_new_image(env->mlx, 1220 * 2, 305 * 2);
+		memset(env->found->pixels, 200, env->found->width * env->found->height * sizeof(int));
+		mlx_image_to_window(env->mlx, env->found, 0, 0);
+		env->found->instances->z = env->player->instances[0].z -1;
+		env->y -= 5;
+		dda_line(env->x + 5, env->y + 5,((env->x + 5) + (env->dx * LENGHT_RAY) ), (env->y +5 + (env->dy * LENGHT_RAY)), env->found, 14149279);
+	}
+	if (mlx_is_key_down(env->mlx, MLX_KEY_DOWN)){
+		
+		env->player->instances[0].y += 5;
+		mlx_delete_image(env->mlx, env->found);
+		env->found = mlx_new_image(env->mlx, 1220 * 2, 305 * 2);
+		memset(env->found->pixels, 200, env->found->width * env->found->height * sizeof(int));
+		mlx_image_to_window(env->mlx, env->found, 0, 0);
+		env->found->instances->z = env->player->instances[0].z -1;
+		env->y += 5;
+		dda_line(env->x + 5, env->y + 5,((env->x + 5) + (env->dx * LENGHT_RAY) ), (env->y +5 + (env->dy * LENGHT_RAY)), env->found, 14149279);
+	}
+	if (mlx_is_key_down(env->mlx, MLX_KEY_LEFT)){
+		env->player->instances[0].x -= 5;
+		mlx_delete_image(env->mlx, env->found);
+		env->found = mlx_new_image(env->mlx, 1220 * 2, 305 * 2);
+		memset(env->found->pixels, 200, env->found->width * env->found->height * sizeof(int));
+		mlx_image_to_window(env->mlx, env->found, 0, 0);
+		env->found->instances->z = env->player->instances[0].z -1;
+		env->x -= 5;
+		dda_line(env->x + 5, env->y + 5,((env->x + 5) + (env->dx * LENGHT_RAY) ), (env->y +5 + (env->dy * LENGHT_RAY)), env->found, 14149279);
+	}
+	if (mlx_is_key_down(env->mlx, MLX_KEY_RIGHT)){
+		env->player->instances[0].x += 5;
+		env->x += 5;
+		mlx_delete_image(env->mlx, env->found);
+		env->found = mlx_new_image(env->mlx, 1220 * 2, 305 * 2);
+		memset(env->found->pixels, 200, env->found->width * env->found->height * sizeof(int));
+		mlx_image_to_window(env->mlx, env->found, 0, 0);
+		env->found->instances->z = env->player->instances[0].z -1;
+		dda_line(env->x + 5, env->y + 5,((env->x + 5) + (env->dx * LENGHT_RAY) ), (env->y +5 + (env->dy * LENGHT_RAY)), env->found, 14149279);
+	}
+	
+}
+
+int main(void){
+	
+	t_env env;
 	mlx_texture_t *texture;
 	mlx_image_t *yellow;
-	mlx_image_t *floor;
-	int worldMap [5][20]=
-	{
-	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1},
-	{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-	{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-	};
 	
-	mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
-	if (!mlx)
+	env.dx = cos(env.pa) * 5;
+	env.dy = sin(env.pa) * 5;
+	env.x = 100;
+	env.y = 100;
+	env.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
+	if (!env.mlx)
 		exit(EXIT_FAILURE);
-	g_img = mlx_new_image(mlx, 10, 10);
-	floor = mlx_new_image(mlx, 1220 * 2, 305 * 2);
-	memset(g_img->pixels, 255, g_img->width * g_img->height * sizeof(int));
-	memset(floor->pixels, 200, floor->width * floor->height * sizeof(int));
-	mlx_image_to_window(mlx, floor, 0, 0);
-	texture = mlx_load_png("./images/yellow.png");
-	yellow = mlx_texture_to_image(mlx, texture);
-	while (y  < 5)
-	{
-		while (x < 20)
-		{
-			if (worldMap[y][x] == 1)
-				mlx_image_to_window(mlx ,yellow, X + (x * 60) + x, Y + (y * 60 )+ y);
-			x++;				
-		}
-		x = 0;
-		y++;
-		
-	}
-	mlx_image_to_window(mlx, g_img, 100, 100);
-	int x = 500;
-	for (int i = 250; i < 500; i++){
-		dda_line(100, 100,i,  x--, floor, 14149279);
-		
-	}
-	dda_line(100, 100,500, 500, floor, 16711680);
-	dda_line(100, 100,250, 500, floor, 16711680);
-	dda_line(100, 100,500, 250, floor, 16711680);
-	dda_line(100, 100 ,500 ,250, floor, 16711680);
-	// // for(int i = 100; i < 500; i++)
-	// // 	mlx_put_pixel(floor, i, i, 14149279);
-	// for(int i = 500; i < 600; i++)
-	// 	mlx_put_pixel(floor, round(cos(i)), i, 14149279);
-	mlx_loop_hook(mlx, &hook, mlx);
-	mlx_loop(mlx);
-	mlx_terminate(mlx);
+	env.player = mlx_new_image(env.mlx, 10, 10);
+	env.found = mlx_new_image(env.mlx, 1220 * 2, 305 * 2);
+	memset(env.player->pixels, 255, env.player->width * env.player->height * sizeof(int));
+	memset(env.found->pixels, 200, env.found->width * env.found->height * sizeof(int));
+	mlx_image_to_window(env.mlx, env.found, 0, 0);
+	mlx_image_to_window(env.mlx, env.player, env.x, env.y);
+	// texture = mlx_load_png("./images/yellow.png");
+	// yellow = mlx_texture_to_image(mlx, texture);
+	mlx_loop_hook(env.mlx, &hook, &env);
+	mlx_loop_hook(env.mlx, &vortice_hook, &env);
+	mlx_loop(env.mlx);
+	mlx_terminate(env.mlx);
 	return (EXIT_SUCCESS);
 }

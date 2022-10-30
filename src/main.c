@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 00:40:08 by W2Wizard          #+#    #+#             */
-/*   Updated: 2022/10/28 13:44:53 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/10/30 16:52:41 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color)
 {
-	
 	t_dcords	dcords;
 	int			i;
 	
@@ -143,8 +142,8 @@ int main(void){
 	memset(env.found->pixels, 200, env.found->width * env.found->height * sizeof(int));
 	mlx_image_to_window(env.mlx, env.found, 0, 0);
 	mlx_image_to_window(env.mlx, env.player, env.x, env.y);
-	// texture = mlx_load_png("./images/yellow.png");
-	// yellow = mlx_texture_to_image(mlx, texture);
+	texture = mlx_load_png("./images/yellow.png");
+	yellow = mlx_texture_to_image(env.mlx, texture);
 	mlx_loop_hook(env.mlx, &hook, &env);
 	mlx_loop_hook(env.mlx, &vortice_hook, &env);
 	mlx_loop(env.mlx);

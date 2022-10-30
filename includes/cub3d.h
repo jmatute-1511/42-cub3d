@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/10/28 12:19:22 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/10/30 18:56:45 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 #define CUB3D_H
 
 #include "../MLX42/include/MLX42/MLX42.h"
-
+#include "../get_next_line/get_next_line.h"
+#include "../libft/libft.h"
 #define PI 3.1415926535
+
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <memory.h>
 #include <math.h>
+#include <fcntl.h>
+#include <stdlib.h>
 
 typedef struct s_dcords
 {
@@ -36,9 +40,12 @@ typedef struct s_dcords
 
 typedef struct	s_env
 {
+	unsigned int height;
+	unsigned int width;
 	mlx_t		*mlx;
 	mlx_image_t	*found;
 	mlx_image_t	*player;
+	char		*map;
 	float dx;
 	float dy;
 	float pa;
@@ -46,6 +53,6 @@ typedef struct	s_env
 	int y;
 
 }				t_env;
-
-
+void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color);
+char *read_map(char *path, unsigned int *widht, unsigned int *height);
 #endif

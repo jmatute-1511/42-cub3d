@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+         #
+#    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2022/10/24 22:39:52 by jmatute-         ###   ########.fr        #
+#    Updated: 2022/10/30 19:26:39 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ BLUE	:= \033[34;1m
 RESET	:= \033[0m
 
 #SOURCES
-SRC_C= main.c
+SRC_C= cub3d.c map.c
 
 #DIRECTORYS
 SRC_DIR = src/

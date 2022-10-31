@@ -6,11 +6,11 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 00:40:08 by W2Wizard          #+#    #+#             */
-/*   Updated: 2022/10/30 16:52:41 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/10/31 15:36:51 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "includes/cub3d.h"
 
 #define WIDTH (1200 * 2) 
 #define HEIGHT (300 * 2)

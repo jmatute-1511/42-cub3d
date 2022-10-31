@@ -6,11 +6,11 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:20:51 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/10/30 19:48:40 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/10/31 16:15:46 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "includes/cub3d.h"
 
 void fill_map(char **map, int fd, unsigned int *widht, unsigned int *height)
 {
@@ -41,15 +41,18 @@ void fill_map(char **map, int fd, unsigned int *widht, unsigned int *height)
 	}	
 }
 
-char *read_map(char *path, unsigned int *widht, unsigned int *height)
+char **read_map(char *path, unsigned int *widht, unsigned int *height)
 {
 	int fd;
-	char *map;
-	
+	char *aux_map;
+	char **map;
 	map = NULL;
+	aux_map = NULL;
 	fd = open(ft_strjoin("./", path), O_RDONLY);
 	if (fd == -1)
 		return (NULL);
-	fill_map(&map, fd, widht, height);
+	fill_map(&aux_map, fd, widht, height);
+	map = ft_split(aux_map, '\n');
+	free(aux_map);
 	return (map);
 }

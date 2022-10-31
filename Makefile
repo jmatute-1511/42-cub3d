@@ -6,7 +6,7 @@
 #    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2022/10/30 19:26:39 by jmatute-         ###   ########.fr        #
+#    Updated: 2022/10/31 19:49:50 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRC_C= cub3d.c map.c
 SRC_DIR = src/
 OBJ_DIR = $(SRC_DIR)obj/
 GNL_DIR = get_next_line/
-HEADER_DIR = includes/
+HEADER_DIR = $(SRC_DIR)includes/
 LIBFT_DIR= libft/ 
 
 #INCLUDES

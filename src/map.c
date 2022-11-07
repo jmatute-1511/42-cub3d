@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:20:51 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/10/31 16:15:46 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/11/06 19:39:30 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void fill_map(char **map, int fd, unsigned int *widht, unsigned int *height)
 		}
 		if ((*map) == NULL)
 			(*map) = ft_strdup(line);
-		free(line);
 		if (ft_strlen(line) > *widht)
 			*widht = ft_strlen(line);
+		free(line);
 		*height += 1;
 	}
 	if (line){

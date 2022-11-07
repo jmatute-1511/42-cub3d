@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
+#    By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2022/10/31 19:49:50 by jmatute-         ###   ########.fr        #
+#    Updated: 2022/11/06 19:41:32 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ all: libs obj $(NAME)
 
 $(NAME) :	$(OBJ) 
 
-			@$(CC) $(CFLAGS) $(OBJ) $(MLX) $(LIBS) $(LIBFT) $(GNL) -lm  -o $(NAME)
+			@$(CC) $(CFLAGS) $(OBJ) $(GNL) $(MLX) $(LIBS) $(LIBFT)  -lm  -o $(NAME)
 			@echo "$(BLUE)YOUR CUB3D🧊 IS READY"
 obj:
 

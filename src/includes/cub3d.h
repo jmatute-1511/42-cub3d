@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/10/31 21:32:05 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/11/06 22:11:05 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "../../get_next_line/get_next_line.h"
 #include "../../libft/libft.h"
 #define PI 3.1415926535
+#define P2 PI/2
+#define P3 3*PI/2 
 #define HEIGHT 64
 #define WIDTH 64
 

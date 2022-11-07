@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/10/31 22:29:26 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/11/06 22:14:20 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ int fill_window(int l_image, t_env *env)
 				mlx_image_to_window(env->mlx, env->walls, x * l_image + 1 , y * l_image + 1);
 			else if (env->map[y][x] == 'P'){
 				mlx_image_to_window(env->mlx, env->player ,x *l_image ,y * l_image);
-				env->x = x * l_image;
-				env->y = y * l_image;
+				env->x = x * l_image + 5;
+				env->y = y * l_image + 5;
 			}
 			x++;
 		}
@@ -86,49 +86,62 @@ int fill_window(int l_image, t_env *env)
 }
 void player_frames(t_env **d_env){
 	t_env	*env;
-	int r, mx, my, mp, dof;
-	float rx, ry, ra, xo, yo;
+	float Xa, Ya;
+	int Xnew, Ynew;
+	int Xnew_y, Ynew_y;
 	
 	env = (*d_env);
-	ra = env->pa;
-	r = 0;
 	mlx_delete_image(env->mlx, env->found);
 	env->found = mlx_new_image(env->mlx, env->width * WIDTH, env->height * HEIGHT);
 	memset(env->found->pixels, 100, env->found->width * env->found->height * sizeof(int));
 	mlx_image_to_window(env->mlx, env->found, 0, 0);
 	draw_separator(&env);
 	env->found->instances->z = env->walls->instances[0].z - 1;
-	while(r <  10){
-		
-		dof = 0;
-		float aTan = -1 /tan(ra);
-		if (ra > PI){ry = ((env->y >> 6) << 6) - 0.0001; rx = (env->y - ry) * aTan + env->x; yo = - 64; xo =- yo * aTan;}
-		if (ra < PI){ry = ((env->y >> 6) << 6) + 64; rx = (env->y - ry) * aTan + env->x; yo = 64; xo =- yo * aTan;}
-		if (ra == 0 || ra == PI){rx = env->x; ry = env->y; dof = 8;}
-		while(dof < 8){
-			mx = (int)(rx) >> 6  ;my = (int) (ry) >> 6; mp = my * env->width + mx;
-			int x = 0;
-			int y = 0;
-			while ( mp >= env->width)
-			{
-				mp -= env->width;
-				y++;
-				x = mp;
-		
-			}	
-			if(mp < env->width * env->height && env->map[y][x] == 1){dof = 8;}
-			else{rx += xo; ry +=yo; dof+=1;}
-		}
-		dda_line(env->x + 5, env->y + 5, (rx) , (ry), env->found, 116711872);
-		r++;
+	if (env->pa < PI)
+	{
+		Ya = 64;
+		Ynew = floor((env->y >> 6) << 6);
 	}
+	else if (env->pa < PI){
+		Ya = -64;
+		Ynew = floor(((env->y >> 6) << 6)) + 64;
+	}
+	Xnew = env->x + (env->y - Ynew) / tan(env->pa);
+	if (env->pa < P2 || env->pa > P3)
+		Xnew_y =(env->x /64) * 64 + 64;
+	else if (env->pa > P2 &&  env->pa < P3)
+	Xa = 64 / tan(env->pa);
+	dprintf(2,"BEFORE%d   %d", Xnew, Ynew);
+	if(Xnew > env->width * 64){
+		Xnew = env->width * 64 -1;
+	}
+	if (Ynew > env->height * 64){
+		Ynew = env->height * 64 - 1;
+	}
+	if (Ynew < 0)
+	{
+		Ynew = 0;
+	}
+	if (Xnew < 0)
+		Xnew = 0;
+	
+	while( Ynew > 0 && Ynew < env->height *64){
+		if (env->map[(Ynew/64 )][(Xnew/64)] == '1')
+			break;
+		Ynew += Ya;
+		Xnew += Xa;
+	}
+	dprintf(2,"DIVIDES %d   %d \n", (Xnew/64), (Ynew/64));
+	dda_line(env->x , env->y, Xnew, Ynew, env->found, 116711872);
+	// dda_line(env->x , env->y, env->x +(env->dx *10), env->y +(env->dy *10), env->found, 116711872);
+	dprintf(2, " LENGTHS %d   %d\n", Xnew, Ynew);
 }
 void vortice_hook(void *param){
 	t_env *env;
 	env = param;
 	
 	if (mlx_is_key_down(env->mlx, MLX_KEY_A)){
-		env->pa -= 0.1;
+		env->pa -= 0.05;
 		if (env->pa < 0)
 			env->pa += 2 *PI;
 		env->dx = cos(env->pa) * 5;
@@ -136,7 +149,7 @@ void vortice_hook(void *param){
 		player_frames(&env);
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_D)){
-		env->pa += 0.1;
+		env->pa += 0.05;
 		if (env->pa > 2 *PI)
 			env->pa -= 2 *PI;
 		env->dx = cos(env->pa) * 5;
@@ -186,6 +199,7 @@ int main(int argc, char **argv)
 		return (0);
 	env.width = 0;
 	env.height = 0;
+	env.pa = PI;
 	env.dx = cos(env.pa) * 5;
 	env.dy = sin(env.pa) * 5;
 	env.map = read_map(argv[1], &env.width, &env.height);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/11/12 13:44:07 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:03:11 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,17 @@ void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color)
 		 i++;
 	}
 }
-
+int H_length(int xi, int yi, int xf, int yf){
+	
+	t_dcords	dcords;
+	dcords.dx = xf - xi;
+	dcords.dy = yf - yi;
+	if (fabs(dcords.dx) >= fabs(dcords.dy))
+		dcords.p = fabs(dcords.dx);
+	else
+		dcords.p = fabs(dcords.dy);
+	return(dcords.p);
+}
 void draw_separator(t_env **d_env)
 {
 	t_env *env;
@@ -70,7 +80,7 @@ int fill_window(int l_image, t_env *env)
 	{
 		while (x < env->width){
 			if (env->map[y][x] == '1')
-				;//mlx_image_to_window(env->mlx, env->walls, x * l_image + 1 , y * l_image + 1);
+				mlx_image_to_window(env->mlx, env->walls, x * l_image + 1 , y * l_image + 1);
 			else if (env->map[y][x] == 'P'){
 				mlx_image_to_window(env->mlx, env->player ,x *l_image ,y * l_image);
 				env->x = x * l_image + 5;
@@ -97,30 +107,29 @@ void player_frames(t_env **d_env){
 	memset(env->found->pixels, 100, env->found->width * env->found->height * sizeof(int));
 	mlx_image_to_window(env->mlx, env->found, 0, 0);
 	draw_separator(&env);
-	env->found->instances->z = env->player->instances[0].z + 1;
-	Xa = 64 / tan(env->pa);
+	env->found->instances->z = env->walls->instances[0].z + 1;
 	dprintf(2,"%f  %f\n", env->pa, PI);
-	// if (PI > env->pa)
-	// {
-	// 	Ya = -64;
-	// 	Ynew = floor(((env->y >> 6) << 6)) -1;
-	// }
-	// else if (PI  < env->pa){
-	// 	Ya = 64;
-	// 	Ynew = floor(((env->y >> 6) << 6))  + 64; 
-	// }
-	// Xnew = env->x + ((env->y - Ynew) / tan(env->pa));
+	if (PI > env->pa)
+	{
+		Ya = -64;
+		Ynew = floor(((env->y >> 6) << 6)) - 1;
+	}
+	else if (PI  < env->pa){
+		Ya = 64;
+		Ynew = floor(((env->y >> 6) << 6)) + 64; 
+	}
+	Xa = -Ya / tan(env->pa);
+	Xnew = env->x + ((env->y - Ynew) / tan(env->pa));
 	if (env->pa > P2  && env->pa < P3){
 		Xnew_y = floor(((env->x >> 6) <<6)) - 1;
-		X_a = -64;
-		Y_a = 64 * tan(env->pa);
+		X_a = - 64;
 	}
 	else {
 		Xnew_y = floor(((env->x >> 6) << 6)) + 64;
 		X_a = 64;
-		Y_a = -64 * tan(env->pa);
 	}
 	Ynew_y = env->y + ((env->x - Xnew_y) * tan(env->pa));
+	Y_a = -X_a * tan(env->pa);
 	dprintf(2,"BEFORE%d   %d \n", Ynew_y, Xnew_y);
 	int xf ;
 	int yf;
@@ -143,8 +152,12 @@ void player_frames(t_env **d_env){
 	 	Ynew_y += Y_a;
 	 	Xnew_y += X_a;
 	}
-	dprintf(2,"AFTER    %d,    %d, ANGLE %f: \n", Ynew_y, Xnew_y, env->pa);	
-	dda_line(env->x , env->y, Xnew_y, Ynew_y, env->found, 116711872);
+	dprintf(2,"AFTER    %d,    %d, ANGLE %f: \n", Ynew_y, Xnew_y, env->pa);
+	if (H_length(env->x, env->y, Xnew, Ynew) > H_length(env->x, env->y, Xnew_y, Ynew_y))
+		dda_line(env->x , env->y, Xnew_y , Ynew_y, env->found, 116711872);
+	else
+		dda_line(env->x , env->y, Xnew, Ynew, env->found, 116711872);
+		
 }
 
 void my_frames(void **d_env)
@@ -174,13 +187,13 @@ void vortice_hook(void *param){
 	if (env->pa < 0)
 		env->pa += (2 * PI);
 	if (mlx_is_key_down(env->mlx, MLX_KEY_A)){
-		env->pa += 0.01;
+		env->pa += 0.02;
 		env->dx = cos(env->pa) * 5;
 		env->dy = sin(env->pa) * 5;
 		player_frames(&env);
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_D)){
-		env->pa -= 0.01;
+		env->pa -= 0.02;
 		env->dx = cos(env->pa) * 5;
 		env->dy = sin(env->pa) * 5;
 		player_frames(&env);

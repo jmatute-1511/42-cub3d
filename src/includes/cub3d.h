@@ -18,7 +18,7 @@
 #include "../../libft/libft.h"
 #define PI 3.1415926535
 #define P2 PI/2
-#define P3 3* (PI/2) 
+#define P3 3 * (PI/2) 
 #define HEIGHT 64
 #define WIDTH 64
 

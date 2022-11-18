@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/11/16 18:55:39 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/11/18 20:45:04 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int fill_window(int l_image, t_env *env)
 	{
 		while (x < env->width){
 			if (env->map[y][x] == '1')
-				;//mlx_image_to_window(env->mlx, env->walls, x * l_image, y * l_image);
+				mlx_image_to_window(env->mlx, env->walls, x * l_image, y * l_image);
 			else if (env->map[y][x] == 'P'){
 				mlx_image_to_window(env->mlx, env->player ,x *l_image ,y * l_image);
 				env->x = x * l_image + 5;
@@ -109,8 +109,7 @@ void player_frames(t_env **d_env){
 	memset(env->found->pixels, 100, env->found->width * env->found->height * sizeof(int));
 	mlx_image_to_window(env->mlx, env->found, 0, 0);
 	draw_separator(&env);
-	env->found->instances->z = env->player->instances[0].z + 1;
-	dprintf(2,"%f  %f\n", env->pa, PI);
+	env->found->instances->z = env->walls->instances[0].z;
 	if (PI > env->pa)
 	{
 		Ya = -64;
@@ -118,57 +117,65 @@ void player_frames(t_env **d_env){
 	}
 	else if (PI  < env->pa){
 		Ya = 64;
-		Ynew = floor(((env->y >> 6) << 6)) + 64; 
+		Ynew = ((env->y >> 6) << 6) + 64; 
 	}
-	Xa = -Ya / tan(env->pa);
+	Xa = round(- Ya / tan(env->pa));
 	Xnew = env->x + ((env->y - Ynew) / tan(env->pa));
 	if (env->pa > P2  && env->pa < P3){
-		Xnew_y = floor(((env->x >> 6) <<6)) - 1;
+		Xnew_y = ((env->x >> 6) <<6) - 1;
 		X_a = - 64;
 	}
 	else if (env->pa > P3 || env->pa < P2){
-		Xnew_y = floor(((env->x >> 6) << 6)) + 64;
+		Xnew_y = ((env->x >> 6) << 6) + 64;
 		X_a = 64;
 	}
 	Ynew_y = env->y + ((env->x - Xnew_y) * tan(env->pa)) ;
-	Y_a = floor(-X_a * tan(env->pa));
-	while(Xnew < env->width * 64)
+	Y_a = round(- X_a * tan(env->pa));
+	while(Xnew < env->width * 64 && Xnew >= 0)
 	{
-		if(env->map[Ynew /64][Xnew/64] == '1'){
+		dprintf(2,"ENTRE -> %d       %d         %d\n", Ynew, Xnew, Xnew / 64);
+		int x = (int)Xnew/64;
+		int y = (int)Ynew/64;
+		if(env->map[y][x] == '1'){
 			dprintf(2,"BLOCK COLISION X : (Y %d,X %d)\n", Ynew/64,  Xnew/64);
+			//mlx_put_pixel(env->found,Xnew, Ynew,16711872);
 			break;
 		}
+		//mlx_put_pixel(env->found,Xnew, Ynew,16711872);
 	 	Ynew += Ya;
 	 	Xnew += Xa;
 	}
-	while(Ynew_y < env->height * 64)
+	while(Ynew_y < env->height * 64 && Ynew_y >= 0)
 	{
 		dprintf(2,"ENTRE -> %d       %d         %d\n", Ynew_y, Xnew_y, Ynew_y / 64);
-		if(env->map[(Ynew_y - 1) / 64][Xnew_y  >> 6] == '1'){
+		int x = (int)Xnew_y/64;
+		int y = (int)Ynew_y/64;
+		if(env->map[y][x] == '1'){
 			dprintf(2,"BLOCK COLISION Y: (Y %d,X %d)\n", Ynew_y/64,  Xnew_y/64);
 			break;
 		}
 	 	Ynew_y += Y_a;
 	 	Xnew_y += X_a;
 	}
-	dprintf(2,"ANGLE %f: \n-",env->pa);
-	if (H_length(env->x, env->y, Xnew, Ynew) > H_length(env->x, env->y, Xnew_y, Ynew_y))
-		dda_line(env->x , env->y, Xnew_y , Ynew_y, env->found, 116711872);
-	else
-		dda_line(env->x , env->y, Xnew, Ynew, env->found, 116711872);
-	int abs_x = fabs((env->x - Xnew) / cos(env->pa));
-	int abs_y = fabs((env->x - Xnew_y) / cos(env->pa));
-	// if ( abs_x <= abs_y)
-	// {
-	// 	dprintf(2,"LINE IN X:  %dx, %dy", Xnew, Ynew);
-	// 	dda_line(env->x , env->y, Xnew, Ynew, env->found, 116711872);
-	// }
-	// else{
-	// 	dprintf(2, "LINE IN Y: %dx, %dy", Xnew_y, Ynew_y);
+	//dprintf(2,"ANGLE %d: \n-",env->pa);
+	// if (H_length(env->x, env->y, Xnew, Ynew) > H_length(env->x, env->y, Xnew_y, Ynew_y))
 	// 	dda_line(env->x , env->y, Xnew_y , Ynew_y, env->found, 116711872);
-		
-	// }
-	dda_line(2 , 0, 2 , 127, env->found, 116711872);
+	// else
+	// 	dda_line(env->x , env->y, Xnew, Ynew, env->found, 116711872);
+	int abs_x = fabs((env->x - Xnew) / cos(env->pa));
+	int abs_y = fabs((env->y - Ynew_y) / sin(env->pa));
+	dprintf(2, "ABSOLUTES : %dx, %dy\n", abs_x, abs_y);
+	if ( abs_x <= abs_y)
+	{
+		dprintf(2,"LINE IN X:  %dx, %dy", Xnew, Ynew);
+		dda_line(env->x , env->y, Xnew, Ynew, env->found, 116711872);
+	}
+	else{
+		dprintf(2, "LINE IN Y: %dx, %dy", Xnew_y, Ynew_y);
+		dda_line(env->x , env->y, Xnew_y , Ynew_y, env->found, 116711872);
+	}
+	dprintf(2,"ANGLE%f  %f\n", env->pa, PI);
+	//dda_line(2 , 0, 2 , 127, env->found, 116711872);
 		
 }
 
@@ -199,13 +206,13 @@ void vortice_hook(void *param){
 	if (env->pa < 0)
 		env->pa += (2 * PI);
 	if (mlx_is_key_down(env->mlx, MLX_KEY_A)){
-		env->pa += 0.01;
+		env->pa += 0.015;
 		env->dx = cos(env->pa) * 5;
 		env->dy = sin(env->pa) * 5;
 		player_frames(&env);
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_D)){
-		env->pa -= 0.01;
+		env->pa -= 0.015;
 		env->dx = cos(env->pa) * 5;
 		env->dy = sin(env->pa) * 5;
 		player_frames(&env);
@@ -257,7 +264,7 @@ int main(int argc, char **argv)
 	env.dx = cos(env.pa) * 5;
 	env.dy = sin(env.pa) * 5;
 	env.map = read_map(argv[1], &env.width, &env.height);
-	printf("%d %d\n", env.width, env.height);
+	printf("%i %i\n", env.width, env.height);
 	env.mlx = mlx_init(env.width * WIDTH , env.height * HEIGHT , "MLX42", true);
 	env.texture = mlx_load_png("./images/yellow.png");
 	env.walls = mlx_texture_to_image(env.mlx, env.texture);

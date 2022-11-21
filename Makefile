@@ -6,7 +6,7 @@
 #    By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2022/11/12 12:36:20 by jmatute-         ###   ########.fr        #
+#    Updated: 2022/11/19 11:43:00 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,7 +55,7 @@ NAME = cub3d
 # RULES OF COMPILE
 CC = gcc
 RM = rm -rf
-CFLAGS	=  #-fsanitize=addressç
+CFLAGS	=  -DTEST --debug #-fsanitize=addressç
 
 all: libs obj $(NAME)
 

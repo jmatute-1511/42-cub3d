@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/11/18 20:45:04 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/11/19 12:00:13 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,10 @@ int fill_window(int l_image, t_env *env)
 }
 void player_frames(t_env **d_env){
 	t_env	*env;
-	int Xa, Ya;
-	int X_a, Y_a;
-	int Xnew, Ynew;
-	int Xnew_y, Ynew_y;
+	int Xa = 0, Ya = 0;
+	int X_a = 0, Y_a = 0;
+	int Xnew = 0, Ynew = 0;
+	int Xnew_y = 0, Ynew_y = 0;
 	
 	env = (*d_env);
 	mlx_delete_image(env->mlx, env->found);
@@ -131,23 +131,23 @@ void player_frames(t_env **d_env){
 	}
 	Ynew_y = env->y + ((env->x - Xnew_y) * tan(env->pa)) ;
 	Y_a = round(- X_a * tan(env->pa));
-	while(Xnew < env->width * 64 && Xnew >= 0)
+	while(Xnew < env->width * 64 && Xnew >0 && Ynew > 0 && Ynew < env->height * 64 )
 	{
-		dprintf(2,"ENTRE -> %d       %d         %d\n", Ynew, Xnew, Xnew / 64);
-		int x = (int)Xnew/64;
-		int y = (int)Ynew/64;
+		dprintf(2,"ENTRE -> %dx       %d y        %d cx   %dcy\n", Ynew, Xnew, Xnew / 64, Ynew /64);
+		int x = Xnew/64;
+		int y = Ynew/64;
 		if(env->map[y][x] == '1'){
 			dprintf(2,"BLOCK COLISION X : (Y %d,X %d)\n", Ynew/64,  Xnew/64);
-			//mlx_put_pixel(env->found,Xnew, Ynew,16711872);
 			break;
 		}
-		//mlx_put_pixel(env->found,Xnew, Ynew,16711872);
 	 	Ynew += Ya;
 	 	Xnew += Xa;
 	}
-	while(Ynew_y < env->height * 64 && Ynew_y >= 0)
+	
+	while(Ynew_y < env->height * 64 && Ynew_y > 0 && Xnew_y > 0)
 	{
-		dprintf(2,"ENTRE -> %d       %d         %d\n", Ynew_y, Xnew_y, Ynew_y / 64);
+
+		dprintf(2,"ENTRE Y-> %dx       %d y        %d cx   %dcy\n", Ynew_y, Xnew_y, Xnew_y / 64, Ynew_y /64);
 		int x = (int)Xnew_y/64;
 		int y = (int)Ynew_y/64;
 		if(env->map[y][x] == '1'){
@@ -157,21 +157,16 @@ void player_frames(t_env **d_env){
 	 	Ynew_y += Y_a;
 	 	Xnew_y += X_a;
 	}
-	//dprintf(2,"ANGLE %d: \n-",env->pa);
-	// if (H_length(env->x, env->y, Xnew, Ynew) > H_length(env->x, env->y, Xnew_y, Ynew_y))
-	// 	dda_line(env->x , env->y, Xnew_y , Ynew_y, env->found, 116711872);
-	// else
-	// 	dda_line(env->x , env->y, Xnew, Ynew, env->found, 116711872);
 	int abs_x = fabs((env->x - Xnew) / cos(env->pa));
-	int abs_y = fabs((env->y - Ynew_y) / sin(env->pa));
+	int abs_y = fabs((env->x -Xnew_y) / cos(env->pa));
 	dprintf(2, "ABSOLUTES : %dx, %dy\n", abs_x, abs_y);
 	if ( abs_x <= abs_y)
 	{
-		dprintf(2,"LINE IN X:  %dx, %dy", Xnew, Ynew);
+		dprintf(2,"LINE IN X:  %dx, %dy\n", Xnew, Ynew);
 		dda_line(env->x , env->y, Xnew, Ynew, env->found, 116711872);
 	}
-	else{
-		dprintf(2, "LINE IN Y: %dx, %dy", Xnew_y, Ynew_y);
+	else if (Xnew_y >= 0 && Ynew_y >= 0){
+		dprintf(2, "LINE IN Y: %dx, %dy\n", Xnew_y, Ynew_y);
 		dda_line(env->x , env->y, Xnew_y , Ynew_y, env->found, 116711872);
 	}
 	dprintf(2,"ANGLE%f  %f\n", env->pa, PI);

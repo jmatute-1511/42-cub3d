@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/11/06 22:11:05 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/11/24 09:28:57 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,21 @@ typedef struct s_dcords
 	double		p;
 }			t_dcords;
 
+typedef struct	s_clcord
+{
+	int		xf;
+	int 	yf;
+	int		sub_x;
+	int		sub_y;
+	int		abs;
+}				t_clcord;
+
 typedef struct	s_env
 {
 	unsigned int	height;
 	unsigned int	width;
+	unsigned int	top_x;
+	unsigned int	top_y;
 	mlx_t			*mlx;
 	mlx_texture_t	*texture;
 	mlx_image_t		*found;
@@ -63,5 +74,7 @@ typedef struct	s_env
 
 }				t_env;
 void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color);
+int draw_colision(t_env **d_env, float angle);
+void draw_separator(t_env **d_env);
 char **read_map(char *path, unsigned int *widht, unsigned int *height);
 #endif

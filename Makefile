@@ -6,7 +6,7 @@
 #    By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2022/11/19 11:43:00 by jmatute-         ###   ########.fr        #
+#    Updated: 2022/11/24 09:27:59 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ BLUE	:= \033[34;1m
 RESET	:= \033[0m
 
 #SOURCES
-SRC_C= cub3d.c map.c
+SRC_C= cub3d.c map.c colisions.c
 
 #DIRECTORYS
 SRC_DIR = src/

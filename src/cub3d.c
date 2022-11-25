@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/11/24 10:30:37 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/11/25 11:34:13 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ void vortice_hook(void *param){
 		env->pa += 0.015;
 		env->dx = cos(env->pa) * 5;
 		env->dy = sin(env->pa) * 5;
-		draw_colision(&env, env->pa);
+		draw_fov(&env);
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_D)){
 		env->pa -= 0.015;
 		env->dx = cos(env->pa) * 5;
 		env->dy = sin(env->pa) * 5;
-		draw_colision(&env, env->pa);
+		draw_fov(&env);
 	}	
 }
 
@@ -96,23 +96,23 @@ void	hook(void *param)
 	if (mlx_is_key_down(env->mlx, MLX_KEY_UP)){
 		env->player->instances[0].y -= 5;
 		env->y -= 5;
-		draw_colision(&env, env->pa);
+		draw_fov(&env);
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_DOWN)){
 		
 		env->player->instances[0].y += 5;
 		env->y += 5;
-		draw_colision(&env, env->pa);
+		draw_fov(&env);
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_LEFT)){
 		env->player->instances[0].x -= 5;
 		env->x -= 5;
-		draw_colision(&env, env->pa);
+		draw_fov(&env);
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_RIGHT)){
 		env->player->instances[0].x += 5;
 		env->x += 5;
-		draw_colision(&env, env->pa);
+		draw_fov(&env);
 	}
 	
 }

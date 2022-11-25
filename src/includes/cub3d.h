@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/11/24 09:28:57 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/11/25 11:19:43 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ typedef struct s_dcords
 
 typedef struct	s_clcord
 {
-	int		xf;
-	int 	yf;
-	int		sub_x;
-	int		sub_y;
-	int		abs;
+	double		xf;
+	double 		yf;
+	double		sub_x;
+	double		sub_y;
+	double		abs;
 }				t_clcord;
 
 typedef struct	s_env
@@ -67,14 +67,15 @@ typedef struct	s_env
 	char			**map;
 	float 			dx;
 	float 			dy;
-	float 			pa;
-	int 			x;
-	int 			y;
+	double 			pa;
+	double 			x;
+	double 			y;
 	int 			z;
 
 }				t_env;
 void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color);
 int draw_colision(t_env **d_env, float angle);
 void draw_separator(t_env **d_env);
+void draw_fov(t_env **d_env);
 char **read_map(char *path, unsigned int *widht, unsigned int *height);
 #endif

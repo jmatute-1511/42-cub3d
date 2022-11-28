@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/11/25 11:34:13 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/11/28 18:52:38 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,10 @@ void vortice_hook(void *param){
 		env->pa += (2 * PI);
 	if (mlx_is_key_down(env->mlx, MLX_KEY_A)){
 		env->pa += 0.015;
-		env->dx = cos(env->pa) * 5;
-		env->dy = sin(env->pa) * 5;
 		draw_fov(&env);
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_D)){
 		env->pa -= 0.015;
-		env->dx = cos(env->pa) * 5;
-		env->dy = sin(env->pa) * 5;
 		draw_fov(&env);
 	}	
 }
@@ -91,27 +87,39 @@ void	hook(void *param)
 	t_env *env;
 	env = param;
 	
+	env->dx = cos(env->pa);
+	env->dy = sin(env->pa);
+	float plane_x = cos(env->pa - 1.5708);
+	float plane_y = sin(env->pa + 1.5708);
 	if (mlx_is_key_down(env->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(env->mlx);
 	if (mlx_is_key_down(env->mlx, MLX_KEY_UP)){
-		env->player->instances[0].y -= 5;
-		env->y -= 5;
+		
+		env->y = env->y - env->dy * 5;
+		env->x = env->x + env->dx * 5;
+		env->player->instances[0].y = env->y - 5;
+		env->player->instances[0].x = env->x - 5;
 		draw_fov(&env);
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_DOWN)){
-		
-		env->player->instances[0].y += 5;
-		env->y += 5;
+		env->y = env->y + env->dy *5;
+		env->x = env->x - env->dx *5;
+		env->player->instances[0].y = env->y  - 5;
+		env->player->instances[0].x = env->x - 5;
 		draw_fov(&env);
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_LEFT)){
-		env->player->instances[0].x -= 5;
-		env->x -= 5;
+		env->x = env->x + plane_x * 5;
+		env->y = env->y + plane_y * 5;
+		env->player->instances[0].y = env->y  - 5;
+		env->player->instances[0].x = env->x - 5;
 		draw_fov(&env);
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_RIGHT)){
-		env->player->instances[0].x += 5;
-		env->x += 5;
+		env->x = env->x - plane_x * 5;
+		env->y = env->y - plane_y * 5;
+		env->player->instances[0].y = env->y  - 5;
+		env->player->instances[0].x = env->x - 5;
 		draw_fov(&env);
 	}
 	
@@ -127,12 +135,13 @@ int main(int argc, char **argv)
 		return (0);
 	env.width = 0;
 	env.height = 0;
-	env.pa = PI;
+	env.pa = PI  / 2;
 	env.dx = cos(env.pa) * 5;
 	env.dy = sin(env.pa) * 5;
 	env.map = read_map(argv[1], &env.width, &env.height);
 	env.top_x = env.width * 64;
 	env.top_y = env.height * 64;
+	env.dplane = 64 / tan(0.523599);
 	printf("%i %i\n", env.width, env.height);
 	env.mlx = mlx_init(env.width * WIDTH , env.height * HEIGHT , "MLX42", true);
 	env.texture = mlx_load_png("./images/yellow.png");

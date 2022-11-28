@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/11/25 11:19:43 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:06:33 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ typedef struct	s_env
 	mlx_image_t		*walls;
 	mlx_image_t		*player;
 	char			**map;
-	float 			dx;
-	float 			dy;
+	double			dplane;
+	double			dx;
+	double 			dy;
 	double 			pa;
 	double 			x;
 	double 			y;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colisions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/11/25 13:22:08 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/11/28 17:08:57 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ int draw_colision(t_env **d_env, float angle)
 	else if (ord.xf >= 0 && ord.yf >= 0){
 		dda_line(env->x , env->y, ord.xf, ord.yf, env->found, 116711872);
 	}
+	return (0);
 }
 void change_angle(float *angle)
 {
@@ -149,7 +150,7 @@ void draw_fov(t_env **d_env)
 	memset(env->found->pixels, 100, env->found->width * env->found->height * sizeof(int));
 	mlx_image_to_window(env->mlx, env->found, 0, 0);
 	draw_separator(&env);
-	env->found->instances->z = env->walls->instances[0].z;
+	env->found->instances->z = env->player->instances[0].z;
 	while(i < 320)
 	{
 		change_angle(&angle);

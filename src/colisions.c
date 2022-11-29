@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colisions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/11/28 17:08:57 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:51:16 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void init_cord(t_clcord *cord)
 }
 
 
-int draw_colision(t_env **d_env, float angle)
+int draw_colision(t_env **d_env, float angle, int x)
 {
 	t_env	*env;
 	t_clcord absc;
@@ -119,10 +119,22 @@ int draw_colision(t_env **d_env, float angle)
 	// print_state("ORDENADAS", &ord);
 	
 	if ( absc.abs <= ord.abs){
-		dda_line(env->x , env->y, absc.xf, absc.yf, env->found, 116711872);
+		double y = (64 / absc.abs) * 277;
+		int y_i = 200 - (int)(y/2);
+		//dprintf(2, "ABSCISAS ABS : %f\n", absc.abs);
+		if ((int)absc.xf % 64 != 0)
+			dda_line(x, y_i, x, y_i + y, env->found, 16776960);
+		else
+			dda_line(x, y_i, x, y_i + y, env->found, 16777215);
 	}
 	else if (ord.xf >= 0 && ord.yf >= 0){
-		dda_line(env->x , env->y, ord.xf, ord.yf, env->found, 116711872);
+		double y = (64 / ord.abs) * 277;
+		int y_i = 200 - (int)(y/2);
+		//dprintf(2,"ORDENADAS ABS : %f\n", ord.abs);
+		if ((int)ord.xf % 64 != 0)
+			dda_line(x, y_i, x, y_i + y, env->found, 16776960);
+		else
+			dda_line(x, y_i, x, y_i + y, env->found, 16777215);
 	}
 	return (0);
 }
@@ -142,19 +154,19 @@ void draw_fov(t_env **d_env)
 	int i;
 	
 	i = 0;
-	inc = 1.0472 / 320;
+	inc = 1.0472 / 640;
 	env = *d_env;
 	angle = env->pa - 0.523599;
 	mlx_delete_image(env->mlx, env->found);
 	env->found = mlx_new_image(env->mlx, env->width * WIDTH, env->height * HEIGHT);
-	memset(env->found->pixels, 100, env->found->width * env->found->height * sizeof(int));
+	memset(env->found->pixels, 255, env->found->width * env->found->height * sizeof(int));
 	mlx_image_to_window(env->mlx, env->found, 0, 0);
-	draw_separator(&env);
-	env->found->instances->z = env->player->instances[0].z;
-	while(i < 320)
+	//draw_separator(&env);
+	//env->found->instances->z = env->walls->instances[0].z;
+	while(i < 640)
 	{
 		change_angle(&angle);
-		draw_colision(d_env, angle);
+		draw_colision(d_env, angle, i);
 		angle += inc;
 		i++;
 	}

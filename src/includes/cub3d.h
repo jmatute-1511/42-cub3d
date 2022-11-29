@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/11/28 17:06:33 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/11/29 13:27:20 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct	s_env
 
 }				t_env;
 void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color);
-int draw_colision(t_env **d_env, float angle);
+int draw_colision(t_env **d_env, float angle, int x);
 void draw_separator(t_env **d_env);
 void draw_fov(t_env **d_env);
 char **read_map(char *path, unsigned int *widht, unsigned int *height);

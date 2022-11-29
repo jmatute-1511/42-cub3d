@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colisions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/11/29 13:51:16 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/11/29 16:27:24 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,22 +119,23 @@ int draw_colision(t_env **d_env, float angle, int x)
 	// print_state("ORDENADAS", &ord);
 	
 	if ( absc.abs <= ord.abs){
-		double y = (64 / absc.abs) * 277;
-		int y_i = 200 - (int)(y/2);
+		double y = (64 / absc.abs) * (int)env->dplane;
+		int y_i = 400 - (int)(y/2);
 		//dprintf(2, "ABSCISAS ABS : %f\n", absc.abs);
-		if ((int)absc.xf % 64 != 0)
+		if (y_i < 800  && y_i > 0)
 			dda_line(x, y_i, x, y_i + y, env->found, 16776960);
 		else
-			dda_line(x, y_i, x, y_i + y, env->found, 16777215);
+			dda_line(x, 0, x, 799, env->found, 16776960);
+
 	}
 	else if (ord.xf >= 0 && ord.yf >= 0){
-		double y = (64 / ord.abs) * 277;
-		int y_i = 200 - (int)(y/2);
+		double y = (64 / ord.abs) * (int)env->dplane;
+		int y_i = 400 - (int)(y/2);
 		//dprintf(2,"ORDENADAS ABS : %f\n", ord.abs);
-		if ((int)ord.xf % 64 != 0)
-			dda_line(x, y_i, x, y_i + y, env->found, 16776960);
-		else
+		if (y_i < 800  && y_i > 0)
 			dda_line(x, y_i, x, y_i + y, env->found, 16777215);
+		else
+			dda_line(x, 0, x, 799, env->found, 16777215);
 	}
 	return (0);
 }
@@ -154,7 +155,7 @@ void draw_fov(t_env **d_env)
 	int i;
 	
 	i = 0;
-	inc = 1.0472 / 640;
+	inc = 1.0472 / 1280;
 	env = *d_env;
 	angle = env->pa - 0.523599;
 	mlx_delete_image(env->mlx, env->found);
@@ -163,7 +164,7 @@ void draw_fov(t_env **d_env)
 	mlx_image_to_window(env->mlx, env->found, 0, 0);
 	//draw_separator(&env);
 	//env->found->instances->z = env->walls->instances[0].z;
-	while(i < 640)
+	while(i < 1280)
 	{
 		change_angle(&angle);
 		draw_colision(d_env, angle, i);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colisions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/11/29 16:27:24 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/11/30 12:41:13 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,23 @@ void init_cord(t_clcord *cord)
 	cord->yf = 0;
 }
 
+int angle_colision(t_env *env, float angle, char type)
+{
+	t_clcord absc;
+	t_clcord ord;
+	
+	init_cord(&absc);
+	init_cord(&ord);
+	if (angle >  PI * 2)
+		angle-= PI * 2;
+	else if(angle < 0)
+		angle+= PI * 2;
+	Y_colision(&ord, angle, env);
+	X_colision(&absc, angle, env);
+	if (type == 'y')
+		return(ord.abs);
+	return(absc.abs);
+}
 
 int draw_colision(t_env **d_env, float angle, int x)
 {

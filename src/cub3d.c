@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/11/29 16:25:31 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/01 12:19:36 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,45 +91,56 @@ void	hook(void *param)
 		env->pa -= (2 * PI);
 	if (env->pa < 0)
 		env->pa += (2 * PI);
-	env->dx = cos(env->pa);
-	env->dy = sin(env->pa);
+	env->dx = cos(env->pa) * 2;
+	env->dy = sin(env->pa) * 2;
 	double plane_x = cos(env->pa - 1.5708);
 	double plane_y = sin(env->pa + 1.5708);
+	if (mlx_is_key_down(env->mlx, MLX_KEY_D))
+		env->pa += 0.015;
+	if (mlx_is_key_down(env->mlx, MLX_KEY_A))
+		env->pa -= 0.015;
 	if (mlx_is_key_down(env->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(env->mlx);
 	if (mlx_is_key_down(env->mlx, MLX_KEY_UP)){
 		
-		env->y = env->y - env->dy;
-		env->x = env->x + env->dx;
+		if (angle_colision(env, env->pa, 'y' ) > 5)
+			env->y = env->y - env->dy;
+		if (angle_colision(env, env->pa, 'x' ) > 5)
+			env->x = env->x + env->dx;
 		// env->player->instances[0].y = env->y - 5;
 		// env->player->instances[0].x = env->x - 5;
 		
 	}
-	if (mlx_is_key_down(env->mlx, MLX_KEY_DOWN)){
-		env->y = env->y + env->dy ;
-		env->x = env->x - env->dx ;
+	if (mlx_is_key_down(env->mlx, MLX_KEY_DOWN))
+	{
+		if (angle_colision(env, env->pa, 'y' ) > 5)
+			env->y = env->y + env->dy;
+		if (angle_colision(env, env->pa, 'x' ) > 5)
+			env->x = env->x - env->dx;
+		// env->player->instances[0].y = env->
 		// env->player->instances[0].y = env->y  - 5;
 		// env->player->instances[0].x = env->x - 5;
 		//draw_fov(&env);
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_LEFT)){
-		env->x = env->x + plane_x ;
-		env->y = env->y + plane_y ;
+		
+		if (angle_colision(env, env->pa - 0.523599) > 7){
+			env->x = env->x + plane_x ;
+			env->y = env->y + plane_y ;
+		}
 		// env->player->instances[0].y = env->y  - 5;
 		// env->player->instances[0].x = env->x - 5;
 		//draw_fov(&env);
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_RIGHT)){
-		env->x = env->x - plane_x;
-		env->y = env->y - plane_y;
+		if (angle_colision(env, env->pa+ 0.523599) > 7){
+			env->x = env->x - plane_x;
+			env->y = env->y - plane_y;
+		}
 		// env->player->instances[0].y = env->y  - 5;
 		// env->player->instances[0].x = env->x - 5;
 		//draw_fov(&env);
 	}
-	if (mlx_is_key_down(env->mlx, MLX_KEY_D))
-		env->pa += 0.015;
-	if (mlx_is_key_down(env->mlx, MLX_KEY_A))
-		env->pa -= 0.015;
 	draw_fov(&env);
 }
 
@@ -149,7 +160,7 @@ int main(int argc, char **argv)
 	env.map = read_map(argv[1], &env.width, &env.height);
 	env.top_x = env.width * 64;
 	env.top_y = env.height * 64;
-	env.dplane = 64 / tan(0.523599);
+	env.dplane = 256 / tan(0.523599);
 	printf("%i %i\n", env.width, env.height);
 	env.mlx = mlx_init(1280, 800 , "MLX42", true);
 	env.texture = mlx_load_png("./images/yellow.png");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/11/30 12:40:12 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:18:30 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ typedef struct	s_env
 	mlx_image_t		*player;
 	char			**map;
 	double			dplane;
+	double			plane_x;
+	double			plane_y;
 	double			dx;
 	double 			dy;
 	double 			pa;
@@ -79,5 +81,6 @@ int draw_colision(t_env **d_env, float angle, int x);
 void draw_separator(t_env **d_env);
 void draw_fov(t_env **d_env);
 int angle_colision(t_env * env, float angle, char type);
+double fix_angle(double angle);
 char **read_map(char *path, unsigned int *widht, unsigned int *height);
 #endif

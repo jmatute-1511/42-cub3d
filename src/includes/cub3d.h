@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/01 18:18:30 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/02 19:22:15 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,5 @@ void draw_fov(t_env **d_env);
 int angle_colision(t_env * env, float angle, char type);
 double fix_angle(double angle);
 char **read_map(char *path, unsigned int *widht, unsigned int *height);
+int colision_is_close(t_env *env, double dir, char type);
 #endif

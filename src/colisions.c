@@ -3,21 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   colisions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/01 18:24:51 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/02 19:31:06 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/cub3d.h"
 
-void print_state(char *str, t_clcord *cord){
+void print_state(char *str, t_clcord *cord)
+{
 	dprintf(2,"%s---> abs: %f,sub_x: %f, sub_y %f, xf: %f, yf: %f\n",str,cord->abs, cord->sub_x, cord->sub_y, cord->xf, cord->yf);
 }
 
 
-void X_colision(t_clcord *cord, float angle, t_env *env)
+void X_colision(t_clcord *cord, float angle, t_env *env, int limit)
 {
 	if (PI > angle)
 	{
@@ -41,10 +42,13 @@ void X_colision(t_clcord *cord, float angle, t_env *env)
 		cord->xf += cord->sub_x;
 		cord->yf += cord->sub_y;
 	}
-	cord->abs = fabs((env->x - cord->xf) / cos(angle));
+	if (limit < 1280 / 2)
+		cord->abs = fabs(((env->y - cord->yf) / sin(angle))) * cos(env->pa - angle);
+	else
+		cord->abs = fabs(((env->y - cord->yf) / sin(angle))) * cos(env->pa - angle);
 }
 
-void Y_colision(t_clcord *cord, float angle, t_env *env)
+void Y_colision(t_clcord *cord, float angle, t_env *env, int limit)
 {
 	if (angle > P2 && angle < P3)
 	{
@@ -69,7 +73,10 @@ void Y_colision(t_clcord *cord, float angle, t_env *env)
 		cord->xf += cord->sub_x;
 		cord->yf += cord->sub_y;
 	}
-	cord->abs = fabs((env->x - cord->xf) / cos(angle));
+	if (limit < 1280 / 2)
+		cord->abs = fabs(((env->y - cord->yf) / sin(angle))) * cos(env->pa - angle);
+	else
+		cord->abs = fabs(((env->y - cord->yf) / sin(angle))) * cos(env->pa - angle);
 }
 
 void draw_separator(t_env **d_env)
@@ -103,23 +110,23 @@ void init_cord(t_clcord *cord)
 	cord->yf = 0;
 }
 
-int angle_colision(t_env *env, float angle, char type)
-{
-	t_clcord absc;
-	t_clcord ord;
+// int angle_colision(t_env *env, float angle, char type)
+// {
+// 	t_clcord absc;
+// 	t_clcord ord;
 	
-	init_cord(&absc);
-	init_cord(&ord);
-	if (angle >  PI * 2)
-		angle-= PI * 2;
-	else if(angle < 0)
-		angle+= PI * 2;
-	Y_colision(&ord, angle, env);
-	X_colision(&absc, angle, env);
-	if (type == 'y')
-		return(ord.abs);
-	return(absc.abs);
-}
+// 	init_cord(&absc);
+// 	init_cord(&ord);
+// 	if (angle >  PI * 2)
+// 		angle-= PI * 2;
+// 	else if(angle < 0)
+// 		angle+= PI * 2;
+// 	Y_colision(&ord, angle, env);
+// 	X_colision(&absc, angle, env);
+// 	if (type == 'y')
+// 		return(ord.abs);
+// 	return(absc.abs);
+// }
 
 int draw_colision(t_env **d_env, float angle, int x)
 {
@@ -130,14 +137,15 @@ int draw_colision(t_env **d_env, float angle, int x)
 	env = (*d_env);
 	init_cord(&absc);
 	init_cord(&ord);
-	X_colision(&absc, angle, env);
-	Y_colision(&ord, angle, env);
+	X_colision(&absc, angle, env, x);
+	Y_colision(&ord, angle, env, x);
 	// 	print_state("ABCISAS", &absc);
 	// print_state("ORDENADAS", &ord);
 	
 	if ( absc.abs <= ord.abs){
-		double y = (64 / absc.abs) * (int)env->dplane;
+		double y = (64 / absc.abs) * env->dplane;
 		int y_i = 400 - (int)(y/2);
+		//dprintf(2, "ABSCISAS ABS : %f\n", absc.abs);
 		if (y_i < 800  && y_i > 0)
 			dda_line(x, y_i, x, y_i + y, env->found, 16776960);
 		else
@@ -145,8 +153,9 @@ int draw_colision(t_env **d_env, float angle, int x)
 
 	}
 	else if (ord.xf >= 0 && ord.yf >= 0){
-		double y = (64 / ord.abs) * (int)env->dplane;
+		double y = (64 / ord.abs) * env->dplane;
 		int y_i = 400 - (int)(y/2);
+		//dprintf(2,"ORDENADAS ABS : %f\n", ord.abs);
 		if (y_i < 800  && y_i > 0)
 			dda_line(x, y_i, x, y_i + y, env->found, 16777215);
 		else
@@ -154,6 +163,7 @@ int draw_colision(t_env **d_env, float angle, int x)
 	}
 	return (0);
 }
+
 double fix_angle(double  angle)
 {
 	if ( angle > 2 *PI)
@@ -161,6 +171,14 @@ double fix_angle(double  angle)
 	if ( angle < 0)
 		 angle += (2 * PI);
 	return (angle);
+}
+
+void change_angle(float *angle)
+{
+	if (*angle > 2 *PI)
+		*angle -= (2 * PI);
+	if (*angle < 0)
+		*angle += (2 * PI);
 }
 
 void draw_fov(t_env **d_env)
@@ -182,7 +200,7 @@ void draw_fov(t_env **d_env)
 	//env->found->instances->z = env->walls->instances[0].z;
 	while(i < 1280)
 	{
-		angle = fix_angle(angle);
+		change_angle(&angle);
 		draw_colision(d_env, angle, i);
 		angle += inc;
 		i++;

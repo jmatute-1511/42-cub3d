@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/02 19:31:06 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/05 13:05:38 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,22 +144,23 @@ int draw_colision(t_env **d_env, float angle, int x)
 	
 	if ( absc.abs <= ord.abs){
 		double y = (64 / absc.abs) * env->dplane;
-		int y_i = 400 - (int)(y/2);
-		//dprintf(2, "ABSCISAS ABS : %f\n", absc.abs);
-		if (y_i < 800  && y_i > 0)
+		int y_i = 500 - (int)(y/2);
+		if (y_i < 1000  && y_i > 0 && y_i + y < 1000)
 			dda_line(x, y_i, x, y_i + y, env->found, 16776960);
-		else
-			dda_line(x, 0, x, 799, env->found, 16776960);
+		else{
+			dda_line(x, 0, x, 999, env->found, 16776960);
+		}
 
 	}
 	else if (ord.xf >= 0 && ord.yf >= 0){
 		double y = (64 / ord.abs) * env->dplane;
-		int y_i = 400 - (int)(y/2);
+		int y_i = 500 - (int)(y/2);
 		//dprintf(2,"ORDENADAS ABS : %f\n", ord.abs);
-		if (y_i < 800  && y_i > 0)
+		if (y_i < 1000  && y_i > 0 && y_i + y < 1000)
 			dda_line(x, y_i, x, y_i + y, env->found, 16777215);
-		else
-			dda_line(x, 0, x, 799, env->found, 16777215);
+		else{
+			dda_line(x, 0, x, 999, env->found, 16777215);
+		}
 	}
 	return (0);
 }
@@ -193,7 +194,7 @@ void draw_fov(t_env **d_env)
 	env = *d_env;
 	angle = env->pa - 0.523599;
 	mlx_delete_image(env->mlx, env->found);
-	env->found = mlx_new_image(env->mlx, env->width * WIDTH, env->height * HEIGHT);
+	env->found = mlx_new_image(env->mlx, 1280, 1000);
 	memset(env->found->pixels, 255, env->found->width * env->found->height * sizeof(int));
 	mlx_image_to_window(env->mlx, env->found, 0, 0);
 	//draw_separator(&env);

@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/02 18:54:25 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/05 13:05:42 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	hook(void *param)
 		if (env->map[(int)env->y / 64][((int)(env->x - env->plane_x * 3)) / 64] != '1')
 			env->x = env->x - env->plane_x;
 	}
-	draw_fov(&env);
+		draw_fov(&env);
 }
 
 int main(int argc, char **argv)
@@ -157,12 +157,12 @@ int main(int argc, char **argv)
 	env.map = read_map(argv[1], &env.width, &env.height);
 	env.top_x = env.width * 64;
 	env.top_y = env.height * 64;
-	env.dplane = 320 / tan(0.523599);
+	env.dplane =  320 / tan(0.523599);
 	printf("%i %i\n", env.width, env.height);
-	env.mlx = mlx_init(1280, 800 , "MLX42", true);
+	env.mlx = mlx_init(1280, 1280 , "MLX42", true);
 	env.texture = mlx_load_png("./images/yellow.png");
 	env.walls = mlx_texture_to_image(env.mlx, env.texture);
-	env.found = mlx_new_image(env.mlx, env.width * WIDTH, env.height * HEIGHT);
+	env.found = mlx_new_image(env.mlx, 1280, 1000);
 	//env.player = mlx_new_image(env.mlx, 10, 10);
 	//memset(env.player->pixels, 255, env.player->width * env.player->height * sizeof(int));
 	//memset(env.found->pixels, 100, env.found->width * env.found->height * sizeof(int));

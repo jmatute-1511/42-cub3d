@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/05 13:05:42 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/06 17:34:21 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/cub3d.h"
+#include "includes/cub3d.h"
 
 #define LENGHT_RAY 15
 
-void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color)
+void	dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color)
 {
 	t_dcords	dcords;
 	int			i;
-	
+
 	i = 0;
 	dcords.dx = xf - xi;
 	dcords.dy = yf - yi;
@@ -30,28 +30,31 @@ void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color)
 	dcords.incy = dcords.dy / dcords.p;
 	dcords.x = xi;
 	dcords.y = yi;
-	while(i < dcords.p){
-		 mlx_put_pixel(flor, dcords.x, dcords.y, color);
-		 dcords.x += dcords.incx;
-		 dcords.y += dcords.incy;
-		 i++;
+	while (i < dcords.p)
+	{
+		mlx_put_pixel(flor, dcords.x, dcords.y, color);
+		dcords.x += dcords.incx;
+		dcords.y += dcords.incy;
+		i++;
 	}
 }
 
-int fill_window(int l_image, t_env *env)
+int	fill_window(int l_image, t_env *env)
 {
-	int y;
-	int x;
+	int	y;
+	int	x;
 
 	y = 0;
 	x = 0;
-	while (y  < env->height)
+	while (y < env->height)
 	{
-		while (x < env->width){
+		while (x < env->width)
+		{
 			if (env->map[y][x] == '1')
 				;//mlx_image_to_window(env->mlx, env->walls, x * l_image, y * l_image);
-			else if (env->map[y][x] == 'P'){
-				;//mlx_image_to_window(env->mlx, env->player ,x *l_image ,y * l_image);
+			else if (env->map[y][x] == 'P')
+			{
+				//mlx_image_to_window(env->mlx, env->player ,x *l_image ,y * l_image);
 				env->x = x * l_image + 5;
 				env->y = y * l_image + 5;
 			}
@@ -64,30 +67,33 @@ int fill_window(int l_image, t_env *env)
 	return (0);
 }
 
-void vortice_hook(void *param){
-	t_env *env;
+void	vortice_hook(void *param)
+{
+	t_env	*env;
+
 	env = param;
-	
-	if (env->pa > 2 *PI)
+	if (env->pa > 2 * PI)
 		env->pa -= (2 * PI);
 	if (env->pa < 0)
 		env->pa += (2 * PI);
-	if (mlx_is_key_down(env->mlx, MLX_KEY_D)){
+	if (mlx_is_key_down(env->mlx, MLX_KEY_D))
+	{
 		env->pa += 0.015;
 		draw_fov(&env);
 	}
-	if (mlx_is_key_down(env->mlx, MLX_KEY_A)){
+	if (mlx_is_key_down(env->mlx, MLX_KEY_A))
+	{
 		env->pa -= 0.015;
 		draw_fov(&env);
 	}	
 }
 
-void change_angles(t_env **d_env)
+void	change_angles(t_env **d_env)
 {
-	t_env *env;
-	double a_x;
-	double a_y;
-	
+	t_env	*env;
+	double	a_x;
+	double	a_y;
+
 	env = *d_env;
 	env->pa = fix_angle(env->pa);
 	env->dx = cos(env->pa) * 4;
@@ -95,13 +101,14 @@ void change_angles(t_env **d_env)
 	a_x = fix_angle(env->pa - 1.5708);
 	a_y = fix_angle(env->pa + 1.5708);
 	env->plane_x = cos(a_x) * 2;
-	env->plane_y = sin(a_y) * 2;	
+	env->plane_y = sin(a_y) * 2;
 }
+
 void	hook(void *param)
 {
-	t_env *env;
+	t_env	*env;
+
 	env = param;
-	
 	if (mlx_is_key_down(env->mlx, MLX_KEY_D))
 		env->pa += 0.015;
 	if (mlx_is_key_down(env->mlx, MLX_KEY_A))
@@ -141,25 +148,23 @@ void	hook(void *param)
 		draw_fov(&env);
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_env env;
-	mlx_texture_t *texture;
-	mlx_image_t *yellow;
-	
+	t_env			env;
+	mlx_texture_t	*texture;
+	mlx_image_t		*yellow;
+
 	if (argc == 1)
 		return (0);
-	env.width = 0;
-	env.height = 0;
 	env.pa = PI ;
 	env.dx = cos(env.pa);
 	env.dy = sin(env.pa);
-	env.map = read_map(argv[1], &env.width, &env.height);
+	read_map(argv[1], &env);
 	env.top_x = env.width * 64;
 	env.top_y = env.height * 64;
-	env.dplane =  320 / tan(0.523599);
+	env.dplane = 320 / tan(0.523599);
 	printf("%i %i\n", env.width, env.height);
-	env.mlx = mlx_init(1280, 1280 , "MLX42", true);
+	env.mlx = mlx_init(1280, 1280, "MLX42", true);
 	env.texture = mlx_load_png("./images/yellow.png");
 	env.walls = mlx_texture_to_image(env.mlx, env.texture);
 	env.found = mlx_new_image(env.mlx, 1280, 1000);
@@ -172,5 +177,5 @@ int main(int argc, char **argv)
 	//mlx_loop_hook(env.mlx, &vortice_hook, &env);
 	mlx_loop(env.mlx);
 	mlx_terminate(env.mlx);
-	return 0;
-}	
+	return (0);
+}

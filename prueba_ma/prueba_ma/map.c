@@ -6,11 +6,11 @@
 /*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:20:51 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/06 17:23:10 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2022/12/03 19:20:35 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3d.h"
+#include "cub3d.h"
 
 static void	save_texture(char *str, t_env *env, int line)
 {
@@ -95,24 +95,24 @@ void	read_map(char *path, t_env *env)
 	char	*name;
 	char	*aux_map;
 
-	if (check_name(path) != 1)
+	if (check_name(path) == 1)
+	{	
+		aux_map = ft_calloc(1, sizeof(char *));
+		env->tex = ft_calloc(1, sizeof(t_textures));
+		name = ft_strjoin("./", path);
+		take_h_w(name, env);
+		fd = open(name, O_RDONLY);
+		if (fd == -1)
+			exit (1);
+		fill_map(&aux_map, fd, env);
+		env->map = ft_split(aux_map, '\n');
+		free(aux_map);
+		close(fd);
+		check_map(env->map, env);
+	}
+	else
 	{
 		ft_putstr_fd("Bad type of map\n", 2);
 		exit (127);
 	}
-	aux_map = ft_calloc(1, sizeof(char *));
-	env->tex = ft_calloc(1, sizeof(t_textures));
-	name = ft_strjoin("./", path);
-	env->height = 0;
-	env->width = 0;
-	take_h_w(name, env);
-	fd = open(name, O_RDONLY);
-	if (fd == -1)
-		exit (1);
-	env->play = 0;
-	fill_map(&aux_map, fd, env);
-	env->map = ft_split(aux_map, '\n');
-	free(aux_map);
-	close(fd);
-	check_map(env->map, env);
 }

@@ -6,21 +6,15 @@
 /*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/06 16:45:28 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2022/12/03 19:15:32 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "../../MLX42/include/MLX42/MLX42.h"
-# include "../../libft/libft.h"
-# define PI 3.1415926535
-# define P2 PI/2
-# define P3 3 * (PI/2)
-# define HEIGHT 64
-# define WIDTH 64
-
+//#include "../../MLX42/include/MLX42/MLX42.h"
+# include "../libft/libft.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -28,7 +22,12 @@
 # include <math.h>
 # include <fcntl.h>
 # include <stdlib.h>
-# include <float.h>
+# include <mlx.h>
+# define PI 3.1415926535
+# define P2 PI/2
+# define P3 3 * PI /2
+# define HEIGHT 64
+# define WIDTH 64
 
 typedef struct s_dcords
 {
@@ -58,59 +57,32 @@ typedef struct s_textures
 	char			*we;
 	char			*f;
 	char			*c;
+	//mlx_texture_t	*texture;
+	//mlx_image_t		*found;
+	//mlx_image_t		*floor;
+	//mlx_image_t		*walls;
+	//mlx_image_t		*player;
 }	t_textures;
-
-typedef struct s_clcord
-{
-	double			xf;
-	double			yf;
-	double			sub_x;
-	double			sub_y;
-	double			abs;
-}				t_clcord;
 
 typedef struct s_env
 {
 	unsigned int	height;
 	unsigned int	width;
-	unsigned int	top_x;
-	unsigned int	top_y;
-	mlx_t			*mlx;
-	mlx_texture_t	*texture;
-	mlx_image_t		*found;
-	mlx_image_t		*floor;
-	mlx_image_t		*walls;
-	mlx_image_t		*player;
+	//mlx_t			*mlx;
 	t_textures		*tex;
 	char			**map;
+	int				player;
 	char			view;
-	double			dplane;
-	double			plane_x;
-	double			plane_y;
-	double			dx;
-	double			dy;
-	double			pa;
-	double			x;
-	double			y;
+	float			dx;
+	float			dy;
+	float			pa;
+	int				x;
+	int				y;
 	int				z;
-	int				play;
+
 }				t_env;
 
-void	dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color);
-int		draw_colision(t_env **d_env, float angle, int x);
-void	draw_separator(t_env **d_env);
-void	draw_fov(t_env **d_env);
-int		angle_colision(t_env *env, float angle, char type);
-double	fix_angle(double angle);
-int		colision_is_close(t_env *env, double dir, char type);
-
-//		Map.c		//
-
 void	read_map(char *path, t_env *env);
-
-//		check_map.c		//
-
-void	check_map(char **map, t_env *env);
 
 //		Error.c		//
 
@@ -119,5 +91,11 @@ int		check_name(char *path);
 void	take_h_w(char *name, t_env *env);
 void	midel_line(char *str, int check, t_env *env);
 void	add_player(char c, t_env *env);
+
+//		Map.c		//
+
+//		check_map.c		//
+
+void	check_map(char **map, t_env *env);
 
 #endif

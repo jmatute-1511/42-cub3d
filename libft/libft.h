@@ -3,21 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/16 17:03:57 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/07/16 13:50:56 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:26:19 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
+# define BUFFER_SIZE 1
 
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <limits.h>
 # include <stdarg.h>
+# include <fcntl.h>
+
+typedef struct s_list
+{
+	int				content;
+	struct s_list	*next;
+}			t_list;
 
 char	*ft_strdup(const char *s);
 char	*ft_strchr(const char *s, int c);
@@ -63,13 +71,6 @@ int		ft_bolean_operator( char diff, char *str);
 int		bolean_str(char c, char *str);
 int		len_word(const char *s, char c, char *ign);
 int		ft_atoi(const char *str);
-
-typedef struct s_list
-{
-	int				content;
-	struct s_list	*next;
-}			t_list;
-
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstnew(int content);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
@@ -79,5 +80,6 @@ void	ft_lstadd_front(t_list **alst, t_list *new);
 void	ft_lstdelone(t_list *lst, void (*del)(void*));
 void	ft_lstclear(t_list **lst, void (*del)(void *));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
+int		get_next_line(int fd, char **line);
 
 #endif

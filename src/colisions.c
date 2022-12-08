@@ -6,7 +6,7 @@
 /*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/06 17:39:11 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2022/12/08 15:11:21 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,9 +146,9 @@ int	draw_colision(t_env **d_env, float angle, int x)
 		double y = (64 / absc.abs) * env->dplane;
 		int y_i = 500 - (int)(y / 2);
 		if (y_i < 1000 && y_i > 0 && y_i + y < 1000)
-			dda_line(x, y_i, x, y_i + y, env->found, 16776255);
+			dda_line(x, y_i, x, y_i + y, env->found, 102180217);
 		else
-			dda_line(x, 0, x, 999, env->found, 16776255);
+			dda_line(x, 0, x, 999, env->found, 102180217);
 	}
 	else if (ord.xf >= 0 && ord.yf >= 0)
 	{
@@ -194,6 +194,7 @@ void	draw_fov(t_env **d_env)
 	mlx_delete_image(env->mlx, env->found);
 	env->found = mlx_new_image(env->mlx, 1280, 1000);
 	memset(env->found->pixels, 255, env->found->width * env->found->height * sizeof(int));
+	memset(env->found->pixels, 120, env->found->width * (env->found->height / 2) * sizeof(int));
 	mlx_image_to_window(env->mlx, env->found, 0, 0);
 	//draw_separator(&env);
 	//env->found->instances->z = env->walls->instances[0].z;

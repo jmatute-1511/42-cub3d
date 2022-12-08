@@ -6,7 +6,7 @@
 /*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/06 17:34:21 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2022/12/08 15:12:54 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	hook(void *param)
 		if (env->map[(int)env->y / 64][((int)(env->x - env->plane_x * 3)) / 64] != '1')
 			env->x = env->x - env->plane_x;
 	}
-		draw_fov(&env);
+	draw_fov(&env);
 }
 
 int	main(int argc, char **argv)
@@ -164,8 +164,8 @@ int	main(int argc, char **argv)
 	env.top_y = env.height * 64;
 	env.dplane = 320 / tan(0.523599);
 	printf("%i %i\n", env.width, env.height);
-	env.mlx = mlx_init(1280, 1280, "MLX42", true);
-	env.texture = mlx_load_png("./images/yellow.png");
+	env.mlx = mlx_init(1280, 1000, "MLX42", true);
+	env.texture = mlx_load_png("./images/wall_640.png");
 	env.walls = mlx_texture_to_image(env.mlx, env.texture);
 	env.found = mlx_new_image(env.mlx, 1280, 1000);
 	//env.player = mlx_new_image(env.mlx, 10, 10);

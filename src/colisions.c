@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colisions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/13 08:40:09 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:37:08 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ void X_colision(t_clcord *cord, float angle, t_env *env, int limit)
 		cord->xf += cord->sub_x;
 		cord->yf += cord->sub_y;
 	}
-	if (limit < 1280 / 2)
-		cord->abs = fabs(((env->y - cord->yf) / sin(angle))) * cos(env->pa - angle);
-	else
-		cord->abs = fabs(((env->y - cord->yf) / sin(angle))) * cos(env->pa - angle);
+	cord->abs = fabs(((env->y - cord->yf) / sin(angle))) * cos(fix_angle(env->pa - angle));
 }
 
 void Y_colision(t_clcord *cord, float angle, t_env *env, int limit)
@@ -66,10 +63,7 @@ void Y_colision(t_clcord *cord, float angle, t_env *env, int limit)
 		cord->xf += cord->sub_x;
 		cord->yf += cord->sub_y;
 	}
-	if (limit < 1280 / 2)
-		cord->abs = fabs(((env->y - cord->yf) / sin(angle))) * cos(env->pa - angle);
-	else
-		cord->abs = fabs(((env->y - cord->yf) / sin(angle))) * cos(env->pa - angle);
+	cord->abs = fabs(((env->y - cord->yf) / sin(angle))) * cos(fix_angle(env->pa - angle));
 }
 
 void draw_separator(t_env **d_env)
@@ -128,22 +122,19 @@ int draw_colision(t_env **d_env, float angle, int x)
 	if ( absc.abs <= ord.abs){
 		double y = (64 / absc.abs) * env->dplane;
 		int y_i = 500 - (int)(y/2);
-		if (y_i < 1000  && y_i > 0 && y_i + y < 1000)
+		if (y_i < 1000  && y_i > 0 && y_i + y < 1000 && (int)absc.xf % 64 != 0)
 			dda_line(x, y_i, x, y_i + y, env->found, color);
-		else{
+		else if((int)absc.xf % 64 != 0)
 			dda_line(x, 0, x, 999, env->found, color);
-		}
-
 	}
 	else if (ord.xf >= 0 && ord.yf >= 0){
 		color = rgb_to_int(249, 231, 141, 255);
 		double y = (64 / ord.abs) * env->dplane;
 		int y_i = 500 - (int)(y/2);
-		if (y_i < 1000  && y_i > 0 && y_i + y < 1000)
-			dda_line(x, y_i, x, y_i + y, env->found, color);
-		else{
+		if (y_i < 1000  && y_i > 0 && y_i + y < 1000 && (int)ord.yf % 64 != 0)
+			dda_line(x, y_i, x, y_i + y, env->found, color );
+		else if ((int)ord.yf % 64 != 0)
 			dda_line(x, 0, x, 999, env->found, color);
-		}
 	}
 	return (0);
 }
@@ -176,7 +167,7 @@ void draw_fov(t_env **d_env)
 	{
 		angle = fix_angle(angle);
 		draw_colision(d_env, angle, i);
-		angle += inc;
+		angle += inc;	
 		i++;
 	}
 }

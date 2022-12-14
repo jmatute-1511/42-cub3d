@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/05 13:05:42 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:56:39 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,9 +157,9 @@ int main(int argc, char **argv)
 	env.map = read_map(argv[1], &env.width, &env.height);
 	env.top_x = env.width * 64;
 	env.top_y = env.height * 64;
-	env.dplane =  320 / tan(0.523599);
+	env.dplane =  512 / tan(0.523599);
 	printf("%i %i\n", env.width, env.height);
-	env.mlx = mlx_init(1280, 1280 , "MLX42", true);
+	env.mlx = mlx_init(1280, 1000 , "MLX42", true);
 	env.texture = mlx_load_png("./images/yellow.png");
 	env.walls = mlx_texture_to_image(env.mlx, env.texture);
 	env.found = mlx_new_image(env.mlx, 1280, 1000);

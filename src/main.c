@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 00:40:08 by W2Wizard          #+#    #+#             */
-/*   Updated: 2022/12/14 18:00:20 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/16 18:06:34 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,21 @@ uint32_t rgb_to_int(int red, int green, int blue, int transparency)
 	return (color | red | green | blue | transparency); 
 }
 
-mlx_texture_t* draw_column(mlx_image_t *image, mlx_texture_t * texture)
+mlx_texture_t* ret_column(mlx_image_t *img, mlx_texture_t * texture,uint32_t fil)
 {
-	double poss = 0;
-	double step = texture->height / 500;
-	for(int i = 0; i < texture->widht * 4; i+= texture->height)
-	{
-		for(int p = 0; p < texture->height; p+=4)
-		{
-			int color = rgb_to_int(texture->pixels[i+p+(int)poss],texture->pixels[i+p+(int)poss +1],texture->pixels[i+p+(int)poss +2],texture->pixels[i+p+(int)poss +3]);
-			poss += step;
-			mlx_put_pixel(image, i,)
-		}
-	}
+	uint32_t *arr_image;
+	mlx_texture_t *new_texture;
 	
+	// if(column * texture->height > texture->height * 4)
+	// 	return NULL;
+	new_texture = malloc(sizeof(mlx_texture_t));
+	new_texture->pixels = malloc(sizeof(uint8_t) * (texture->width * 4));
+	new_texture->bytes_per_pixel = 4;
+	new_texture->height = 1;
+	new_texture->width = texture->width;
+	for(int p = 0; p < texture->width * 4; p++)
+		new_texture->pixels[p] = texture->pixels[((fil * texture->width * 4)) + p];
+	return(new_texture);
 }
 
 int main(void){
@@ -57,9 +58,23 @@ int main(void){
 		exit(EXIT_FAILURE);
 	texture = mlx_load_png("./images/jmatute-.png");
 	dprintf(2, "widht :%d,  height: %d\n", texture->width, texture->height);
-	image = mlx_texture_area_to_image(mlx, texture, xy, wh);
+	image = mlx_new_image(mlx,1280,1000);//mlx_texture_area_to_image(mlx, texture, xy, wh);
+	//mlx_draw_texture(image,texture, 100, 0);
 	if (image)
+	{
+		// mlx_draw_texture(image,ret_column(image, texture,0), 0, 10);
+		// mlx_draw_texture(image,ret_column(image, texture,1), 0, 12);
+		// mlx_draw_texture(image,texture, 0, 14);
+		// mlx_draw_texture(image,ret_column(image, texture,1), 0, 11);
+		// mlx_draw_texture(image,ret_column(image, texture,2), 0, 12);
+		// mlx_draw_texture(image,ret_column(image, texture,3), 0, 13);
+		// mlx_draw_texture(image,ret_column(image, texture,4), 0, 14);
+		for (size_t i = 0; i < texture->height; i++)
+		{
+			mlx_draw_texture(image,ret_column(image, texture,i), 0, i);
+		}
 		mlx_image_to_window(mlx, image, 0, 0);
+	}
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/13 15:56:39 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/17 18:57:21 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,26 +60,7 @@ int fill_window(int l_image, t_env *env)
 		x = 0;
 		y ++;
 	}
-	//draw_separator(&env);
 	return (0);
-}
-
-void vortice_hook(void *param){
-	t_env *env;
-	env = param;
-	
-	if (env->pa > 2 *PI)
-		env->pa -= (2 * PI);
-	if (env->pa < 0)
-		env->pa += (2 * PI);
-	if (mlx_is_key_down(env->mlx, MLX_KEY_D)){
-		env->pa += 0.015;
-		draw_fov(&env);
-	}
-	if (mlx_is_key_down(env->mlx, MLX_KEY_A)){
-		env->pa -= 0.015;
-		draw_fov(&env);
-	}	
 }
 
 void change_angles(t_env **d_env)
@@ -90,52 +71,53 @@ void change_angles(t_env **d_env)
 	
 	env = *d_env;
 	env->pa = fix_angle(env->pa);
-	env->dx = cos(env->pa) * 4;
-	env->dy = sin(env->pa) * 4;
+	env->dx = cos(env->pa) * 12;
+	env->dy = sin(env->pa) * 12;
 	a_x = fix_angle(env->pa - 1.5708);
 	a_y = fix_angle(env->pa + 1.5708);
-	env->plane_x = cos(a_x) * 2;
-	env->plane_y = sin(a_y) * 2;	
+	env->plane_x = cos(a_x) * 8;
+	env->plane_y = sin(a_y) * 8;	
 }
+
 void	hook(void *param)
 {
 	t_env *env;
 	env = param;
 	
 	if (mlx_is_key_down(env->mlx, MLX_KEY_D))
-		env->pa += 0.015;
+		env->pa += 0.02;
 	if (mlx_is_key_down(env->mlx, MLX_KEY_A))
-		env->pa -= 0.015;
+		env->pa -= 0.02;
 	change_angles(&env);
 	if (mlx_is_key_down(env->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(env->mlx);
 	if (mlx_is_key_down(env->mlx, MLX_KEY_UP))
 	{
-		if (env->map[((int)(env->y - env->dy * 3)) / 64][(int)env->x / 64] != '1')
-			env->y = env->y - env->dy;
-		if (env->map[(int)env->y / 64][((int)(env->x + env->dx * 3)) / 64] != '1')
+		if (env->map[((int)(env->y - env->dy * 6)) / env->hpb][(int)env->x / env->hpb] != '1')
+			env->y = env->y - (int)env->dy;
+		if (env->map[(int)env->y / env->hpb][((int)(env->x + env->dx * 6)) / env->hpb] != '1')
 			env->x = env->x + env->dx;
 		//dprintf(2, " <<<  Y  >>: %d\n <<  X  >>: %d\n",(int) env->y, (int)env->x);
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_DOWN))
 	{
-		if (env->map[((int)(env->y + env->dy * 3)) / 64][(int)env->x / 64] != '1')
+		if (env->map[((int)(env->y + env->dy * 6)) / env->hpb][(int)env->x / env->hpb] != '1')
 			env->y = env->y + env->dy;
-		if (env->map[(int)env->y / 64][((int)(env->x - env->dx * 3)) / 64] != '1')
+		if (env->map[(int)env->y / env->hpb][((int)(env->x - env->dx * 6)) / env->hpb] != '1')
 			env->x = env->x - env->dx;
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_LEFT))
 	{
-		if (env->map[((int)(env->y + env->plane_y * 3)) / 64][(int)env->x / 64] != '1')
+		if (env->map[((int)(env->y + env->plane_y * 3)) / env->hpb][(int)env->x / env->hpb] != '1')
 			env->y = env->y + env->plane_y ;
-		if (env->map[(int)env->y / 64][((int)(env->x + env->plane_x * 3)) / 64] != '1')
+		if (env->map[(int)env->y / env->hpb][((int)(env->x + env->plane_x * 3)) / env->hpb] != '1')
 			env->x = env->x + env->plane_x ;
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_RIGHT))
 	{
-		if (env->map[((int)(env->y - env->plane_y * 3)) / 64][(int)env->x / 64] != '1')
+		if (env->map[((int)(env->y - env->plane_y * 3)) / env->hpb][(int)env->x / env->hpb] != '1')
 			env->y = env->y - env->plane_y;
-		if (env->map[(int)env->y / 64][((int)(env->x - env->plane_x * 3)) / 64] != '1')
+		if (env->map[(int)env->y / env->hpb][((int)(env->x - env->plane_x * 3)) / env->hpb] != '1')
 			env->x = env->x - env->plane_x;
 	}
 		draw_fov(&env);
@@ -151,25 +133,22 @@ int main(int argc, char **argv)
 		return (0);
 	env.width = 0;
 	env.height = 0;
-	env.pa = PI ;
+	env.hpb = 256;
+	env.pa = 0 ;
 	env.dx = cos(env.pa);
 	env.dy = sin(env.pa);
 	env.map = read_map(argv[1], &env.width, &env.height);
-	env.top_x = env.width * 64;
-	env.top_y = env.height * 64;
-	env.dplane =  512 / tan(0.523599);
+	env.top_x = env.width * env.hpb;
+	env.top_y = env.height * env.hpb;
+	env.dplane =  256 / tan(0.523599);
 	printf("%i %i\n", env.width, env.height);
 	env.mlx = mlx_init(1280, 1000 , "MLX42", true);
-	env.texture = mlx_load_png("./images/yellow.png");
+	env.texture = mlx_load_png("./images/2jmatute-.png");
 	env.walls = mlx_texture_to_image(env.mlx, env.texture);
 	env.found = mlx_new_image(env.mlx, 1280, 1000);
-	//env.player = mlx_new_image(env.mlx, 10, 10);
-	//memset(env.player->pixels, 255, env.player->width * env.player->height * sizeof(int));
-	//memset(env.found->pixels, 100, env.found->width * env.found->height * sizeof(int));
 	mlx_image_to_window(env.mlx, env.found, 0, 0);
-	fill_window(64, &env);
+	fill_window(256, &env);
 	mlx_loop_hook(env.mlx, &hook, &env);
-	//mlx_loop_hook(env.mlx, &vortice_hook, &env);
 	mlx_loop(env.mlx);
 	mlx_terminate(env.mlx);
 	return 0;

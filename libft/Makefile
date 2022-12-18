@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
+#    By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/22 12:21:57 by jmatute-          #+#    #+#              #
-#    Updated: 2022/10/22 20:59:11 by jmatute-         ###   ########.fr        #
+#    Updated: 2022/12/18 11:49:54 by alsanche         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ ft_substr.c ft_tolower.c ft_toupper.c ft_strtrim.c ft_putchar_fd.c \
 ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c ft_strmapi.c ft_split.c ft_strnjoin.c \
 ft_free_matrix.c ft_lstnew.c ft_lstadd_front.c ft_lstsize.c ft_lstlast.c \
 ft_lstadd_back.c ft_strcmp.c ft_long_atoi.c ft_split_ignore.c ft_bolean_strstr.c\
-ft_bolean_operator.c ft_strldup.c ft_extra.c ft_itoa.c ft_atoi.c
+ft_bolean_operator.c ft_strldup.c ft_extra.c ft_itoa.c ft_atoi.c get_next_line.c
 
 SRCS_B	= ft_lstclear.c ft_lstdelone.c ft_lstiter.c ft_lstmap.c
 

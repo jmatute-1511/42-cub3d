@@ -26,12 +26,12 @@ int main(){
   if (rayDirX == 0)
     deltaDistX = DBL_MAX;
   else
-    deltaDistX = abs(1/ rayDirX);
+    deltaDistX = fabs(1/ rayDirX);
   double deltaDistY;
   if (rayDirY == 0)
     deltaDistY = DBL_MAX;
   else
-    deltaDistY = abs(1/rayDirY);
+    deltaDistY = fabs(1/rayDirY);
   double perpWallDist;
 
   //what direction to step in x or y-direction (either +1 or -1)

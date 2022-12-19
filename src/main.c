@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 00:40:08 by W2Wizard          #+#    #+#             */
-/*   Updated: 2022/12/16 18:06:34 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:45:13 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,6 @@ int main(void){
 	//mlx_draw_texture(image,texture, 100, 0);
 	if (image)
 	{
-		// mlx_draw_texture(image,ret_column(image, texture,0), 0, 10);
-		// mlx_draw_texture(image,ret_column(image, texture,1), 0, 12);
-		// mlx_draw_texture(image,texture, 0, 14);
-		// mlx_draw_texture(image,ret_column(image, texture,1), 0, 11);
-		// mlx_draw_texture(image,ret_column(image, texture,2), 0, 12);
-		// mlx_draw_texture(image,ret_column(image, texture,3), 0, 13);
-		// mlx_draw_texture(image,ret_column(image, texture,4), 0, 14);
 		for (size_t i = 0; i < texture->height; i++)
 		{
 			mlx_draw_texture(image,ret_column(image, texture,i), 0, i);

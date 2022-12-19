@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/17 19:16:22 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:44:24 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,21 @@ void	print_state(char *str, t_clcord *cord)
 
 void X_colision(t_clcord *cord, float angle, t_env *env, int limit)
 {
+	double atan;
+
+	atan = tan(angle);
 	if (PI > angle)
 	{
 		cord->sub_y = - env->hpb;
-		cord->yf = (((int)env->y >> 8) << 8) - 0.00001;
+		cord->yf = (((int)env->y >> 8) << 8) - 0.0000001;
 	}
 	else if (PI < angle)
 	{
 		cord->sub_y = env->hpb;
 		cord->yf = (((int)env->y >> 8) << 8) + env->hpb;
 	}
-	cord->sub_x = -cord->sub_y / tan(angle);
-	cord->xf = env->x + ((env->y - cord->yf) / tan(angle));
+	cord->sub_x = - cord->sub_y / atan;
+	cord->xf = env->x + ((env->y - cord->yf) / atan);
 	while (cord->xf < env->top_x && cord->yf < env->top_y && cord->xf  > 0 && cord->yf > 0)
 	{
 		if (env->map[(int)cord->yf / env->hpb][(int)cord->xf / env->hpb] == '1')
@@ -38,23 +41,28 @@ void X_colision(t_clcord *cord, float angle, t_env *env, int limit)
 		cord->xf += cord->sub_x;
 		cord->yf += cord->sub_y;
 	}
-	cord->abs = fabs(((env->x - cord->xf) / cos(angle))) * cos(fix_angle(env->pa - angle));
+	cord->abs = round(fabs((env->x - cord->xf) / cos(angle)));
+	cord->abs *= cos(angle - env->pa);
 }
 
 void Y_colision(t_clcord *cord, float angle, t_env *env, int limit)
 {
+
+	double atan;
+
+	atan = tan(angle);
 	if (angle > P2 && angle < P3)
 	{
 		cord->sub_x = - env->hpb;
-		cord->xf = (((int)env->x >> 8) << 8) - 0.00001;
+		cord->xf = (((int)env->x >> 8) << 8) - 0.0000001;
 	}
 	else if (angle < P2 || angle > P3)
 	{
 		cord->sub_x = env->hpb;
 		cord->xf = (((int)env->x >> 8) << 8) + env->hpb;
 	}
-	cord->sub_y = -cord->sub_x * tan(angle);
-	cord->yf = env->y + ((env->x - cord->xf) * tan(angle));
+	cord->sub_y = - cord->sub_x * atan;
+	cord->yf = env->y + ((env->x - cord->xf) * atan);
 	while(cord->xf < env->top_x  && cord->yf < env->top_y && cord->xf  > 0 && cord->yf > 0)
 	{
 		if (env->map[(int)cord->yf / env->hpb][(int)cord->xf / env->hpb] == '1')
@@ -62,7 +70,8 @@ void Y_colision(t_clcord *cord, float angle, t_env *env, int limit)
 		cord->xf += cord->sub_x;
 		cord->yf += cord->sub_y;
 	}
-	cord->abs = fabs(((env->y - cord->yf) / sin(angle))) * cos(fix_angle(env->pa - angle));
+	cord->abs = round(fabs((env->x - cord->xf) / cos(angle)));
+	cord->abs *= cos(angle - env->pa);
 }
 
 
@@ -81,19 +90,19 @@ int draw_colision(t_env **d_env, float angle, int x)
 	// print_state("ORD  ",&ord);
 	int color = rgb_to_int(233, 155, 0, 255);
 	if ( absc.abs <= ord.abs){
-		double y = (env->hpb / absc.abs) * env->dplane;
+		double y = (env->hpb / absc.abs ) * env->dplane;
 		int y_i = 500 - (y/2);
 		if (y_i < 1000  && y_i > 0 && y_i + y < 1000)
 		{
 			text = get_column(env->texture, abs((int)round(absc.xf)  % 256), y);
-			//mlx_draw_texture(env->found,text,x,y_i);
-			 dda_line(x, y_i, x, y_i + floor(y), env->found, color);
+			mlx_draw_texture(env->found,text,x,y_i);
+			//dda_line(x, y_i, x, y_i + floor(y), env->found, color);
 		}
-		else{
-			text = get_column(env->texture,abs((int)round(absc.xf)  % 256), 999);
-			//mlx_draw_texture(env->found,text,x,0);
-			dda_line(x, 0, x, 999, env->found, color);
-		}
+		// else{
+		// 	text = get_column(env->texture,abs((int)round(absc.xf)  % 256), 999);
+		// 	mlx_draw_texture(env->found,text,x,0);
+		// 	//dda_line(x, 0, x, 999, env->found, color);
+		// }
 	}
 	else{
 		color = rgb_to_int(249, 231, 141, 255);
@@ -101,15 +110,15 @@ int draw_colision(t_env **d_env, float angle, int x)
 		int y_i = 500 - (y/2);
 		if (y_i < 1000  && y_i > 0 && y_i + y < 1000 )
 		{
-			text = get_column(env->texture,(int)ord.yf % 256, y);
+			text = get_column(env->texture,(int)round(ord.yf) % 256, y);
 			mlx_draw_texture(env->found,text,x,y_i);
 			//dda_line(x, y_i, x, y_i + floor(y), env->found, color );
 		}
-		else{
-			text = get_column(env->texture, (int)ord.yf % 256, 999);
-			mlx_draw_texture(env->found,text,x,0);
-			//dda_line(x, 0, x, 999, env->found, color);
-		}
+		// else{
+		// 	text = get_column(env->texture, (int)ord.yf % 256, 999);
+		// 	mlx_draw_texture(env->found,text,x,0);
+		// 	//dda_line(x, 0, x, 999, env->found, color);
+		// }
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 16:05:08 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/17 19:15:47 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:37:00 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ mlx_texture_t* get_column(mlx_texture_t *texture, int column, int height)
 	double			c_step;
 	
 	it = 0;
-	c_step =  (double)texture->height / (double)height;
 	step = 0;
+	c_step =  (double)texture->height / (double)height;
 	tex = malloc(sizeof(mlx_texture_t));
 	tex->pixels = malloc(sizeof(uint8_t) * (height * 4));
 	tex->bytes_per_pixel = 4;
@@ -30,16 +30,16 @@ mlx_texture_t* get_column(mlx_texture_t *texture, int column, int height)
 	tex->width = 1;
 	while(it < (height * 4))
 	{
-		tex->pixels[it] = texture->pixels[column * (texture->width * 4)];
-		tex->pixels[it + 1] =texture->pixels[column *(texture->width * 4) + 1];
-		tex->pixels[it + 2] =texture->pixels[column *(texture->width * 4) +2];
-		tex->pixels[it + 3] =texture->pixels[column *(texture->width * 4) +3];
+		tex->pixels[it] = texture->pixels[(int)(step) * (texture->width* 4) + (column * 4)];
+		tex->pixels[it + 1] =texture->pixels[(int)(step) *(texture->width * 4) + 1 + (column * 4)];
+		tex->pixels[it + 2] =texture->pixels[(int)(step) *(texture->width * 4) + 2 + (column * 4)];
+		tex->pixels[it + 3] =texture->pixels[(int)(step) *(texture->width * 4) + 3 + (column * 4)];
 		step += c_step;
 		it+=4;
 	}
-	//dprintf(2,"%d \n", column);
 	return (tex);
 }
+
 
 int get_number_column(int cord, mlx_texture_t *texture)
 {

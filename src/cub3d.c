@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/17 18:57:21 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/19 17:36:28 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int main(int argc, char **argv)
 	env.map = read_map(argv[1], &env.width, &env.height);
 	env.top_x = env.width * env.hpb;
 	env.top_y = env.height * env.hpb;
-	env.dplane =  256 / tan(0.523599);
+	env.dplane =  380 / tan(0.523599);
 	printf("%i %i\n", env.width, env.height);
 	env.mlx = mlx_init(1280, 1000 , "MLX42", true);
 	env.texture = mlx_load_png("./images/2jmatute-.png");

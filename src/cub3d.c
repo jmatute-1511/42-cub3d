@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/18 11:34:04 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2022/12/17 18:57:21 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ int fill_window(int l_image, t_env *env)
 		while (x < env->width){
 			if (env->map[y][x] == '1')
 				;//mlx_image_to_window(env->mlx, env->walls, x * l_image, y * l_image);
-			else if (env->map[y][x] == 'P')
-			{
+			else if (env->map[y][x] == 'P'){
 				;//mlx_image_to_window(env->mlx, env->player ,x *l_image ,y * l_image);
 				env->x = x * l_image + 5;
 				env->y = y * l_image + 5;

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2022/12/18 11:51:32 by alsanche         ###   ########lyon.fr    #
+#    Updated: 2022/12/17 17:56:15 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC_C= cub3d.c map.c colisions.c tools.c texture.c
 #DIRECTORYS
 SRC_DIR = src/
 OBJ_DIR = $(SRC_DIR)obj/
+GNL_DIR = get_next_line/
 HEADER_DIR = $(SRC_DIR)includes/
 LIBFT_DIR= libft/ 
 
@@ -38,6 +39,7 @@ HEADERS_I = cub3d.h
 #LIBRARYS COMPILE
 MLX = MLX42/libmlx42.a
 LIBFT = libft/libft.a
+GNL = get_next_line/get_next_line.a
 
 #OBJECTS
 OBJS = $(SRC_C:.c=.o)
@@ -59,7 +61,7 @@ all: libs obj $(NAME)
 
 $(NAME) :	$(OBJ) 
 
-			@$(CC) $(CFLAGS) $(OBJ) $(MLX) $(LIBS) $(LIBFT)  -lm  -o $(NAME)
+			@$(CC) $(CFLAGS) $(OBJ) $(GNL) $(MLX) $(LIBS) $(LIBFT)  -lm  -o $(NAME)
 			@echo "$(BLUE)YOUR CUB3D🧊 IS READY"
 obj:
 
@@ -71,15 +73,18 @@ $(OBJ_DIR)%.o:	$(SRC_DIR)%.c
 
 libs:
 		@make -sC $(LIBFT_DIR)
+		@make -sC $(GNL_DIR)
 		@make -sC ./MLX42
 clean:
 			@make -sC $(LIBFT_DIR) clean
 			@make -sC ./MLX42 fclean
+			@make -sC $(GNL_DIR) clean
 			$(RM) $(OBJ) libft.a libmlx42.a get_next_line.a
 
 fclean:		clean
 			$(RM) $(NAME)
 			@make -sC $(LIBFT_DIR) fclean
+			@make -sC $(GNL_DIR) fclean
 
 re:			fclean all
 

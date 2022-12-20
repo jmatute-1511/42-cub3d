@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colisions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/19 17:44:24 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/20 15:12:14 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,59 +91,58 @@ int draw_colision(t_env **d_env, float angle, int x)
 	int color = rgb_to_int(233, 155, 0, 255);
 	if ( absc.abs <= ord.abs){
 		double y = (env->hpb / absc.abs ) * env->dplane;
-		int y_i = 500 - (y/2);
-		if (y_i < 1000  && y_i > 0 && y_i + y < 1000)
+		int y_i = 540 - (y/2);
+		if (y_i < 1080  && y_i > 0 && y_i + y < 1080)
 		{
-			text = get_column(env->texture, abs((int)round(absc.xf)  % 256), y);
+			text = get_column(env->texture, get_number_column(absc.xf, env->texture), y, y);
 			mlx_draw_texture(env->found,text,x,y_i);
 			//dda_line(x, y_i, x, y_i + floor(y), env->found, color);
 		}
-		// else{
-		// 	text = get_column(env->texture,abs((int)round(absc.xf)  % 256), 999);
-		// 	mlx_draw_texture(env->found,text,x,0);
-		// 	//dda_line(x, 0, x, 999, env->found, color);
-		// }
+		else{
+			text = get_column(env->texture,get_number_column(absc.xf, env->texture), 1079, 1079);
+			mlx_draw_texture(env->found,text,x,0);
+			//dda_line(x, 0, x, 999, env->found, color);
+		}
 	}
 	else{
 		color = rgb_to_int(249, 231, 141, 255);
 		double y = (env->hpb / ord.abs) * env->dplane;
-		int y_i = 500 - (y/2);
-		if (y_i < 1000  && y_i > 0 && y_i + y < 1000 )
+		int y_i = 540 - (y/2);
+		if (y_i < 1080  && y_i > 0 && y_i + y < 1080 )
 		{
-			text = get_column(env->texture,(int)round(ord.yf) % 256, y);
+			text = get_column(env->texture,get_number_column(ord.yf, env->texture), y, y);
 			mlx_draw_texture(env->found,text,x,y_i);
 			//dda_line(x, y_i, x, y_i + floor(y), env->found, color );
 		}
-		// else{
-		// 	text = get_column(env->texture, (int)ord.yf % 256, 999);
-		// 	mlx_draw_texture(env->found,text,x,0);
-		// 	//dda_line(x, 0, x, 999, env->found, color);
-		// }
+		else{
+			text = get_column(env->texture, get_number_column(ord.yf, env->texture), 1079, 1079);
+			mlx_draw_texture(env->found,text,x,0);
+			//dda_line(x, 0, x, 999, env->found, color);
+		}
 	}
 	return (0);
 }
-
 
 void draw_fov(t_env **d_env)
 {
 	float	inc;
 	float	angle;
 	t_env	*env;
-	int i;
-	
+	int		i;
+
 	i = 0;
-	inc = 1.0472 / 1280;
+	inc = 1.0472 / 1920;
 	env = *d_env;
 	angle = env->pa - 0.523599;
 	mlx_delete_image(env->mlx, env->found);
-	env->found = mlx_new_image(env->mlx, 1280, 1000);
+	env->found = mlx_new_image(env->mlx, 1920, 1080);
 	//memset(env->found->pixels, 255, env->found->width * env->found->height * sizeof(int));
 	mlx_image_to_window(env->mlx, env->found, 0, 0);
-	while(i < 1280)
+	while (i < 1920)
 	{
 		angle = fix_angle(angle);
 		draw_colision(d_env, angle, i);
-		angle += inc;	
+		angle += inc;
 		i++;
 	}
 }

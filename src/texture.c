@@ -3,28 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 16:05:08 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/20 15:10:49 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2022/12/20 17:01:34 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/cub3d.h"
 
-mlx_texture_t* get_column(mlx_texture_t *texture, int column, int height, double dis)
+
+double start_step(mlx_texture_t *texture, int height, double line_height)
+{
+	double start;
+
+	start = 0;
+	if (height > 1079)
+		start = ((double)height - 1079) * line_height / 2;
+	return(start);
+}
+
+mlx_texture_t* get_column(mlx_texture_t *texture, int column, int height)
 {
 	mlx_texture_t	*tex;
 	double			step;		
 	int				pos_pixel;		
 	int				it;
 	double			c_step;
+	int				end;
 
 	it = 0;
-	step = 0;
-	c_step =  (double)texture->height / dis;
+	c_step =  (double)texture->height / height;
 	tex = malloc(sizeof(mlx_texture_t));
 	tex->pixels = malloc(sizeof(uint8_t) * (height * 4));
+	step = start_step(texture, height, c_step);
+	if (height > 1079)
+		height = 1079;
 	tex->bytes_per_pixel = 4;
 	tex->height = height;
 	tex->width = 1;

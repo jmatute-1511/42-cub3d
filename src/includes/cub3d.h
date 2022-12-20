@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/20 15:08:36 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2022/12/20 16:01:03 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ double fix_angle(double angle);
 char **read_map(char *path, unsigned int *widht, unsigned int *height);
 int colision_is_close(t_env *env, double dir, char type);
 uint32_t rgb_to_int(int red, int green, int blue, int transparency);
-mlx_texture_t* get_column(mlx_texture_t *texture, int column, int height, double dis);
+mlx_texture_t* get_column(mlx_texture_t *texture, int column, int height);
 int get_number_column(int cord, mlx_texture_t *texture);
 
 #endif

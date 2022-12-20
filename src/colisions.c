@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colisions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/20 15:12:14 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2022/12/20 17:01:13 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,9 @@ void Y_colision(t_clcord *cord, float angle, t_env *env, int limit)
 		cord->xf += cord->sub_x;
 		cord->yf += cord->sub_y;
 	}
-	cord->abs = round(fabs((env->x - cord->xf) / cos(angle)));
+	cord->abs = round(fabs((env->y - cord->yf) / sin(angle)));
 	cord->abs *= cos(angle - env->pa);
+
 }
 
 
@@ -94,12 +95,12 @@ int draw_colision(t_env **d_env, float angle, int x)
 		int y_i = 540 - (y/2);
 		if (y_i < 1080  && y_i > 0 && y_i + y < 1080)
 		{
-			text = get_column(env->texture, get_number_column(absc.xf, env->texture), y, y);
+			text = get_column(env->texture, get_number_column(absc.xf, env->texture), y);
 			mlx_draw_texture(env->found,text,x,y_i);
 			//dda_line(x, y_i, x, y_i + floor(y), env->found, color);
 		}
 		else{
-			text = get_column(env->texture,get_number_column(absc.xf, env->texture), 1079, 1079);
+			text = get_column(env->texture,get_number_column(absc.xf, env->texture), y);
 			mlx_draw_texture(env->found,text,x,0);
 			//dda_line(x, 0, x, 999, env->found, color);
 		}
@@ -110,12 +111,12 @@ int draw_colision(t_env **d_env, float angle, int x)
 		int y_i = 540 - (y/2);
 		if (y_i < 1080  && y_i > 0 && y_i + y < 1080 )
 		{
-			text = get_column(env->texture,get_number_column(ord.yf, env->texture), y, y);
+			text = get_column(env->texture,get_number_column(ord.yf, env->texture), y);
 			mlx_draw_texture(env->found,text,x,y_i);
 			//dda_line(x, y_i, x, y_i + floor(y), env->found, color );
 		}
 		else{
-			text = get_column(env->texture, get_number_column(ord.yf, env->texture), 1079, 1079);
+			text = get_column(env->texture, get_number_column(ord.yf, env->texture), y);
 			mlx_draw_texture(env->found,text,x,0);
 			//dda_line(x, 0, x, 999, env->found, color);
 		}

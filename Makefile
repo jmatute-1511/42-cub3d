@@ -24,12 +24,11 @@ BLUE	:= \033[34;1m
 RESET	:= \033[0m
 
 #SOURCES
-SRC_C= cub3d.c map.c colisions.c tools.c texture.c
+SRC_C= cub3d.c map.c colisions.c tools.c texture.c check_map.c error_map.c
 
 #DIRECTORYS
 SRC_DIR = src/
 OBJ_DIR = $(SRC_DIR)obj/
-GNL_DIR = get_next_line/
 HEADER_DIR = $(SRC_DIR)includes/
 LIBFT_DIR= libft/ 
 
@@ -39,7 +38,6 @@ HEADERS_I = cub3d.h
 #LIBRARYS COMPILE
 MLX = MLX42/libmlx42.a
 LIBFT = libft/libft.a
-GNL = get_next_line/get_next_line.a
 
 #OBJECTS
 OBJS = $(SRC_C:.c=.o)
@@ -61,7 +59,7 @@ all: libs obj $(NAME)
 
 $(NAME) :	$(OBJ) 
 
-			@$(CC) $(CFLAGS) $(OBJ) $(GNL) $(MLX) $(LIBS) $(LIBFT)  -lm  -o $(NAME)
+			@$(CC) $(CFLAGS) $(OBJ) $(MLX) $(LIBS) $(LIBFT)  -lm  -o $(NAME)
 			@echo "$(BLUE)YOUR CUB3D🧊 IS READY"
 obj:
 
@@ -73,18 +71,15 @@ $(OBJ_DIR)%.o:	$(SRC_DIR)%.c
 
 libs:
 		@make -sC $(LIBFT_DIR)
-		@make -sC $(GNL_DIR)
 		@make -sC ./MLX42
 clean:
 			@make -sC $(LIBFT_DIR) clean
 			@make -sC ./MLX42 fclean
-			@make -sC $(GNL_DIR) clean
-			$(RM) $(OBJ) libft.a libmlx42.a get_next_line.a
+			$(RM) $(OBJ) libft.a libmlx42.a
 
 fclean:		clean
 			$(RM) $(NAME)
 			@make -sC $(LIBFT_DIR) fclean
-			@make -sC $(GNL_DIR) fclean
 
 re:			fclean all
 

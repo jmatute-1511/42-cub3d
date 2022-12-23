@@ -125,9 +125,9 @@ void	hook(void *param)
 
 int main(int argc, char **argv)
 {
-	t_env 			env;
-	mlx_texture_t	*texture;
-	mlx_image_t		*yellow;
+	t_env env;
+	mlx_texture_t *texture;
+	mlx_image_t *yellow;
 	
 	if (argc == 1)
 		return (0);
@@ -137,7 +137,7 @@ int main(int argc, char **argv)
 	env.pa = 0 ;
 	env.dx = cos(env.pa);
 	env.dy = sin(env.pa);
-	read_map(argv[1], &env);
+	env.map = read_map(argv[1], &env.width, &env.height);
 	env.top_x = env.width * env.hpb;
 	env.top_y = env.height * env.hpb;
 	env.dplane =  380	 / tan(0.523599);

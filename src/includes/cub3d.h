@@ -14,6 +14,7 @@
 #define CUB3D_H
 
 #include "../../MLX42/include/MLX42/MLX42.h"
+#include "../../get_next_line/get_next_line.h"
 #include "../../libft/libft.h"
 #define PI 3.1415926535
 #define P2 PI/2
@@ -34,32 +35,13 @@
 typedef struct s_dcords
 {
 	double			dx;
-	double			dy;
-	double			incx;
-	double			incy;
-	double			x;
-	double			y;
-	double			p;
+	double		dy;
+	double		incx;
+	double		incy;
+	double		x;
+	double		y;
+	double		p;
 }			t_dcords;
-
-typedef struct s_read_map
-{
-	int			frist_wall;
-	int			last_wall;
-	int			check_f;
-	int			check_l;
-	int			i;
-}			t_read_map;
-
-typedef struct s_textures
-{
-	char			*no;
-	char			*so;
-	char			*ea;
-	char			*we;
-	char			*f;
-	char			*c;
-}			t_textures;
 
 typedef struct	s_clcord
 {
@@ -83,9 +65,7 @@ typedef struct	s_env
 	mlx_image_t		*floor;
 	mlx_image_t		*walls;
 	mlx_image_t		*player;
-	t_textures		*tex;
 	char			**map;
-	char			view;
 	double			dplane;
 	double			plane_x;
 	double			plane_y;
@@ -95,34 +75,18 @@ typedef struct	s_env
 	double 			x;
 	double 			y;
 	int 			z;
-	int				play;
+
 }				t_env;
-
-void 			dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color);
-int 			draw_colision(t_env **d_env, float angle, int x);
-void 			draw_separator(t_env **d_env);
-void 			draw_fov(t_env **d_env);
-int 			angle_colision(t_env * env, float angle, char type);
-double 			fix_angle(double angle);
-int 			colision_is_close(t_env *env, double dir, char type);
-uint32_t 		rgb_to_int(int red, int green, int blue, int transparency);
-mlx_texture_t* 	get_column(mlx_texture_t *texture, int column, int height);
-int		 		get_number_column(int cord, mlx_texture_t *texture);
-
-//		Map.c		//
-
-void			read_map(char *path, t_env *env);
-
-//		check_map.c		//
-
-void			check_map(char **map, t_env *env);
-
-//		Error.c		//
-
-void			print_error_map(int line, int i, int check);
-int				check_name(char *path);
-void			take_h_w(char *name, t_env *env);
-void			midel_line(char *str, int check, t_env *env);
-void			add_player(char c, t_env *env);
+void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color);
+int draw_colision(t_env **d_env, float angle, int x);
+void draw_separator(t_env **d_env);
+void draw_fov(t_env **d_env);
+int angle_colision(t_env * env, float angle, char type);
+double fix_angle(double angle);
+char **read_map(char *path, unsigned int *widht, unsigned int *height);
+int colision_is_close(t_env *env, double dir, char type);
+uint32_t rgb_to_int(int red, int green, int blue, int transparency);
+mlx_texture_t* get_column(mlx_texture_t *texture, int column, int height);
+int get_number_column(int cord, mlx_texture_t *texture);
 
 #endif

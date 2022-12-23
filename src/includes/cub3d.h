@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/23 11:34:04 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/23 12:10:07 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ typedef struct	s_env
 	mlx_image_t		*walls;
 	mlx_image_t		*player;
 	char			**map;
-	
 	double			dplane;
 	double			plane_x;
 	double			plane_y;

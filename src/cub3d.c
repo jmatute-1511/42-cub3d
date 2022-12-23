@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/20 17:12:28 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/23 11:52:44 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/cub3d.h"
-
-#define LENGHT_RAY 15
 
 void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color)
 {
@@ -48,10 +46,8 @@ int fill_window(int l_image, t_env *env)
 	while (y  < env->height)
 	{
 		while (x < env->width){
-			if (env->map[y][x] == '1')
-				;//mlx_image_to_window(env->mlx, env->walls, x * l_image, y * l_image);
-			else if (env->map[y][x] == 'P'){
-				;//mlx_image_to_window(env->mlx, env->player ,x *l_image ,y * l_image);
+			if (env->map[y][x] == 'P')
+			{
 				env->x = x * l_image + 5;
 				env->y = y * l_image + 5;
 			}
@@ -97,7 +93,6 @@ void	hook(void *param)
 			env->y = env->y - (int)env->dy;
 		if (env->map[(int)env->y / env->hpb][((int)(env->x + env->dx * 6)) / env->hpb] != '1')
 			env->x = env->x + env->dx;
-		//dprintf(2, " <<<  Y  >>: %d\n <<  X  >>: %d\n",(int) env->y, (int)env->x);
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_DOWN))
 	{
@@ -134,20 +129,23 @@ int main(int argc, char **argv)
 	env.width = 0;
 	env.height = 0;
 	env.hpb = 256;
-	env.pa = 0 ;
+	env.pa = 0;
+	env.win_height = 720;
+	env.win_width = 1280;
+	env.inc = 1.0472 / env.win_width;
 	env.dx = cos(env.pa);
 	env.dy = sin(env.pa);
 	env.map = read_map(argv[1], &env.width, &env.height);
 	env.top_x = env.width * env.hpb;
 	env.top_y = env.height * env.hpb;
-	env.dplane =  380	 / tan(0.523599);
+	env.dplane =  env.hpb / tan(0.523599);
 	printf("%i %i\n", env.width, env.height);
-	env.mlx = mlx_init(1920, 1080 , "MLX42", true);
+	env.mlx = mlx_init((int)env.win_width,(int)env.win_height , "MLX42", true);
 	env.texture = mlx_load_png("./images/wall.png");
 	env.walls = mlx_texture_to_image(env.mlx, env.texture);
-	env.found = mlx_new_image(env.mlx, 1920, 1080);
+	env.found = mlx_new_image(env.mlx, 1280, 720);
 	mlx_image_to_window(env.mlx, env.found, 0, 0);
-	fill_window(256, &env);
+	fill_window(env.hpb, &env);
 	mlx_loop_hook(env.mlx, &hook, &env);
 	mlx_loop(env.mlx);
 	mlx_terminate(env.mlx);

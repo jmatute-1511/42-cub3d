@@ -3,21 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   colisions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/20 17:01:13 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/23 11:59:49 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/cub3d.h"
 
-void	print_state(char *str, t_clcord *cord)
-{
-	dprintf(2, "%s---> abs: %f,sub_x: %f, sub_y %f, xf: %f, yf: %f\n", str, cord->abs, cord->sub_x, cord->sub_y, cord->xf, cord->yf);
-}
-
-void X_colision(t_clcord *cord, float angle, t_env *env, int limit)
+void X_colision(t_clcord *cord, double angle, t_env *env, int limit)
 {
 	double atan;
 
@@ -41,13 +36,12 @@ void X_colision(t_clcord *cord, float angle, t_env *env, int limit)
 		cord->xf += cord->sub_x;
 		cord->yf += cord->sub_y;
 	}
-	cord->abs = round(fabs((env->x - cord->xf) / cos(angle)));
+	cord->abs = fabs((env->x - cord->xf) / cos(angle));
 	cord->abs *= cos(angle - env->pa);
 }
 
-void Y_colision(t_clcord *cord, float angle, t_env *env, int limit)
+void Y_colision(t_clcord *cord, double angle, t_env *env, int limit)
 {
-
 	double atan;
 
 	atan = tan(angle);
@@ -70,16 +64,33 @@ void Y_colision(t_clcord *cord, float angle, t_env *env, int limit)
 		cord->xf += cord->sub_x;
 		cord->yf += cord->sub_y;
 	}
-	cord->abs = round(fabs((env->y - cord->yf) / sin(angle)));
+	cord->abs = fabs((env->y - cord->yf) / sin(angle));
 	cord->abs *= cos(angle - env->pa);
-
 }
 
-
+void draw_column(t_env **d_env, double abs, double cord, int x)
+{
+	t_env			*env;
+	mlx_texture_t	*text;
+	double			height;
+	int				y_i;
+	
+	env = *d_env;
+	height = (env->hpb / abs ) * env->dplane;
+	y_i = ((int)floor(env->win_height + 1) >> 1) - ((int)height >> 1);
+	text = get_text_column(env->texture, \
+	get_number_column(round(cord), env->texture), height, env);
+	if (y_i < env->win_height && y_i > 0 && y_i + height < env->win_height)
+		mlx_draw_texture(env->found,text,x,y_i);
+	else
+		mlx_draw_texture(env->found,text,x,0);
+	free(text);
+}
 
 int draw_colision(t_env **d_env, float angle, int x)
 {
 	t_env	*env;
+	double	y;
 	t_clcord absc;
 	t_clcord ord;
 	mlx_texture_t *text;
@@ -87,63 +98,30 @@ int draw_colision(t_env **d_env, float angle, int x)
 	env = (*d_env);
 	X_colision(&absc, angle, env, x);
 	Y_colision(&ord, angle, env, x);
-	// print_state("ABSCISAS  ",&absc);
-	// print_state("ORD  ",&ord);
-	int color = rgb_to_int(233, 155, 0, 255);
-	if ( absc.abs <= ord.abs){
-		double y = (env->hpb / absc.abs ) * env->dplane;
-		int y_i = 540 - (y/2);
-		if (y_i < 1080  && y_i > 0 && y_i + y < 1080)
-		{
-			text = get_column(env->texture, get_number_column(absc.xf, env->texture), y);
-			mlx_draw_texture(env->found,text,x,y_i);
-			//dda_line(x, y_i, x, y_i + floor(y), env->found, color);
-		}
-		else{
-			text = get_column(env->texture,get_number_column(absc.xf, env->texture), y);
-			mlx_draw_texture(env->found,text,x,0);
-			//dda_line(x, 0, x, 999, env->found, color);
-		}
-	}
-	else{
-		color = rgb_to_int(249, 231, 141, 255);
-		double y = (env->hpb / ord.abs) * env->dplane;
-		int y_i = 540 - (y/2);
-		if (y_i < 1080  && y_i > 0 && y_i + y < 1080 )
-		{
-			text = get_column(env->texture,get_number_column(ord.yf, env->texture), y);
-			mlx_draw_texture(env->found,text,x,y_i);
-			//dda_line(x, y_i, x, y_i + floor(y), env->found, color );
-		}
-		else{
-			text = get_column(env->texture, get_number_column(ord.yf, env->texture), y);
-			mlx_draw_texture(env->found,text,x,0);
-			//dda_line(x, 0, x, 999, env->found, color);
-		}
-	}
+	if ( absc.abs <= ord.abs)
+		draw_column(d_env,absc.abs,absc.xf, x);
+	else
+		draw_column(d_env,ord.abs, ord.yf, x);
 	return (0);
 }
 
 void draw_fov(t_env **d_env)
 {
-	float	inc;
-	float	angle;
+	double	angle;
 	t_env	*env;
 	int		i;
 
 	i = 0;
-	inc = 1.0472 / 1920;
 	env = *d_env;
 	angle = env->pa - 0.523599;
 	mlx_delete_image(env->mlx, env->found);
-	env->found = mlx_new_image(env->mlx, 1920, 1080);
-	//memset(env->found->pixels, 255, env->found->width * env->found->height * sizeof(int));
+	env->found = mlx_new_image(env->mlx, env->win_width, env->win_height);
 	mlx_image_to_window(env->mlx, env->found, 0, 0);
-	while (i < 1920)
+	while (i < env->win_width)
 	{
 		angle = fix_angle(angle);
 		draw_colision(d_env, angle, i);
-		angle += inc;
+		angle += env->inc;
 		i++;
 	}
 }

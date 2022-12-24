@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/23 11:59:49 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/23 13:54:04 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void X_colision(t_clcord *cord, double angle, t_env *env, int limit)
 		cord->yf += cord->sub_y;
 	}
 	cord->abs = fabs((env->x - cord->xf) / cos(angle));
-	cord->abs *= cos(angle - env->pa);
+	cord->abs = floor(cord->abs * cos(angle - env->pa));
 }
 
 void Y_colision(t_clcord *cord, double angle, t_env *env, int limit)
@@ -64,8 +64,8 @@ void Y_colision(t_clcord *cord, double angle, t_env *env, int limit)
 		cord->xf += cord->sub_x;
 		cord->yf += cord->sub_y;
 	}
-	cord->abs = fabs((env->y - cord->yf) / sin(angle));
-	cord->abs *= cos(angle - env->pa);
+	cord->abs = fabs(((env->y  - cord->yf) / sin(angle)));
+	cord->abs = floor(cord->abs * cos(angle - env->pa));
 }
 
 void draw_column(t_env **d_env, double abs, double cord, int x)
@@ -79,7 +79,7 @@ void draw_column(t_env **d_env, double abs, double cord, int x)
 	height = (env->hpb / abs ) * env->dplane;
 	y_i = ((int)floor(env->win_height + 1) >> 1) - ((int)height >> 1);
 	text = get_text_column(env->texture, \
-	get_number_column(round(cord), env->texture), height, env);
+	get_number_column(floor(cord), env->texture), height, env);
 	if (y_i < env->win_height && y_i > 0 && y_i + height < env->win_height)
 		mlx_draw_texture(env->found,text,x,y_i);
 	else
@@ -87,7 +87,7 @@ void draw_column(t_env **d_env, double abs, double cord, int x)
 	free(text);
 }
 
-int draw_colision(t_env **d_env, float angle, int x)
+int draw_colision(t_env **d_env, double angle, int x)
 {
 	t_env	*env;
 	double	y;

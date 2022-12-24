@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 16:05:08 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/23 11:42:14 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/23 13:51:51 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ int get_number_column(int cord, mlx_texture_t *texture)
 {
 	int result;
 
-	result = ((cord % 256) * texture->width) >> 8;
+	result = ((cord % 256) * texture->width) / 256;
 	return(result);
 }

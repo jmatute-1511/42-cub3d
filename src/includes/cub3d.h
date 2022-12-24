@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/23 12:10:07 by jmatute-         ###   ########.fr       */
+/*   Updated: 2022/12/23 13:36:46 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ typedef struct	s_env
 
 }				t_env;
 void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color);
-int draw_colision(t_env **d_env, float angle, int x);
+int draw_colision(t_env **d_env, double angle, int x);
 void draw_separator(t_env **d_env);
 void draw_fov(t_env **d_env);
-int angle_colision(t_env * env, float angle, char type);
+int angle_colision(t_env * env, double angle, char type);
 double fix_angle(double angle);
 char **read_map(char *path, unsigned int *widht, unsigned int *height);
 int colision_is_close(t_env *env, double dir, char type);

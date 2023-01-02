@@ -3,61 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/02 13:05:02 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:31:52 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/cub3d.h"
-
-void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color)
-{
-	t_dcords	dcords;
-	int			i;
-	
-	i = 0;
-	dcords.dx = xf - xi;
-	dcords.dy = yf - yi;
-	if (fabs(dcords.dx) >= fabs(dcords.dy))
-		dcords.p = fabs(dcords.dx);
-	else
-		dcords.p = fabs(dcords.dy);
-	dcords.incx = dcords.dx / dcords.p;
-	dcords.incy = dcords.dy / dcords.p;
-	dcords.x = xi;
-	dcords.y = yi;
-	while(i < dcords.p){
-		 mlx_put_pixel(flor, dcords.x, dcords.y, color);
-		 dcords.x += dcords.incx;
-		 dcords.y += dcords.incy;
-		 i++;
-	}
-}
-
-int fill_window(int l_image, t_env *env)
-{
-	int y;
-	int x;
-
-	y = 0;
-	x = 0;
-	while (y  < env->height)
-	{
-		while (x < env->width){
-			if (env->map[y][x] == 'P')
-			{
-				env->x = x * l_image + 5;
-				env->y = y * l_image + 5;
-			}
-			x++;
-		}
-		x = 0;
-		y ++;
-	}
-	return (0);
-}
 
 void change_angles(t_env **d_env)
 {
@@ -98,8 +51,8 @@ void chek_colision_up_or_down(t_env **d_env)
 		if (env->map[y][((int)(env->x - env->dx * 6)) / env->hpb] != '1')
 			env->x = env->x - env->dx;
 	}
-	
 }	
+
 void chek_colision_left_or_right(t_env **d_env)
 {
 	t_env *env;
@@ -140,29 +93,6 @@ void	hook(void *param)
 	chek_colision_up_or_down(&env);
 	chek_colision_left_or_right(&env);
 	draw_fov(&env);
-}
-
-void get_rgb(t_env *env)
-{
-	char **m_floor;
-	char **m_roof;
-	uint8_t floor[3];
-	uint8_t roof[3];
-	int it;
-
-	it = 0;
-	m_floor = ft_split(env->tex->f, ',');
-	m_roof = ft_split(env->tex->c, ',');
-	while (it < 3)
-	{
-		floor[it] = ft_atoi(m_floor[it]);
-		roof[it] = ft_atoi(m_roof[it]);
-		it++;
-	}
-	env->floor = rgb_to_int(floor[0], floor[1], floor[2], 255);
-	env->roof = rgb_to_int(roof[0], roof[1], roof[2], 255);
-	free(m_floor);
-	free(m_roof);
 }
 
 int main(int argc, char **argv)

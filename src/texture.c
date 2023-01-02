@@ -3,15 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 16:05:08 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/27 10:08:28 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:30:42 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/cub3d.h"
 
+
+void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color)
+{
+	t_dcords	dcords;
+	int			i;
+	
+	i = 0;
+	dcords.dx = xf - xi;
+	dcords.dy = yf - yi;
+	if (fabs(dcords.dx) >= fabs(dcords.dy))
+		dcords.p = fabs(dcords.dx);
+	else
+		dcords.p = fabs(dcords.dy);
+	dcords.incx = dcords.dx / dcords.p;
+	dcords.incy = dcords.dy / dcords.p;
+	dcords.x = xi;
+	dcords.y = yi;
+	while(i < dcords.p){
+		 mlx_put_pixel(flor, dcords.x, dcords.y, color);
+		 dcords.x += dcords.incx;
+		 dcords.y += dcords.incy;
+		 i++;
+	}
+}
 
 double start_step(mlx_texture_t *texture, int height, double line_height, t_env * env)
 {
@@ -23,31 +47,35 @@ double start_step(mlx_texture_t *texture, int height, double line_height, t_env 
 	return(start);
 }
 
-mlx_texture_t* get_text_column(mlx_texture_t *texture, int column, int height, t_env *env)
+mlx_texture_t* allocate_tex(t_env *env, int height)
 {
 	mlx_texture_t	*tex;
-	double			step;		
-	int				pos_pixel;		
-	int				it;
-	double			c_step;
-	int				width;
 
-	it = 0;
-	c_step =  (double)texture->height / height;
 	tex = malloc(sizeof(mlx_texture_t));
 	tex->pixels = malloc(sizeof(uint8_t) * (height << 2));
-	step = start_step(texture, height, c_step, env);
-	if (height >= env->win_height)
-		height = env->win_height - 1;
 	tex->bytes_per_pixel = 4;
 	tex->height = height;
 	tex->width = 1;
-	column <<= 2;
-	height <<= 2;
-	width = (texture->width << 2);
-	while(it < height)
+	return (tex);
+}
+
+mlx_texture_t* get_text_column(mlx_texture_t *texture, int column, int height, t_env *env)
+{
+	mlx_texture_t	*tex;
+	int				it;
+	double			step;		
+	double			c_step;
+	int				pos_pixel;		
+
+	it = 0;
+	c_step =  (double)texture->height / height;
+	step = start_step(texture, height, c_step, env);
+	if (height >= env->win_height)
+		height = env->win_height - 1;
+	tex = allocate_tex(env, height);
+	while(it < (height << 2))
 	{
-		pos_pixel = (int)(step) * width + column;
+		pos_pixel = (int)(step) * (texture->width << 2) + (column << 2);
 		tex->pixels[it] = texture->pixels[pos_pixel];
 		tex->pixels[it + 1] = texture->pixels[pos_pixel + 1];
 		tex->pixels[it + 2] =texture->pixels[pos_pixel + 2];

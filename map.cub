@@ -1,14 +1,15 @@
-NO ./images/wall_classic.png
 
-SO ./images/wall_new.png
+NO ./images/blue_brick_wall.png
 
-WE ./images/wall_shadow.png
+SO ./images/arcade_wall.png
 
-EA ./images/wall_wood.png
+WE ./images/rock_grey_wall.png
 
-F 220,100,0
+EA ./images/moss_wall.png
 
-C 225,30,0
+F 90,113,152
+
+C 62,150,188
 
     1111111111111    111111111111
 11111000000000001    1000000001 

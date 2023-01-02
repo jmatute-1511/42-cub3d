@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 13:59:28 by alsanche          #+#    #+#             */
-/*   Updated: 2022/12/25 15:36:15 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:06:46 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	add_player(char c, t_env *env)
 		print_error_map(0, 0, 4);
 }
 
-void	midel_line(char *str, int check, t_env *env)
+void	midle_line(char *str, int check, t_env *env)
 {
 	int	i;
 

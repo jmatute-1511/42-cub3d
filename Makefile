@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
+#    By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2022/12/17 17:56:15 by jmatute-         ###   ########.fr        #
+#    Updated: 2022/12/25 14:46:15 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ BLUE	:= \033[34;1m
 RESET	:= \033[0m
 
 #SOURCES
-SRC_C= cub3d.c map.c colisions.c tools.c texture.c
+SRC_C= cub3d.c map.c colisions.c tools.c texture.c check_map.c  error_map.c
 
 #DIRECTORYS
 SRC_DIR = src/

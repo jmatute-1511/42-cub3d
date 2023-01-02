@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2022/12/23 13:30:16 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/01 14:49:45 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ void change_angles(t_env **d_env)
 	
 	env = *d_env;
 	env->pa = fix_angle(env->pa);
-	env->dx = cos(env->pa) * 12;
-	env->dy = sin(env->pa) * 12;
+	env->dx = round(cos(env->pa) * 12);
+	env->dy = round(sin(env->pa) * 12);
 	a_x = fix_angle(env->pa - 1.5708);
 	a_y = fix_angle(env->pa + 1.5708);
-	env->plane_x = cos(a_x) * 8;
-	env->plane_y = sin(a_y) * 8;	
+	env->plane_x = round(cos(a_x) * 8);
+	env->plane_y = round(sin(a_y) * 8);	
 }
 
 void chek_colision_up_or_down(t_env **d_env)
@@ -142,33 +142,47 @@ void	hook(void *param)
 	draw_fov(&env);
 }
 
+void get_rgb(t_env *env)
+{
+	char **m_floor;
+	char **m_roof;
+	uint8_t floor[3];
+	uint8_t roof[3];
+	int it;
+
+	it = 0;
+	m_floor = ft_split(env->tex->f, ',');
+	m_roof = ft_split(env->tex->c, ',');
+	while (it < 3)
+	{
+		floor[it] = ft_atoi(m_floor[it]);
+		roof[it] = ft_atoi(m_roof[it]);
+		it++;
+	}
+	env->floor = rgb_to_int(floor[0], floor[1], floor[2], 255);
+	env->roof = rgb_to_int(roof[0], roof[1], roof[2], 255);
+	free(m_floor);
+	free(m_roof);
+}
+
 int main(int argc, char **argv)
 {
-	t_env env;
-	mlx_texture_t *texture;
-	mlx_image_t *yellow;
+	t_env		env;
 	
-	if (argc == 1)
+	if (argc != 2)
 		return (0);
-	env.width = 0;
-	env.height = 0;
 	env.hpb = 256;
-	env.pa = 0;
 	env.win_height = 720;
 	env.win_width = 1280;
-	env.inc = 1.0472 / env.win_width;
-	env.dx = cos(env.pa);
-	env.dy = sin(env.pa);
-	env.map = read_map(argv[1], &env.width, &env.height);
+	env.inc = (RADIAN * 60)/ env.win_width;
+	read_map(argv[1], &env);
+	get_rgb(&env);
+	env.mlx = mlx_init((int)env.win_width,(int)env.win_height , "MLX42", true);
 	env.top_x = env.width * env.hpb;
 	env.top_y = env.height * env.hpb;
 	env.dplane =  env.hpb / tan(0.523599);
-	env.mlx = mlx_init((int)env.win_width,(int)env.win_height , "MLX42", true);
-	env.texture = mlx_load_png("./images/wall.png");
-	env.walls = mlx_texture_to_image(env.mlx, env.texture);
 	env.found = mlx_new_image(env.mlx, env.win_width, env.win_height);
 	mlx_image_to_window(env.mlx, env.found, 0, 0);
-	fill_window(env.hpb, &env);
 	mlx_loop_hook(env.mlx, &hook, &env);
 	mlx_loop(env.mlx);
 	mlx_terminate(env.mlx);

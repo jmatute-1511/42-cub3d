@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/01 14:52:07 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/02 13:01:01 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void X_colision(t_clcord *cord, double angle, t_env *env, int limit)
 		cord->xf += cord->sub_x;
 		cord->yf += cord->sub_y;
 	}
-	cord->abs = fabs((env->x - cord->xf) / cos(angle)) * cos(angle - env->pa);
+	cord->abs = fabs((env->x - cord->xf) / cos(angle)) * cos(fix_angle(angle - env->pa));
 	cord->xf = round(cord->xf);
 }
 
@@ -64,7 +64,7 @@ void Y_colision(t_clcord *cord, double angle, t_env *env, int limit)
 		cord->xf += cord->sub_x;
 		cord->yf += cord->sub_y;
 	}
-	cord->abs = fabs((env->y  - cord->yf) / sin(angle)) * cos(angle - env->pa);
+	cord->abs = fabs((env->y  - cord->yf) / sin(angle)) * cos(fix_angle(angle - env->pa));
 	cord->yf = (int)cord->yf;
 }
 
@@ -94,10 +94,10 @@ void draw_column(t_env **d_env, double abs, double cord, int x)
 	int				y_i;
 	
 	env = *d_env;
-	height = (env->hpb / abs ) * env->dplane;
+	height = (env->hpb / abs ) * env->dplane - 0.5;
 	y_i = ((int)env->win_height >> 1) - ((int)height >> 1);
 	text = get_text_column(env->texture, \
-	get_number_column(floor(cord), env->texture), height, env);
+	get_number_column(cord, env->texture), height, env);
 	if (y_i < env->win_height && y_i > 0 && y_i + height < env->win_height)
 	{
 		dda_line(x,0,x,y_i,env->found,env->roof);

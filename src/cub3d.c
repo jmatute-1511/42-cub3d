@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/01 14:49:45 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/02 13:05:02 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,16 +112,16 @@ void chek_colision_left_or_right(t_env **d_env)
 	if (mlx_is_key_down(env->mlx, MLX_KEY_LEFT))
 	{
 		if (env->map[((int)(env->y + env->plane_y * 3)) / env->hpb][x] != '1')
-			env->y = env->y + env->plane_y ;
+			env->y = round(env->y + env->plane_y );
 		if (env->map[y][((int)(env->x + env->plane_x * 3)) / env->hpb] != '1')
-			env->x = env->x + env->plane_x ;
+			env->x = round(env->x + env->plane_x );
 	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_RIGHT))
 	{
 		if (env->map[((int)(env->y - env->plane_y * 3)) / env->hpb][x] != '1')
-			env->y = env->y - env->plane_y;
+			env->y = (int)(env->y - env->plane_y);
 		if (env->map[y][((int)(env->x - env->plane_x * 3)) / env->hpb] != '1')
-			env->x = env->x - env->plane_x;
+			env->x = (int)(env->x - env->plane_x);
 	}
 }
 

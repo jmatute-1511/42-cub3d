@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:50:21 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/02 16:31:27 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:31:47 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void get_rgb(t_env *env)
 	}
 	env->floor = rgb_to_int(floor[0], floor[1], floor[2], 255);
 	env->roof = rgb_to_int(roof[0], roof[1], roof[2], 255);
-	free(m_floor);
-	free(m_roof);
+	free_matrix(m_floor);
+	free_matrix(m_roof);
 }
 
 uint32_t rgb_to_int(int red, int green, int blue, int transparency)

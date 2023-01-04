@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/02 16:33:14 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/04 15:11:55 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,14 @@ void draw_column(t_env **d_env, double abs, double cord, int x)
 	}
 	else
 		mlx_draw_texture(env->found,text,x,0);
-	free(text);
+	mlx_delete_texture(text);
 }
 
 int draw_colision(t_env **d_env, double angle, int x)
 {
 	t_env	*env;
-	double	y;
 	t_clcord absc;
 	t_clcord ord;
-	mlx_texture_t *text;
 	
 	env = (*d_env);
 	X_colision(&absc, angle, env, x);

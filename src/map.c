@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:20:51 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/02 16:06:24 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:38:25 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ void error_exit(t_env *env)
 
 void load_texture(t_env *env)
 {
-	dprintf(2, "NORTE: %s|\nSUR: %s|\nESTE: %s|\nOESTE: %s|\n",env->tex->no, env->tex->so, env->tex->ea, env->tex->we );
     env->tex->t_no = mlx_load_png(env->tex->no);
 	if (env->tex->t_no == NULL)
 		error_exit(env);
@@ -109,7 +108,6 @@ void load_texture(t_env *env)
     env->tex->t_we = mlx_load_png(env->tex->we);
 	if (env->tex->t_we == NULL)
 		error_exit(env);
-		
 }
 
 void	read_map(char *path, t_env *env)
@@ -130,6 +128,7 @@ void	read_map(char *path, t_env *env)
 	env->width = 0;
 	take_h_w(name, env);
 	fd = open(name, O_RDONLY);
+	free(name);
 	if (fd == -1)
 		exit (1);
 	env->play = 0;

@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/04 17:36:06 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/07 15:39:27 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void chek_colision_left_or_right(t_env **d_env)
 void close_cub(t_env *d_env)
 {
 	mlx_delete_image(d_env->mlx,d_env->found);
-	mlx_terminate(d_env->mlx);
 	free_matrix((d_env)->map);
 	mlx_delete_texture((d_env)->tex->t_ea);
 	mlx_delete_texture((d_env)->tex->t_no);
@@ -98,6 +97,8 @@ void close_cub(t_env *d_env)
 	free((d_env)->tex->no);
 	free((d_env)->tex->so);
 	free((d_env)->tex->we);
+	free(d_env->tex);
+	mlx_terminate(d_env->mlx);
 }
 
 void	hook(void *param)
@@ -106,10 +107,7 @@ void	hook(void *param)
 	env = param;
 	
 	if (mlx_is_key_down(env->mlx, MLX_KEY_ESCAPE))
-	{
-		
 		mlx_close_window(env->mlx);
-	}
 	if (mlx_is_key_down(env->mlx, MLX_KEY_RIGHT))
 		env->pa += 0.02;
 	if (mlx_is_key_down(env->mlx, MLX_KEY_LEFT))
@@ -132,15 +130,13 @@ int main(int argc, char **argv)
 	env.hpb = 256;
 	env.win_height = 720;
 	env.win_width = 1280;
-	env.inc = (RADIAN * 60)/ env.win_width;
 	read_map(argv[1], &env);
 	get_rgb(&env);
 	env.mlx = mlx_init((int)env.win_width,(int)env.win_height , "MLX42", true);
+	env.inc = (RADIAN * 60)/ env.win_width;
 	env.top_x = env.width * env.hpb;
 	env.top_y = env.height * env.hpb;
 	env.dplane =  env.hpb / tan(0.523599);
-	env.found = mlx_new_image(env.mlx, env.win_width, env.win_height);
-	mlx_image_to_window(env.mlx, env.found, 0, 0);
 	mlx_loop_hook(env.mlx, &hook, &env);
 	mlx_loop(env.mlx);
 	close_cub(&env);

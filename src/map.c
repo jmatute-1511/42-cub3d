@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:20:51 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/04 17:38:25 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/07 15:39:08 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,8 @@ void	read_map(char *path, t_env *env)
 		ft_putstr_fd("Bad type of map\n", 2);
 		exit (127);
 	}
-	aux_map = ft_calloc(1, sizeof(char *));
-	env->tex = ft_calloc(1, sizeof(t_textures));
+	aux_map = NULL;
+	env->tex = malloc(sizeof(t_textures));
 	name = ft_strjoin("./", path);
 	env->height = 0;
 	env->width = 0;

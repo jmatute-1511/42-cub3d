@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/04 15:11:55 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/07 15:25:20 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,8 @@ void draw_fov(t_env **d_env)
 	i = 0;
 	env = *d_env;
 	angle = env->pa - (RADIAN * 30);
-	mlx_delete_image(env->mlx, env->found);
+	if (env->found)
+		mlx_delete_image(env->mlx, env->found);
 	env->found = mlx_new_image(env->mlx, env->win_width, env->win_height);
 	mlx_image_to_window(env->mlx, env->found, 0, 0);
 	while (i < env->win_width)

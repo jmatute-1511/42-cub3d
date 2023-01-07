@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 16:05:08 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/02 16:30:42 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/07 17:34:08 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/cub3d.h"
 
 
-void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color)
+void	dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color)
 {
 	t_dcords	dcords;
 	int			i;
-	
+
 	i = 0;
 	dcords.dx = xf - xi;
 	dcords.dy = yf - yi;
@@ -29,25 +29,26 @@ void dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color)
 	dcords.incy = dcords.dy / dcords.p;
 	dcords.x = xi;
 	dcords.y = yi;
-	while(i < dcords.p){
-		 mlx_put_pixel(flor, dcords.x, dcords.y, color);
-		 dcords.x += dcords.incx;
-		 dcords.y += dcords.incy;
-		 i++;
+	while (i < dcords.p)
+	{
+		mlx_put_pixel(flor, dcords.x, dcords.y, color);
+		dcords.x += dcords.incx;
+		dcords.y += dcords.incy;
+		i++;
 	}
 }
 
-double start_step(mlx_texture_t *texture, int height, double line_height, t_env * env)
+double	start_step(mlx_texture_t *texture, int height, double line_height, t_env *env)
 {
-	double start;
+	double	start;
 
 	start = 0;
 	if (height >= env->win_height)
 		start = ((double)height - env->win_height - 1) * line_height / 2;
-	return(start);
+	return (start);
 }
 
-mlx_texture_t* allocate_tex(t_env *env, int height)
+mlx_texture_t	*allocate_tex(t_env *env, int height)
 {
 	mlx_texture_t	*tex;
 
@@ -59,7 +60,7 @@ mlx_texture_t* allocate_tex(t_env *env, int height)
 	return (tex);
 }
 
-mlx_texture_t* get_text_column(mlx_texture_t *texture, int column, int height, t_env *env)
+mlx_texture_t	*get_text_column(mlx_texture_t *texture, int column, int height, t_env *env)
 {
 	mlx_texture_t	*tex;
 	int				it;
@@ -68,29 +69,28 @@ mlx_texture_t* get_text_column(mlx_texture_t *texture, int column, int height, t
 	int				pos_pixel;		
 
 	it = 0;
-	c_step =  (double)texture->height / height;
+	c_step = (double)texture->height / height;
 	step = start_step(texture, height, c_step, env);
 	if (height >= env->win_height)
 		height = env->win_height - 1;
 	tex = allocate_tex(env, height);
-	while(it < (height << 2))
+	while (it < (height << 2))
 	{
 		pos_pixel = (int)(step) * (texture->width << 2) + (column << 2);
 		tex->pixels[it] = texture->pixels[pos_pixel];
 		tex->pixels[it + 1] = texture->pixels[pos_pixel + 1];
-		tex->pixels[it + 2] =texture->pixels[pos_pixel + 2];
-		tex->pixels[it + 3] =texture->pixels[pos_pixel + 3];
+		tex->pixels[it + 2] = texture->pixels[pos_pixel + 2];
+		tex->pixels[it + 3] = texture->pixels[pos_pixel + 3];
 		step += c_step;
 		it += 4;
 	}
 	return (tex);
 }
 
-
-int get_number_column(int cord, mlx_texture_t *texture)
+int	get_number_column(int cord, mlx_texture_t *texture)
 {
-	int result;
+	int	result;
 
 	result = (int)round(((cord % 256) * texture->width) / 256);
-	return(result);
+	return (result);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 13:59:28 by alsanche          #+#    #+#             */
-/*   Updated: 2023/01/02 16:06:46 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/07 18:09:20 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,10 @@ int	check_name(char *path)
 {
 	int	i;
 
-	i = -1;
-	while (path[++i])
-	{
-		if (!ft_strncmp(&path[i], ".cub\n", 5))
-			return (1);
-	}
+	i = ft_strlen(path);
+	if (path[i - 4] == '.' && path[i - 3] == 'c'
+		&& path[i - 2] == 'u' && path[i - 1] == 'b')
+		return (1);
 	return (0);
 }
 

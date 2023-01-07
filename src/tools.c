@@ -3,23 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:50:21 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/04 16:31:47 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/07 17:35:36 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "./includes/cub3d.h"
 
-void get_rgb(t_env *env)
+void	get_rgb(t_env *env)
 {
-	char **m_floor;
-	char **m_roof;
-	uint8_t floor[3];
-	uint8_t roof[3];
-	int it;
+	char		**m_floor;
+	char		**m_roof;
+	uint8_t		floor[3];
+	uint8_t		roof[3];
+	int			it;
 
 	it = 0;
 	m_floor = ft_split(env->tex->f, ',');
@@ -36,22 +35,22 @@ void get_rgb(t_env *env)
 	free_matrix(m_roof);
 }
 
-uint32_t rgb_to_int(int red, int green, int blue, int transparency)
+uint32_t	rgb_to_int(int red, int green, int blue, int transparency)
 {
-	int color;
+	int	color;
 
 	color = 0;
 	red <<= 24;
 	green <<= 16;
 	blue <<= 8;
-	return (color | red | green | blue | transparency); 
+	return (color | red | green | blue | transparency);
 }
 
-double fix_angle(double  angle)
+double	fix_angle(double angle)
 {
-	if ( angle > 2 *PI)
-		 angle -= (2 * PI);
-	if ( angle < 0)
-		 angle += (2 * PI);
+	if (angle > 2 * PI)
+		angle -= (2 * PI);
+	if (angle < 0)
+		angle += (2 * PI);
 	return (angle);
 }

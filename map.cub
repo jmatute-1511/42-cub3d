@@ -3,9 +3,9 @@ NO ./images/blue_brick_wall.png
 
 SO ./images/arcade_wall.png
 
-WE ./images/rock_grey_wall.png
-
 EA ./images/moss_wall.png
+
+WE ./images/rock_grey_wall.png
 
 F 90,113,152
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/02 16:31:15 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/07 19:51:01 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 #include <stdlib.h>
 #include <float.h>
 
-
 typedef struct s_dcords
 {
 	double		dx;
@@ -44,10 +43,10 @@ typedef struct s_dcords
 	double		p;
 }			t_dcords;
 
-typedef struct	s_clcord
+typedef struct s_clcord
 {
 	double		xf;
-	double 		yf;
+	double		yf;
 	double		sub_x;
 	double		sub_y;
 	double		abs;
@@ -76,8 +75,7 @@ typedef struct s_read_map
 	int		i;
 }	t_read_map;
 
-
-typedef struct	s_env
+typedef struct s_env
 {
 	mlx_t			*mlx;
 	t_textures		*tex;
@@ -92,6 +90,7 @@ typedef struct	s_env
 	int 			floor;
 	int				roof;
 	int				hpb;
+	int				value_n;
 	double			inc;
 	char			view;				
 	int 			*play;
@@ -123,4 +122,12 @@ void			midle_line(char *str, int check, t_env *env);
 int				check_name(char *path);
 void			check_map(char **map, t_env *env);
 void			take_h_w(char *name, t_env *env);
+int				check_one(char **map, int y, int x);
+int				check_cero(char **map, int y, int x);
+int				check_space(char **map, int y, int x);
+int				corner_checker(char **map, int y, int x);
+int				is_valid(char c);
+char			*save_trim(char *str, int num, t_env *env, char t);
+void			init_env(char *path, t_env *env);
+void			exit_free(t_env *env, int check);
 #endif

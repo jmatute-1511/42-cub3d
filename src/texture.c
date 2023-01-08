@@ -6,12 +6,11 @@
 /*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 16:05:08 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/07 17:34:08 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2023/01/08 18:45:07 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/cub3d.h"
-
 
 void	dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color)
 {
@@ -38,7 +37,7 @@ void	dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color)
 	}
 }
 
-double	start_step(mlx_texture_t *texture, int height, double line_height, t_env *env)
+double	start_step(int height, double line_height, t_env *env)
 {
 	double	start;
 
@@ -60,7 +59,7 @@ mlx_texture_t	*allocate_tex(t_env *env, int height)
 	return (tex);
 }
 
-mlx_texture_t	*get_text_column(mlx_texture_t *texture, int column, int height, t_env *env)
+mlx_texture_t	*g_t_c(mlx_texture_t *texture, int column, int hgt, t_env *env)
 {
 	mlx_texture_t	*tex;
 	int				it;
@@ -69,12 +68,12 @@ mlx_texture_t	*get_text_column(mlx_texture_t *texture, int column, int height, t
 	int				pos_pixel;		
 
 	it = 0;
-	c_step = (double)texture->height / height;
-	step = start_step(texture, height, c_step, env);
-	if (height >= env->win_height)
-		height = env->win_height - 1;
-	tex = allocate_tex(env, height);
-	while (it < (height << 2))
+	c_step = (double)texture->height / hgt;
+	step = start_step(hgt, c_step, env);
+	if (hgt >= env->win_height)
+		hgt = env->win_height - 1;
+	tex = allocate_tex(env, hgt);
+	while (it < (hgt << 2))
 	{
 		pos_pixel = (int)(step) * (texture->width << 2) + (column << 2);
 		tex->pixels[it] = texture->pixels[pos_pixel];

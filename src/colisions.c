@@ -6,7 +6,7 @@
 /*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/08 18:25:45 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2023/01/07 17:28:58 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	draw_column(t_env **d_env, double abs, double cord, int x)
 	env = *d_env;
 	height = (env->hpb / abs) * env->dplane - 0.5;
 	y_i = ((int)env->win_height >> 1) - ((int)height >> 1);
-	text = g_t_c(env->texture, \
+	text = get_text_column(env->texture, \
 	get_number_column(cord, env->texture), height, env);
 	if (y_i < env->win_height && y_i > 0 && y_i + height < env->win_height)
 	{

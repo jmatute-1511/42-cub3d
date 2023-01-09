@@ -6,7 +6,7 @@
 /*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:20:51 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/08 18:07:49 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2023/01/07 19:03:05 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	save_texture(char *str, t_env *env, int line)
 	else if (str[0] == 'C' && str[1] == ' ')
 		env->tex->c = save_trim(str, 1, env, 'c');
 	if (str[0] == '\0' && line >= 0)
-		print_error_map(line + 1, 0, 6, env);
+		print_error_map(line + 1, 0, 6);
 }
 
 static void	check_walls(char *str, int check, t_env *env)
@@ -40,7 +40,7 @@ static void	check_walls(char *str, int check, t_env *env)
 		while (str[read.i])
 		{
 			if (str[read.i] != '1' && str[read.i] != ' ')
-				print_error_map(check, read.i, 0, env);
+				print_error_map(check, read.i, 0);
 			read.i++;
 		}
 	}
@@ -87,6 +87,27 @@ void	fill_map(char **map, int fd, t_env *env)
 		last_line(line, map, height, env);
 		free(line);
 	}
+}
+
+void	error_exit(t_env *env)
+{
+	exit(0);
+}
+
+void	load_texture(t_env *env)
+{
+	env->tex->t_no = mlx_load_png(env->tex->no);
+	if (env->tex->t_no == NULL)
+		error_exit(env);
+	env->tex->t_so = mlx_load_png(env->tex->so);
+	if (env->tex->t_so == NULL)
+		error_exit(env);
+	env->tex->t_ea = mlx_load_png(env->tex->ea);
+	if (env->tex->t_ea == NULL)
+		error_exit(env);
+	env->tex->t_we = mlx_load_png(env->tex->we);
+	if (env->tex->t_we == NULL)
+		error_exit(env);
 }
 
 void	read_map(char *path, t_env *env)

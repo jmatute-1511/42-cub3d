@@ -6,13 +6,13 @@
 /*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 13:59:28 by alsanche          #+#    #+#             */
-/*   Updated: 2023/01/08 18:09:43 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2023/01/07 18:09:20 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
 
-void	print_error_map(int line, int i, int check, t_env *env)
+void	print_error_map(int line, int i, int check)
 {
 	{
 		if (check == 0 && line == 0)
@@ -29,9 +29,7 @@ void	print_error_map(int line, int i, int check, t_env *env)
 			ft_putstr_fd("Error\nNot Player on the map\n", 2);
 		else if (check == 6)
 			dprintf(2, "Error\nline: %d, It's empty\n", line);
-		else if (check == 7)
-			dprintf(2, "Error\nBad value\n");
-		exit_free(env, 1);
+		exit (1);
 	}
 }
 
@@ -82,7 +80,7 @@ void	add_player(char c, t_env *env)
 		env->view = c;
 	}
 	else
-		print_error_map(0, 0, 4, env);
+		print_error_map(0, 0, 4);
 }
 
 void	midle_line(char *str, int check, t_env *env)
@@ -95,6 +93,6 @@ void	midle_line(char *str, int check, t_env *env)
 		if (str[i] == 'N' || str[i] == 'S' || str[i] == 'W' || str[i] == 'E')
 			add_player(str[i], env);
 		else if (str[i] != '0' && str[i] != '1' && str[i] != ' ')
-			print_error_map(check, i, 3, env);
+			print_error_map(check, i, 3);
 	}
 }

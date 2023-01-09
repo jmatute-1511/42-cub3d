@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colisions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/09 15:00:52 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/08 18:25:45 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	x_colision(t_clcord *cord, double angle, t_env *env, int limit)
 		cord->yf += cord->sub_y;
 	}
 	cord->abs = fabs((env->x - cord->xf) / cos(angle)) * cos(angle - env->pa);
+	cord->xf = round(cord->xf);
 }
 
 void	y_colision(t_clcord *cord, double angle, t_env *env, int limit)
@@ -64,6 +65,7 @@ void	y_colision(t_clcord *cord, double angle, t_env *env, int limit)
 		cord->yf += cord->sub_y;
 	}
 	cord->abs = fabs((env->y - cord->yf) / sin(angle)) * cos(angle - env->pa);
+	cord->yf = (int)cord->yf;
 }
 
 void	select_texture(double angle, char axis, t_env **d_env)
@@ -116,7 +118,7 @@ int	draw_colision(t_env **d_env, double angle, int x)
 	env = (*d_env);
 	x_colision(&absc, angle, env, x);
 	y_colision(&ord, angle, env, x);
-	if (absc.abs >= ord.abs)
+	if (absc.abs > ord.abs)
 	{
 		select_texture(angle, 'y', d_env);
 		draw_column(d_env, ord.abs, ord.yf, x);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/08 18:44:29 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 15:02:35 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,6 @@ void	hook(void *param)
 	draw_fov(&env);
 }
 
-void	leaks_out()
-{
-	system("leaks cub3d");
-}
-
 int main(int argc, char **argv)
 {
 	t_env		env;
@@ -114,6 +109,5 @@ int main(int argc, char **argv)
 	mlx_loop_hook(env.mlx, &hook, &env);
 	mlx_loop(env.mlx);
 	close_cub(&env);
-	atexit(leaks_out);
 	return (0);
 }

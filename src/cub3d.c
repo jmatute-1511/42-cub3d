@@ -6,26 +6,26 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/09 16:11:51 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:35:08 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/cub3d.h"
 
-void	change_angles(t_env **d_env)
-{
+void	key_down(int y, int x, t_env **d_env)
+{	
 	t_env	*env;
-	double	a_x;
-	double	a_y;
 
 	env = *d_env;
-	env->pa = fix_angle(env->pa);
-	env->dx = round(cos(env->pa) * 12);
-	env->dy = round(sin(env->pa) * 12);
-	a_x = fix_angle(env->pa - 1.5708);
-	a_y = fix_angle(env->pa + 1.5708);
-	env->plane_x = round(cos(a_x) * 8);
-	env->plane_y = round(sin(a_y) * 8);
+	if (env->map[y][((int)(env->x + round(env->dx))) / env->hpb] != '1')
+		env->x = env->x + env->dx;
+	if (env->map[((int)(env->y - round(env->dy))) / env->hpb][x] != '1')
+		env->y = env->y - env->dy;
+	if (env->map[(int)(env->y / env->hpb)][(int)(env->x / env->hpb)] == '1')
+	{
+		env->y = env->y + env->dy;
+		env->x = env->x - env->dx;
+	}
 }
 
 void	chek_colision_up_or_down(t_env **d_env)
@@ -38,17 +38,7 @@ void	chek_colision_up_or_down(t_env **d_env)
 	x = (int)env->x / env->hpb;
 	y = (int)env->y / env->hpb;
 	if (mlx_is_key_down(env->mlx, MLX_KEY_W))
-	{
-		if (env->map[y][((int)(env->x + round(env->dx))) / env->hpb] != '1')
-			env->x = env->x + env->dx;
-		if (env->map[((int)(env->y - round(env->dy))) / env->hpb][x] != '1')
-			env->y = env->y - env->dy;
-		if (env->map[(int)(env->y / env->hpb)][(int)(env->x / env->hpb)] == '1')
-		{
-			env->y = env->y + env->dy;
-			env->x = env->x - env->dx;
-		}
-	}
+		key_down(y, x, d_env);
 	if (mlx_is_key_down(env->mlx, MLX_KEY_S))
 	{
 		if (env->map[((int)(env->y + env->dy)) / env->hpb][x] != '1')
@@ -81,24 +71,6 @@ void	chek_colision_left_or_right(t_env **d_env)
 		if (env->map[y][((int)(env->x - env->plane_x * 3)) / env->hpb] != '1')
 			env->x = (int)(env->x - env->plane_x);
 	}
-}
-
-void	close_cub(t_env *d_env)
-{
-	mlx_delete_image(d_env->mlx, d_env->found);
-	free_matrix((d_env)->map);
-	mlx_delete_texture((d_env)->tex->t_ea);
-	mlx_delete_texture((d_env)->tex->t_no);
-	mlx_delete_texture((d_env)->tex->t_so);
-	mlx_delete_texture((d_env)->tex->t_we);
-	free((d_env)->tex->c);
-	free((d_env)->tex->f);
-	free((d_env)->tex->ea);
-	free((d_env)->tex->no);
-	free((d_env)->tex->so);
-	free((d_env)->tex->we);
-	free(d_env->tex);
-	mlx_terminate(d_env->mlx);
 }
 
 void	hook(void *param)

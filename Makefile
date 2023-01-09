@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2023/01/07 19:52:00 by alsanche         ###   ########lyon.fr    #
+#    Updated: 2023/01/09 17:19:30 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,22 +25,22 @@ RESET	:= \033[0m
 
 #SOURCES
 SRC_C= cub3d.c map.c colisions.c tools.c texture.c check_map.c  error_map.c \
-	tools_map.c final_check.c
+	tools_map.c final_check.c draw_3d.c
 
 #DIRECTORYS
 SRC_DIR = src/
 OBJ_DIR = $(SRC_DIR)obj/
-GNL_DIR = get_next_line/
+GNL_DIR = $(SRC_DIR)get_next_line/
 HEADER_DIR = $(SRC_DIR)includes/
-LIBFT_DIR= libft/ 
+LIBFT_DIR= $(SRC_DIR)libft/ 
 
 #INCLUDES
 HEADERS_I = cub3d.h 
 
 #LIBRARYS COMPILE
 MLX = MLX42/libmlx42.a
-LIBFT = libft/libft.a
-GNL = get_next_line/get_next_line.a
+LIBFT = src/libft/libft.a
+GNL = src/get_next_line/get_next_line.a
 
 #OBJECTS
 OBJS = $(SRC_C:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:20:51 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/09 16:35:25 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/09 17:24:05 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	sub_while(char **map, t_env *env, int y)
 		else if (map[y][x] == '1' && check_one(map, y, x) == -1)
 			print_error_map(y, x, 2, env);
 		else if (map[y][x] == 'N' || map[y][x] == 'S'
-			|| map[y][x] == 'E' || map[y][x] == 'O')
+			|| map[y][x] == 'E' || map[y][x] == 'W')
 		{
 			env->x = x * env->hpb + 5;
 			env->y = y * env->hpb + 5;

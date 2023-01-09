@@ -3,32 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 16:05:08 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/07 17:34:08 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 16:14:28 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/cub3d.h"
 
-
-void	dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color)
+void	dda_line(t_dda *data, mlx_image_t *flor, uint32_t color)
 {
 	t_dcords	dcords;
 	int			i;
 
 	i = 0;
-	dcords.dx = xf - xi;
-	dcords.dy = yf - yi;
+	dcords.dx = data->x_f - data->x_i;
+	dcords.dy = data->y_f - data->y_i;
 	if (fabs(dcords.dx) >= fabs(dcords.dy))
 		dcords.p = fabs(dcords.dx);
 	else
 		dcords.p = fabs(dcords.dy);
 	dcords.incx = dcords.dx / dcords.p;
 	dcords.incy = dcords.dy / dcords.p;
-	dcords.x = xi;
-	dcords.y = yi;
+	dcords.x = data->x_i;
+	dcords.y = data->y_i;
 	while (i < dcords.p)
 	{
 		mlx_put_pixel(flor, dcords.x, dcords.y, color);
@@ -60,7 +59,7 @@ mlx_texture_t	*allocate_tex(t_env *env, int height)
 	return (tex);
 }
 
-mlx_texture_t	*get_text_column(mlx_texture_t *texture, int column, int height, t_env *env)
+mlx_texture_t	*g_t_c(mlx_texture_t *texture, int column, int height, t_env *env)
 {
 	mlx_texture_t	*tex;
 	int				it;
@@ -76,7 +75,7 @@ mlx_texture_t	*get_text_column(mlx_texture_t *texture, int column, int height, t
 	tex = allocate_tex(env, height);
 	while (it < (height << 2))
 	{
-		pos_pixel = (int)(step) * (texture->width << 2) + (column << 2);
+		pos_pixel = round(step) * (texture->width << 2) + (column << 2);
 		tex->pixels[it] = texture->pixels[pos_pixel];
 		tex->pixels[it + 1] = texture->pixels[pos_pixel + 1];
 		tex->pixels[it + 2] = texture->pixels[pos_pixel + 2];

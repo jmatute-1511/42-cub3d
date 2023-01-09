@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/08 18:45:15 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 15:51:00 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,8 @@
 # include "../../libft/libft.h"
 # define PI 3.1415926535
 # define RADIAN 0.0174533
-# define P2 PI/2
-# define P3 3 * (PI/2) 
-# define HEIGHT 64
-# define WIDTH 64
+# define P2 1.5707963267
+# define P3 4.7123889803
 
 # include	<stdlib.h>
 # include	<stdio.h>
@@ -42,6 +40,15 @@ typedef struct s_dcords
 	double		y;
 	double		p;
 }			t_dcords;
+
+typedef struct s_dda
+{
+	int		x_i;
+	int		y_i;
+	int		x_f;
+	int		y_f;
+	int		y;
+}			t_dda;
 
 typedef struct s_clcord
 {
@@ -81,6 +88,7 @@ typedef struct s_env
 	t_textures		*tex;
 	mlx_image_t		*found;
 	mlx_texture_t	*texture;
+	double			text_height;
 	unsigned int	height;
 	unsigned int	width;
 	double			win_height;
@@ -107,7 +115,7 @@ typedef struct s_env
 
 void			get_rgb(t_env *env);
 void			change_angles(t_env **d_env);
-void			dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color);
+void			dda_line(t_dda *data, mlx_image_t *flor, uint32_t color);
 int				draw_colision(t_env **d_env, double angle, int x);
 void			draw_separator(t_env **d_env);
 void			draw_fov(t_env **d_env);

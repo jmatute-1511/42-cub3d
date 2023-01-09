@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colisions.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/08 18:25:45 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 15:58:46 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void	x_colision(t_clcord *cord, double angle, t_env *env, int limit)
 	}
 	cord->sub_x = -cord->sub_y / atan;
 	cord->xf = env->x + ((env->y - cord->yf) / atan);
-	while (cord->xf < env->top_x && cord->yf < env->top_y && cord->xf > 0 && cord->yf > 0)
+	while (cord->xf < env->top_x && cord->yf < env->top_y && \
+	cord->xf > 0 && cord->yf > 0)
 	{
 		if (env->map[(int)cord->yf / env->hpb][(int)cord->xf / env->hpb] == '1')
 			break ;
@@ -37,7 +38,6 @@ void	x_colision(t_clcord *cord, double angle, t_env *env, int limit)
 		cord->yf += cord->sub_y;
 	}
 	cord->abs = fabs((env->x - cord->xf) / cos(angle)) * cos(angle - env->pa);
-	cord->xf = round(cord->xf);
 }
 
 void	y_colision(t_clcord *cord, double angle, t_env *env, int limit)
@@ -57,7 +57,8 @@ void	y_colision(t_clcord *cord, double angle, t_env *env, int limit)
 	}
 	cord->sub_y = -cord->sub_x * atan;
 	cord->yf = env->y + ((env->x - cord->xf) * atan);
-	while (cord->xf < env->top_x && cord->yf < env->top_y && cord->xf > 0 && cord->yf > 0)
+	while (cord->xf < env->top_x && cord->yf < env->top_y && \
+	cord->xf > 0 && cord->yf > 0)
 	{
 		if (env->map[(int)cord->yf / env->hpb][(int)cord->xf / env->hpb] == '1')
 			break ;
@@ -65,7 +66,6 @@ void	y_colision(t_clcord *cord, double angle, t_env *env, int limit)
 		cord->yf += cord->sub_y;
 	}
 	cord->abs = fabs((env->y - cord->yf) / sin(angle)) * cos(angle - env->pa);
-	cord->yf = (int)cord->yf;
 }
 
 void	select_texture(double angle, char axis, t_env **d_env)
@@ -86,23 +86,43 @@ void	select_texture(double angle, char axis, t_env **d_env)
 	}	
 }
 
+void	dda_data(t_dda *data, t_env *env, int x, char type)
+{
+	if (type == 'R')
+	{
+		data->x_i = x;
+		data->x_f = x;
+		data->y_i = 0;
+		data->y_f = data->y;
+	}
+	else if (type == 'F')
+	{
+		data->x_i = x;
+		data->x_f = x;
+		data->y_i = data->y + env->text_height;
+		data->y_f = env->win_height - 1;
+	}
+}
+
 void	draw_column(t_env **d_env, double abs, double cord, int x)
 {
 	t_env			*env;
 	mlx_texture_t	*text;
-	double			height;
-	int				y_i;
+	t_dda			data;
 
 	env = *d_env;
-	height = (env->hpb / abs) * env->dplane - 0.5;
-	y_i = ((int)env->win_height >> 1) - ((int)height >> 1);
+	env->text_height = (env->hpb / abs) * env->dplane - 0.5;
+	data.y = ((int)env->win_height >> 1) - ((int)env->text_height >> 1);
 	text = g_t_c(env->texture, \
-	get_number_column(cord, env->texture), height, env);
-	if (y_i < env->win_height && y_i > 0 && y_i + height < env->win_height)
+	get_number_column(cord, env->texture), env->text_height, env);
+	if (data.y < env->win_height && data.y > 0 && \
+	data.y + env->text_height < env->win_height)
 	{
-		dda_line(x, 0, x, y_i, env->found, env->roof);
-		mlx_draw_texture(env->found, text, x, y_i);
-		dda_line(x, y_i + height, x, env->win_height - 1, env->found, env->floor);
+		dda_data(&data, env, x, 'R');
+		dda_line(&data, env->found, env->roof);
+		mlx_draw_texture(env->found, text, x, data.y);
+		dda_data(&data, env, x, 'F');
+		dda_line(&data, env->found, env->floor);
 	}
 	else
 		mlx_draw_texture(env->found, text, x, 0);

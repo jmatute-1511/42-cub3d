@@ -3,31 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   texture.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 16:05:08 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/08 18:45:07 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 15:35:21 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./includes/cub3d.h"
 
-void	dda_line(int xi, int yi, int xf, int yf, mlx_image_t *flor, uint32_t color)
+void	dda_line(t_dda *data, mlx_image_t *flor, uint32_t color)
 {
 	t_dcords	dcords;
 	int			i;
 
 	i = 0;
-	dcords.dx = xf - xi;
-	dcords.dy = yf - yi;
+	dcords.dx = data->x_f - data->x_i;
+	dcords.dy = data->y_f - data->y_i;
 	if (fabs(dcords.dx) >= fabs(dcords.dy))
 		dcords.p = fabs(dcords.dx);
 	else
 		dcords.p = fabs(dcords.dy);
 	dcords.incx = dcords.dx / dcords.p;
 	dcords.incy = dcords.dy / dcords.p;
-	dcords.x = xi;
-	dcords.y = yi;
+	dcords.x = data->x_i;
+	dcords.y = data->y_i;
 	while (i < dcords.p)
 	{
 		mlx_put_pixel(flor, dcords.x, dcords.y, color);
@@ -75,7 +75,7 @@ mlx_texture_t	*g_t_c(mlx_texture_t *texture, int column, int hgt, t_env *env)
 	tex = allocate_tex(env, hgt);
 	while (it < (hgt << 2))
 	{
-		pos_pixel = (int)(step) * (texture->width << 2) + (column << 2);
+		pos_pixel = round(step) * (texture->width << 2) + (column << 2);
 		tex->pixels[it] = texture->pixels[pos_pixel];
 		tex->pixels[it + 1] = texture->pixels[pos_pixel + 1];
 		tex->pixels[it + 2] = texture->pixels[pos_pixel + 2];

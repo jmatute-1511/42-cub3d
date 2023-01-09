@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/09 15:51:00 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/09 17:20:52 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define CUB3D_H
 
 # include "../../MLX42/include/MLX42/MLX42.h"
-# include "../../get_next_line/get_next_line.h"
-# include "../../libft/libft.h"
+# include "../get_next_line/get_next_line.h"
+# include "../libft/libft.h"
 # define PI 3.1415926535
 # define RADIAN 0.0174533
 # define P2 1.5707963267
@@ -141,4 +141,8 @@ void			init_env(char *path, t_env *env);
 void			exit_free(t_env *env, int check);
 void			load_texture(t_env *env);
 void			close_cub(t_env *d_env);
+void			draw_column(t_env **d_env, double abs, double cord, int x);
+void			select_texture(double angle, char axis, t_env **d_env);
+void			y_colision(t_clcord *cord, double angle, t_env *env, int limit);
+void			x_colision(t_clcord *cord, double angle, t_env *env, int limit);
 #endif

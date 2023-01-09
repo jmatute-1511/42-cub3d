@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:20:51 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/08 18:07:43 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 16:51:12 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	sub_while(char **map, t_env *env, int y)
 		else if (map[y][x] == '1' && check_one(map, y, x) == -1)
 			print_error_map(y, x, 2, env);
 		else if (map[y][x] == 'N' || map[y][x] == 'S'
-			|| map[y][x] == 'E' || map[y][x] == 'O')
+			|| map[y][x] == 'E' || map[y][x] == 'W')
 		{
 			env->x = x * env->hpb + 5;
 			env->y = y * env->hpb + 5;

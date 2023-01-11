@@ -6,7 +6,7 @@
 #    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2023/01/09 17:19:30 by jmatute-         ###   ########.fr        #
+#    Updated: 2023/01/11 18:20:29 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,13 +56,13 @@ NAME = cub3d
 # RULES OF COMPILE
 CC = gcc
 RM = rm -rf
-CFLAGS	= #-fsanitize=addressç
+CFLAGS	=  -fsanitize=address
 
 all: libs obj $(NAME)
 
 $(NAME) :	$(OBJ) 
 
-			@$(CC) $(CFLAGS) $(OBJ) $(GNL) $(MLX) $(LIBS) $(LIBFT)  -lm  -o $(NAME)
+			@$(CC) $(OBJ) $(GNL) $(MLX) $(LIBS) $(LIBFT)  $(CFLAGS) -lm  -o $(NAME)
 			@echo "$(BLUE)YOUR CUB3D🧊 IS READY"
 obj:
 

@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/09 17:20:52 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:02:13 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,6 @@ void			load_texture(t_env *env);
 void			close_cub(t_env *d_env);
 void			draw_column(t_env **d_env, double abs, double cord, int x);
 void			select_texture(double angle, char axis, t_env **d_env);
-void			y_colision(t_clcord *cord, double angle, t_env *env, int limit);
-void			x_colision(t_clcord *cord, double angle, t_env *env, int limit);
+void			y_colision(t_clcord *cord, double angle, t_env *env);
+void			x_colision(t_clcord *cord, double angle, t_env *env);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 15:50:21 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/08 18:40:47 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2023/01/09 18:57:55 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,10 @@ void	change_angles(t_env **d_env)
 
 	env = *d_env;
 	env->pa = fix_angle(env->pa);
-	env->dx = round(cos(env->pa) * 12);
-	env->dy = round(sin(env->pa) * 12);
+	env->dx = round(cos(env->pa) * 16);
+	env->dy = round(sin(env->pa) * 16);
 	a_x = fix_angle(env->pa - 1.5708);
 	a_y = fix_angle(env->pa + 1.5708);
-	env->plane_x = round(cos(a_x) * 8);
-	env->plane_y = round(sin(a_y) * 8);
+	env->plane_x = round(cos(a_x) * 12);
+	env->plane_y = round(sin(a_y) * 12);
 }

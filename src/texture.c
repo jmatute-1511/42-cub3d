@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 16:05:08 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/09 15:35:21 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:05:50 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ double	start_step(int height, double line_height, t_env *env)
 	return (start);
 }
 
-mlx_texture_t	*allocate_tex(t_env *env, int height)
+mlx_texture_t	*allocate_tex(int height)
 {
 	mlx_texture_t	*tex;
 
@@ -72,16 +72,18 @@ mlx_texture_t	*g_t_c(mlx_texture_t *texture, int column, int hgt, t_env *env)
 	step = start_step(hgt, c_step, env);
 	if (hgt >= env->win_height)
 		hgt = env->win_height - 1;
-	tex = allocate_tex(env, hgt);
-	while (it < (hgt << 2))
+	tex = allocate_tex(hgt);
+	int top_tex = (texture->width * 4) * texture->height;
+	pos_pixel = round(step) * (texture->width << 2) + (column << 2);
+	while (it < (hgt << 2) && pos_pixel + 3  < top_tex)
 	{
-		pos_pixel = round(step) * (texture->width << 2) + (column << 2);
 		tex->pixels[it] = texture->pixels[pos_pixel];
 		tex->pixels[it + 1] = texture->pixels[pos_pixel + 1];
 		tex->pixels[it + 2] = texture->pixels[pos_pixel + 2];
 		tex->pixels[it + 3] = texture->pixels[pos_pixel + 3];
 		step += c_step;
 		it += 4;
+		pos_pixel = round(step) * (texture->width << 2) + (column << 2);
 	}
 	return (tex);
 }

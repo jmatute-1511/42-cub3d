@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:20:51 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/09 16:51:12 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/09 19:04:08 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	check_map(char **map, t_env *env)
 {
 	int	y;
 
+	y = 0;
 	if (env->play == 0)
 		print_error_map(y, 0, 5, env);
 	y = -1;

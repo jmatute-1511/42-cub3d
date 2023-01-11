@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:17:22 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/09 17:21:50 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:11:30 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	draw_colision(t_env **d_env, double angle, int x)
 	t_clcord	ord;
 
 	env = (*d_env);
-	x_colision(&absc, angle, env, x);
-	y_colision(&ord, angle, env, x);
-	if (absc.abs > ord.abs)
+	x_colision(&absc, angle, env);
+	y_colision(&ord, angle, env);
+	if (ord.abs < absc.abs)
 	{
 		select_texture(angle, 'y', d_env);
 		draw_column(d_env, ord.abs, ord.yf, x);

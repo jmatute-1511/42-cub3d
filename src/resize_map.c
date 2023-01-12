@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:14:25 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/12 17:17:35 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:24:41 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char	*resized_row(char **row, t_env *env)
 	fill_space[it] = '\0';
 	aux = ft_strjoin((*row), fill_space);
 	free(*row);
+	free(fill_space);
 	return (aux);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:54:31 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/12 17:16:57 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:25:42 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,5 @@ typedef struct s_env
 	double			x;
 	double			y;
 }				t_env;
-
 
 #endif

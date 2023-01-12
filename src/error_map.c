@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 13:59:28 by alsanche          #+#    #+#             */
-/*   Updated: 2023/01/08 18:09:43 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2023/01/12 16:36:44 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ int	check_name(char *path)
 	i = ft_strlen(path);
 	if (path[i - 4] == '.' && path[i - 3] == 'c'
 		&& path[i - 2] == 'u' && path[i - 1] == 'b')
-		return (1);
-	return (0);
+		return (0);
+	ft_putstr_fd("Bad type of map\n", 2);
+	return (1);
 }
 
 void	take_h_w(char *name, t_env *env)

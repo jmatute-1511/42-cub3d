@@ -6,7 +6,7 @@
 #    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2023/01/11 18:20:29 by jmatute-         ###   ########.fr        #
+#    Updated: 2023/01/12 16:58:17 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ RESET	:= \033[0m
 
 #SOURCES
 SRC_C= cub3d.c map.c colisions.c tools.c texture.c check_map.c  error_map.c \
-	tools_map.c final_check.c draw_3d.c
+	tools_map.c final_check.c draw_3d.c resize_map.c
 
 #DIRECTORYS
 SRC_DIR = src/
@@ -56,7 +56,7 @@ NAME = cub3d
 # RULES OF COMPILE
 CC = gcc
 RM = rm -rf
-CFLAGS	=  -fsanitize=address
+CFLAGS	= -Wall -Werror -Wextra #-fsanitize=address
 
 all: libs obj $(NAME)
 

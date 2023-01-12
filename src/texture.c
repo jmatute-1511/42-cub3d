@@ -6,7 +6,7 @@
 /*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/17 16:05:08 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/11 18:05:50 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:53:23 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,27 +63,25 @@ mlx_texture_t	*g_t_c(mlx_texture_t *texture, int column, int hgt, t_env *env)
 {
 	mlx_texture_t	*tex;
 	int				it;
-	double			step;		
-	double			c_step;
-	int				pos_pixel;		
+	t_data_tex		data;	
 
 	it = 0;
-	c_step = (double)texture->height / hgt;
-	step = start_step(hgt, c_step, env);
+	data.c_step = (double)texture->height / hgt;
+	data.step = start_step(hgt, data.c_step, env);
 	if (hgt >= env->win_height)
 		hgt = env->win_height - 1;
 	tex = allocate_tex(hgt);
-	int top_tex = (texture->width * 4) * texture->height;
-	pos_pixel = round(step) * (texture->width << 2) + (column << 2);
-	while (it < (hgt << 2) && pos_pixel + 3  < top_tex)
+	data.top_tex = (texture->width * 4) * texture->height;
+	data.pos_pixel = round(data.step) * (texture->width << 2) + (column << 2);
+	while (it < (hgt << 2) && data.pos_pixel + 3 < data.top_tex)
 	{
-		tex->pixels[it] = texture->pixels[pos_pixel];
-		tex->pixels[it + 1] = texture->pixels[pos_pixel + 1];
-		tex->pixels[it + 2] = texture->pixels[pos_pixel + 2];
-		tex->pixels[it + 3] = texture->pixels[pos_pixel + 3];
-		step += c_step;
+		tex->pixels[it] = texture->pixels[data.pos_pixel];
+		tex->pixels[it + 1] = texture->pixels[data.pos_pixel + 1];
+		tex->pixels[it + 2] = texture->pixels[data.pos_pixel + 2];
+		tex->pixels[it + 3] = texture->pixels[data.pos_pixel + 3];
+		data.step += data.c_step;
 		it += 4;
-		pos_pixel = round(step) * (texture->width << 2) + (column << 2);
+		data.pos_pixel = (int)data.step * (texture->width << 2) + (column << 2);
 	}
 	return (tex);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:20:51 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/08 18:07:49 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2023/01/12 16:36:51 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,8 @@ void	read_map(char *path, t_env *env)
 	int		fd;
 	char	*aux_map;
 
-	if (check_name(path) != 1)
-	{
-		ft_putstr_fd("Bad type of map\n", 2);
+	if (check_name(path) == 1)
 		exit (127);
-	}
 	aux_map = NULL;
 	env->tex = malloc(sizeof(t_textures));
 	init_env(path, env);
@@ -111,4 +108,5 @@ void	read_map(char *path, t_env *env)
 	close(fd);
 	check_map(env->map, env);
 	load_texture(env);
+	resized_map(&env);
 }

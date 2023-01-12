@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   error_map.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/13 13:59:28 by alsanche          #+#    #+#             */
-/*   Updated: 2023/01/09 16:35:55 by jmatute-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "includes/cub3d.h"
 
@@ -42,8 +31,9 @@ int	check_name(char *path)
 	i = ft_strlen(path);
 	if (path[i - 4] == '.' && path[i - 3] == 'c'
 		&& path[i - 2] == 'u' && path[i - 1] == 'b')
-		return (1);
-	return (0);
+		return (0);
+	ft_putstr_fd("Bad type of map\n", 2);
+	return (1);
 }
 
 void	take_h_w(char *name, t_env *env)

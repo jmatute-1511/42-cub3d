@@ -1,18 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   colisions.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/22 12:05:48 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/09 17:24:31 by jmatute-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "./includes/cub3d.h"
 
-void	x_colision(t_clcord *cord, double angle, t_env *env, int limit)
+void	x_colision(t_clcord *cord, double angle, t_env *env)
 {
 	double	atan;
 
@@ -20,9 +9,9 @@ void	x_colision(t_clcord *cord, double angle, t_env *env, int limit)
 	if (PI > angle)
 	{
 		cord->sub_y = -env->hpb;
-		cord->yf = (((int)env->y >> 8) << 8) - 0.00001;
+		cord->yf = (((int)env->y >> 8) << 8) - 0.0001;
 	}
-	else if (PI < angle)
+	else
 	{
 		cord->sub_y = env->hpb;
 		cord->yf = (((int)env->y >> 8) << 8) + env->hpb;
@@ -34,13 +23,13 @@ void	x_colision(t_clcord *cord, double angle, t_env *env, int limit)
 	{
 		if (env->map[(int)cord->yf / env->hpb][(int)cord->xf / env->hpb] == '1')
 			break ;
-		cord->xf += cord->sub_x;
 		cord->yf += cord->sub_y;
+		cord->xf += cord->sub_x;
 	}
 	cord->abs = fabs((env->x - cord->xf) / cos(angle)) * cos(angle - env->pa);
 }
 
-void	y_colision(t_clcord *cord, double angle, t_env *env, int limit)
+void	y_colision(t_clcord *cord, double angle, t_env *env)
 {
 	double	atan;
 
@@ -48,7 +37,7 @@ void	y_colision(t_clcord *cord, double angle, t_env *env, int limit)
 	if (angle > P2 && angle < P3)
 	{
 		cord->sub_x = -env->hpb;
-		cord->xf = (((int)env->x >> 8) << 8) - 0.00001;
+		cord->xf = (((int)env->x >> 8) << 8) - 0.0001;
 	}
 	else if (angle < P2 || angle > P3)
 	{
@@ -65,7 +54,7 @@ void	y_colision(t_clcord *cord, double angle, t_env *env, int limit)
 		cord->xf += cord->sub_x;
 		cord->yf += cord->sub_y;
 	}
-	cord->abs = fabs((env->y - cord->yf) / sin(angle)) * cos(angle - env->pa);
+	cord->abs = fabs((env->x - cord->xf) / cos(angle)) * cos(angle - env->pa);
 }
 
 void	select_texture(double angle, char axis, t_env **d_env)
@@ -100,7 +89,7 @@ void	dda_data(t_dda *data, t_env *env, int x, char type)
 		data->x_i = x;
 		data->x_f = x;
 		data->y_i = data->y + env->text_height;
-		data->y_f = env->win_height - 1;
+		data->y_f = env->win_height ;
 	}
 }
 

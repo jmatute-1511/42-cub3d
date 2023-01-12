@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/29 18:20:51 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/09 16:36:23 by jmatute-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "includes/cub3d.h"
 
@@ -94,11 +83,8 @@ void	read_map(char *path, t_env *env)
 	int		fd;
 	char	*aux_map;
 
-	if (check_name(path) != 1)
-	{
-		ft_putstr_fd("Bad type of map\n", 2);
+	if (check_name(path) == 1)
 		exit (127);
-	}
 	aux_map = NULL;
 	env->tex = malloc(sizeof(t_textures));
 	init_env(path, env);
@@ -111,4 +97,5 @@ void	read_map(char *path, t_env *env)
 	close(fd);
 	check_map(env->map, env);
 	load_texture(env);
+	resized_map(&env);
 }

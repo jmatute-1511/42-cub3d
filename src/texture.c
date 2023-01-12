@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   texture.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/17 16:05:08 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/09 16:36:39 by jmatute-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "./includes/cub3d.h"
 
@@ -47,7 +36,7 @@ double	start_step(int height, double line_height, t_env *env)
 	return (start);
 }
 
-mlx_texture_t	*allocate_tex(t_env *env, int height)
+mlx_texture_t	*allocate_tex(int height)
 {
 	mlx_texture_t	*tex;
 
@@ -63,25 +52,25 @@ mlx_texture_t	*g_t_c(mlx_texture_t *texture, int column, int hgt, t_env *env)
 {
 	mlx_texture_t	*tex;
 	int				it;
-	double			step;		
-	double			c_step;
-	int				pos_pixel;		
+	t_data_tex		data;	
 
 	it = 0;
-	c_step = (double)texture->height / hgt;
-	step = start_step(hgt, c_step, env);
+	data.c_step = (double)texture->height / hgt;
+	data.step = start_step(hgt, data.c_step, env);
 	if (hgt >= env->win_height)
 		hgt = env->win_height - 1;
-	tex = allocate_tex(env, hgt);
-	while (it < (hgt << 2))
+	tex = allocate_tex(hgt);
+	data.top_tex = (texture->width * 4) * texture->height;
+	data.pos_pixel = round(data.step) * (texture->width << 2) + (column << 2);
+	while (it < (hgt << 2) && data.pos_pixel + 3 < data.top_tex)
 	{
-		pos_pixel = round(step) * (texture->width << 2) + (column << 2);
-		tex->pixels[it] = texture->pixels[pos_pixel];
-		tex->pixels[it + 1] = texture->pixels[pos_pixel + 1];
-		tex->pixels[it + 2] = texture->pixels[pos_pixel + 2];
-		tex->pixels[it + 3] = texture->pixels[pos_pixel + 3];
-		step += c_step;
+		tex->pixels[it] = texture->pixels[data.pos_pixel];
+		tex->pixels[it + 1] = texture->pixels[data.pos_pixel + 1];
+		tex->pixels[it + 2] = texture->pixels[data.pos_pixel + 2];
+		tex->pixels[it + 3] = texture->pixels[data.pos_pixel + 3];
+		data.step += data.c_step;
 		it += 4;
+		data.pos_pixel = (int)data.step * (texture->width << 2) + (column << 2);
 	}
 	return (tex);
 }

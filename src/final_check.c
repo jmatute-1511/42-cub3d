@@ -29,8 +29,6 @@ void	exit_free(t_env *env, int check)
 	free(env->tex);
 	if (check == 1)
 		free_matrix(env->map);
-	if (check == 2)
-		printf("Error\nWrong order of path\n");
 	exit (1);
 }
 
@@ -50,7 +48,7 @@ void	not_error(t_env *env, char f, char	*str)
 		}
 		if (ft_isdigit(str[i]) == 0)
 		{
-			printf("Error\nNot number cher on %c\n", f);
+			printf("Error\nNot number char on %c\n", f);
 			exit_free(env, 1);
 		}
 	}

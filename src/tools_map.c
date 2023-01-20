@@ -12,21 +12,11 @@
 
 #include "includes/cub3d.h"
 
-char	*save_trim(char *str, int num, t_env *env, char t)
+char	*save_trim(char *str, int num, t_env *env)
 {
 	char	*aux;
 	char	*temp;
 
-	if (t == 's' && env->value_n != 1)
-		exit_free(env, 2);
-	else if (t == 'e' && env->value_n != 2)
-		exit_free(env, 2);
-	else if (t == 'w' && env->value_n != 3)
-		exit_free(env, 2);
-	else if (t == 'f' && env->value_n != 4)
-		exit_free(env, 2);
-	else if (t == 'c' && env->value_n != 5)
-		exit_free(env, 2);
 	env->value_n += 1;
 	temp = ft_substr(str, num, ft_strlen(str));
 	aux = ft_strtrim(temp, " ");

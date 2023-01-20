@@ -12,12 +12,11 @@
 
 #include "includes/cub3d.h"
 
-char	*save_trim(char *str, int num, t_env *env)
+char	*save_trim(char *str, int num)
 {
 	char	*aux;
 	char	*temp;
 
-	env->value_n += 1;
 	temp = ft_substr(str, num, ft_strlen(str));
 	aux = ft_strtrim(temp, " ");
 	free(temp);
@@ -36,7 +35,6 @@ void	init_env(char *path, t_env *env)
 	env->tex->f = NULL;
 	env->tex->c = NULL;
 	env->play = 0;
-	env->value_n = 0;
 }
 
 void	set_view(char dir, t_env *env)

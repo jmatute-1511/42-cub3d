@@ -15,17 +15,17 @@
 static void	save_texture(char *str, t_env *env, int line)
 {
 	if (str[0] == 'N' && str[1] == 'O' && str[2] == ' ')
-		env->tex->no = save_trim(str, 2, env);
+		env->tex->no = save_trim(str, 2);
 	else if (str[0] == 'S' && str[1] == 'O' && str[2] == ' ')
-		env->tex->so = save_trim(str, 2, env);
+		env->tex->so = save_trim(str, 2);
 	else if (str[0] == 'E' && str[1] == 'A' && str[2] == ' ')
-		env->tex->ea = save_trim(str, 2, env);
+		env->tex->ea = save_trim(str, 2);
 	else if (str[0] == 'W' && str[1] == 'E' && str[2] == ' ')
-		env->tex->we = save_trim(str, 2, env);
+		env->tex->we = save_trim(str, 2);
 	else if (str[0] == 'F' && str[1] == ' ')
-		env->tex->f = save_trim(str, 1, env);
+		env->tex->f = save_trim(str, 1);
 	else if (str[0] == 'C' && str[1] == ' ')
-		env->tex->c = save_trim(str, 1, env);
+		env->tex->c = save_trim(str, 1);
 	if (str[0] == '\0' && line >= 0)
 		print_error_map(line + 1, 0, 6, env);
 }

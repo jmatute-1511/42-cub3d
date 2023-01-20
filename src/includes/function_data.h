@@ -92,7 +92,6 @@ typedef struct s_env
 	int				floor;
 	int				roof;
 	int				hpb;
-	int				value_n;
 	double			inc;
 	char			view;				
 	int				*play;

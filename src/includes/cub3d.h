@@ -51,7 +51,7 @@ int				check_cero(char **map, int y, int x);
 int				check_space(char **map, int y, int x);
 int				corner_checker(char **map, int y, int x);
 int				is_valid(char c);
-char			*save_trim(char *str, int num, t_env *env);
+char			*save_trim(char *str, int num);
 void			init_env(char *path, t_env *env);
 void			exit_free(t_env *env, int check);
 void			load_texture(t_env *env);

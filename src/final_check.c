@@ -14,17 +14,17 @@
 
 void	exit_free(t_env *env, int check)
 {
-	if (env->tex->no)
+	if (env->tex->no != NULL)
 		free(env->tex->no);
-	if (env->value_n >= 1)
+	if (env->tex->so != NULL)
 		free(env->tex->so);
-	if (env->value_n >= 2)
+	if (env->tex->ea != NULL)
 		free(env->tex->ea);
-	if (env->value_n >= 3)
+	if (env->tex->we != NULL)
 		free(env->tex->we);
-	if (env->value_n >= 4)
+	if (env->tex->f != NULL)
 		free(env->tex->f);
-	if (env->value_n >= 5)
+	if (env->tex->c != NULL)
 		free(env->tex->c);
 	free(env->tex);
 	if (check == 1)

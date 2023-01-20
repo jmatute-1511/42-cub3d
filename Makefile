@@ -56,11 +56,11 @@ NAME = cub3d
 # RULES OF COMPILE
 CC = gcc
 RM = rm -rf
-CFLAGS	= -Wall -Werror -Wextra -fsanitize=address
+CFLAGS	= -Wall -Werror -Wextra #-fsanitize=address
 
 all: libs obj $(NAME)
 
-$(NAME) :	$(OBJ) 
+$(NAME) :	$(OBJ) Makefile ./src/includes
 
 			@$(CC) $(OBJ) $(GNL) $(MLX) $(LIBS) $(LIBFT)  $(CFLAGS) -lm  -o $(NAME)
 			@echo "$(BLUE)YOUR CUB3D🧊 IS READY"

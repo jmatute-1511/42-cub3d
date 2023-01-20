@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:20:51 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/12 17:17:32 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:02:57 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	read_map(char *path, t_env *env)
 	if (check_name(path) == 1)
 		exit (127);
 	aux_map = NULL;
+	env->map = NULL;
 	env->tex = malloc(sizeof(t_textures));
 	init_env(path, env);
 	fd = open(path, O_RDONLY);

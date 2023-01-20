@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/13 13:59:28 by alsanche          #+#    #+#             */
-/*   Updated: 2023/01/12 17:17:24 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/20 10:48:51 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,23 @@
 
 void	print_error_map(int line, int i, int check, t_env *env)
 {
-	{
-		if (check == 0 && line == 0)
-			ft_putstr_fd("Error\nUnclosed Top Wall\n", 2);
-		else if (check == 0)
-			ft_putstr_fd("Error\nUnclosed Bot Wall\n", 2);
-		else if (check == 2)
-			dprintf(2, "Error\nline: %d, char: %d, Unclosed Wall\n", line + 1, i);
-		else if (check == 3)
-			dprintf(2, "Error\nline: %d, char: %d, Not allowed\n", line + 1, i);
-		else if (check == 4)
-			ft_putstr_fd("Error\ntwo or more Players on the map\n", 2);
-		else if (check == 5)
-			ft_putstr_fd("Error\nNot Player on the map\n", 2);
-		else if (check == 6)
-			dprintf(2, "Error\nline: %d, It's empty\n", line);
-		else if (check == 7)
-			dprintf(2, "Error\nBad value\n");
-		exit_free(env, 1);
-	}
+	if (check == 0 && line == 0)
+		ft_putstr_fd("Error\nUnclosed Top Wall\n", 2);
+	else if (check == 0)
+		ft_putstr_fd("Error\nUnclosed Bot Wall\n", 2);
+	else if (check == 2)
+		dprintf(2, "Error\nline: %d, char: %d, Unclosed Wall\n", line + 1, i);
+	else if (check == 3)
+		dprintf(2, "Error\nline: %d, char: %d, Not allowed\n", line + 1, i);
+	else if (check == 4)
+		ft_putstr_fd("Error\ntwo or more Players on the map\n", 2);
+	else if (check == 5)
+		ft_putstr_fd("Error\nNot Player on the map\n", 2);
+	else if (check == 6)
+		dprintf(2, "Error\nline: %d, It's empty\n", line);
+	else if (check == 7)
+		dprintf(2, "Error\nBad value\n");
+	exit_free(env, 1);
 }
 
 int	check_name(char *path)

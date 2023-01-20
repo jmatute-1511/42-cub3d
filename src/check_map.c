@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:20:51 by alsanche          #+#    #+#             */
-/*   Updated: 2023/01/12 17:17:02 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/20 10:44:30 by jmatute-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,14 @@ int	check_cero(char **map, int y, int x)
 
 int	check_one(char **map, int y, int x)
 {
-	if (x > 0 && map[y][x - 1] != '1' && \
-	map[y][x + 1] == '\0' && map[y - 1][x] != '1')
+	(void)map;
+	(void)y;
+	(void)x;
+	if (x > 0 && map[y][x - 1] != '1' && map[y][x + 1] == '\0' && map[y - 1][x] != '1')
 		return (-1);
-	if (map[y][x + 1] == ' ' && map[y + 1][x] == '0')
+	if (map[y+1] && map[y][x + 1] == ' ' && map[y + 1][x] == '0')
 		return (-1);
-	if (map[y][x + 1] == ' ' && map[y + 1][x] == '1')
+	if (map[y+1] && map[y][x + 1] == ' ' && map[y + 1][x] == '1')
 		return (1);
 	else if (map[y][x + 1] == '1')
 		return (1);

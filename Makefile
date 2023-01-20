@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+         #
+#    By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2023/01/12 16:58:17 by jmatute-         ###   ########.fr        #
+#    Updated: 2023/01/20 10:34:33 by jmatute-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ NAME = cub3d
 # RULES OF COMPILE
 CC = gcc
 RM = rm -rf
-CFLAGS	= -Wall -Werror -Wextra #-fsanitize=address
+CFLAGS	= -Wall -Werror -Wextra -fsanitize=address
 
 all: libs obj $(NAME)
 

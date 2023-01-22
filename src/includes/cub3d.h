@@ -61,4 +61,7 @@ void			select_texture(double angle, char axis, t_env **d_env);
 void			y_colision(t_clcord *cord, double angle, t_env *env);
 void			x_colision(t_clcord *cord, double angle, t_env *env);
 void			resized_map(t_env **d_env);
+void            check_p_position(char **map, int y, int x, t_env *env);
+void	        format_check(t_env *env);
+void	        not_error(t_env *env, char f, char	*str);
 #endif

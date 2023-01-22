@@ -25,7 +25,7 @@ RESET	:= \033[0m
 
 #SOURCES
 SRC_C= cub3d.c map.c colisions.c tools.c texture.c check_map.c  error_map.c \
-	tools_map.c final_check.c draw_3d.c resize_map.c
+	tools_map.c final_check.c draw_3d.c resize_map.c check_player.c
 
 #DIRECTORYS
 SRC_DIR = src/

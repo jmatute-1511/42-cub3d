@@ -14,17 +14,17 @@
 
 void	exit_free(t_env *env, int check)
 {
-	if (env->tex->no != NULL)
+	if (env->tex->no)
 		free(env->tex->no);
-	if (env->tex->so != NULL)
+	if (env->tex->so)
 		free(env->tex->so);
-	if (env->tex->ea != NULL)
+	if (env->tex->ea)
 		free(env->tex->ea);
-	if (env->tex->we != NULL)
+	if (env->tex->we)
 		free(env->tex->we);
-	if (env->tex->f != NULL)
+	if (env->tex->f)
 		free(env->tex->f);
-	if (env->tex->c != NULL)
+	if (env->tex->c)
 		free(env->tex->c);
 	free(env->tex);
 	if (check == 1)
@@ -65,8 +65,7 @@ void	check_nums(t_env *env)
 	int		aux;
 	int		i;
 
-	not_error(env, 'F', env->tex->f);
-	not_error(env, 'C', env->tex->c);
+	format_check(env);
 	temp = ft_split(env->tex->f, ',');
 	i = -1;
 	while (temp[++i])

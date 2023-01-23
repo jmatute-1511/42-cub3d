@@ -1,0 +1,18 @@
+SO ./images/prueba.png
+EA ./images/moss_wall.png
+WE ./images/rock_grey_wall.png
+
+F    90,113,0000000000025        
+NO ./images/gold_wall.png       
+
+
+
+
+
+
+
+
+111
+10111111                                 
+10001 1
+11111111

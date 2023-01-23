@@ -1,22 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   final_check.c                                      :+:      :+:    :+:   */
+/*   check_player.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 19:27:34 by alsanche          #+#    #+#             */
-/*   Updated: 2023/01/20 11:02:48 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/23 18:27:01 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
 
-void    check_p_position(char **map, int y, int x, t_env *env)
+void	check_p_position(char **map, int y, int x, t_env *env)
 {
-	if (map[y][x + 1] == ' ' || map[y][x - 1] == ' ')
+	if (map[y][x + 1] != '0' && map[y][x + 1] != '1')
 		print_error_map(y, x, 5, env);
-	else if (map[y + 1][x] == ' ')
+	if (map[y][x - 1] && map[y][x - 1] != '0' && map[y][x - 1] != '1')
+		print_error_map(y, x, 5, env);
+	else if ((map[y + 1] && map[y + 1][x] != '0' && map[y + 1][x] != '1'))
+		print_error_map(y, x, 5, env);
+	else if ((map[y - 1] && map[y - 1][x] != '0' && map[y - 1][x] != '1'))
 		print_error_map(y, x, 5, env);
 }
 

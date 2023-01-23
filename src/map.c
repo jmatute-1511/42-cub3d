@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:20:51 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/20 11:02:57 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/01/23 18:53:47 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	check_walls(char *str, int check, t_env *env)
 	t_read_map	read;
 
 	read.i = 0;
-	if (check == 0)
+	if (check == 0 || (unsigned int)check == env->height)
 	{
 		while (str[read.i])
 		{
@@ -71,22 +71,22 @@ void	fill_map(char **map, int fd, t_env *env)
 	{
 		if (line[0] != '1' && line[0] != ' ' && line[0] != '0')
 			save_texture(line, env, height);
-		else if (line[0] != '\n' && (*map))
+		else if (line[0] != '\n')
 		{
+			if ((*map) == NULL)
+				(*map) = ft_strdup(line);
+			else
+			{
+				aux_map = (*map);
+				(*map) = ft_strnjoin(3, aux_map, "\n", line);
+				free(aux_map);
+			}
 			check_walls(line, ++height, env);
-			aux_map = (*map);
-			(*map) = ft_strnjoin(3, aux_map, "\n", line);
-			free(aux_map);
 		}
-		if ((*map) == NULL)
-			(*map) = ft_strdup(line);
 		free(line);
 	}
-	if (line)
-	{
-		last_line(line, map, height, env);
-		free(line);
-	}
+	last_line(line, map, ++height, env);
+	free(line);
 }
 
 void	read_map(char *path, t_env *env)
@@ -96,13 +96,16 @@ void	read_map(char *path, t_env *env)
 
 	if (check_name(path) == 1)
 		exit (127);
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+	{
+		ft_putstr_fd("Error\n Map\n", 2);
+		exit (1);
+	}
 	aux_map = NULL;
 	env->map = NULL;
 	env->tex = malloc(sizeof(t_textures));
 	init_env(path, env);
-	fd = open(path, O_RDONLY);
-	if (fd == -1)
-		exit (1);
 	fill_map(&aux_map, fd, env);
 	env->map = ft_split(aux_map, '\n');
 	free(aux_map);

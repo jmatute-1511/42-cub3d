@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+         #
+#    By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2023/01/20 10:34:33 by jmatute-         ###   ########.fr        #
+#    Updated: 2023/01/23 16:24:13 by alsanche         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 

@@ -2,10 +2,9 @@ SO ./images/prueba.png
 EA ./images/moss_wall.png
 WE ./images/rock_grey_wall.png
 
-F    90,113,0000000000025        
+F    90,113,25        
 NO ./images/gold_wall.png       
-
-
+C    100,11,85   
 
 
 
@@ -14,5 +13,5 @@ NO ./images/gold_wall.png
 
 111
 10111111                                 
-10001 1
+10N01 1
 11111111

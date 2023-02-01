@@ -6,7 +6,7 @@
 /*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 18:20:51 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/23 17:36:16 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2023/02/01 15:30:32 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ void	init_env(char *path, t_env *env)
 	env->height = 0;
 	env->width = 0;
 	take_h_w(path, env);
+	if (env->height < 3 || env->width == 0)
+	{
+		printf("Error\nNot Map in the file\n");
+		exit (1);
+	}
 	env->tex->no = NULL;
 	env->tex->so = NULL;
 	env->tex->ea = NULL;

@@ -1,0 +1,15 @@
+NO ./images/gold_wall.png
+
+SO ./images/arcade_wall.png
+
+EA ./images/moss_wall.png
+
+WE ./images/rock_grey_wall.png
+
+F 90,113,152
+
+C 62,150,188
+
+111
+1N1
+111

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:59:36 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/01/12 17:16:53 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:32:15 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void			select_texture(double angle, char axis, t_env **d_env);
 void			y_colision(t_clcord *cord, double angle, t_env *env);
 void			x_colision(t_clcord *cord, double angle, t_env *env);
 void			resized_map(t_env **d_env);
-void            check_p_position(char **map, int y, int x, t_env *env);
-void	        format_check(t_env *env);
-void	        not_error(t_env *env, char f, char	*str);
+void			check_p_position(char **map, int y, int x, t_env *env);
+void			format_check(t_env *env);
+void			not_error(t_env *env, char f, char	*str);
 #endif

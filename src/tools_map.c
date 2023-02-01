@@ -71,8 +71,8 @@ void	sub_while(char **map, t_env *env, int y)
 			|| map[y][x] == 'E' || map[y][x] == 'W')
 		{
 			check_p_position(map, y, x, env);
-			env->x = x * env->hpb + 5;
-			env->y = y * env->hpb + 5;
+			env->x = x * env->hpb + (env->hpb / 2);
+			env->y = y * env->hpb + (env->hpb / 2);
 			set_view(map[y][x], env);
 		}
 	}

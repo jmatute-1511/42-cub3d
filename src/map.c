@@ -85,7 +85,7 @@ void	fill_map(char **map, int fd, t_env *env)
 		}
 		free(line);
 	}
-	last_line(line, map, ++height, env);
+	last_line(line, map, height, env);
 	free(line);
 }
 

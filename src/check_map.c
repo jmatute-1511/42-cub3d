@@ -51,7 +51,7 @@ int	check_cero(char **map, int y, int x)
 
 int	check_one(char **map, int y, int x)
 {
-	if (x > 0 && map[y][x - 1] != '1' && map[y][x + 1] == '\0'
+	if (x > 0 && y > 0 && map[y][x - 1] != '1' && map[y][x + 1] == '\0'
 	&& map[y - 1][x] != '1')
 		return (-1);
 	if (map[y][x + 1] == '1')

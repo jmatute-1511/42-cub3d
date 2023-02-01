@@ -29,6 +29,7 @@
 # include	<float.h>
 
 void			get_rgb(t_env *env);
+int				is_fillspace(char *str);
 void			change_angles(t_env **d_env);
 void			dda_line(t_dda *data, mlx_image_t *flor, uint32_t color);
 int				draw_colision(t_env **d_env, double angle, int x);

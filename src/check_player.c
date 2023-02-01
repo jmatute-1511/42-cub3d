@@ -39,3 +39,15 @@ void	format_check(t_env *env)
 	not_error(env, 'F', env->tex->f);
 	not_error(env, 'C', env->tex->c);
 }
+
+int	is_fillspace(char *str)
+{
+	size_t	it;
+
+	it = 0;
+	while (str[it] == ' ')
+		it++;
+	if (it == ft_strlen(str))
+		return (1);
+	return (0);
+}

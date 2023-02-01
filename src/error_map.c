@@ -55,7 +55,7 @@ void	take_h_w(char *name, t_env *env)
 	{
 		if (line[0] != '\n' && line[0] != '1' && line[0] != ' ')
 			free(line);
-		else if (line[0] != '\n')
+		else if (line[0] != '\n' && !is_fillspace(line))
 		{
 			if (ft_strlen(line) > env->width)
 				env->width = ft_strlen(line);
@@ -67,7 +67,8 @@ void	take_h_w(char *name, t_env *env)
 	{
 		if (ft_strlen(line) > env->width)
 			env->width = ft_strlen(line);
-		env->height += 1;
+		if (line[0] != '\n' && ft_strlen(line) > 0)
+			env->height += 1;
 		free(line);
 	}
 	close(fd);

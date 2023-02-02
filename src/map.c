@@ -99,7 +99,7 @@ void	read_map(char *path, t_env *env)
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr_fd("Error\n Map\n", 2);
+		ft_putstr_fd("Error\nMap not open\n", 2);
 		exit (1);
 	}
 	aux_map = NULL;

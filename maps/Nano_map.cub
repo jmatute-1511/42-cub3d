@@ -1,16 +1,16 @@
-NO ./images/gold_wall.png
 
-SO ./images/arcade_wall.png
+NO ./images/ccs_01.png
 
-EA ./images/moss_wall.png
+SO ./images/ccs_03.png
 
-WE ./images/rock_grey_wall.png
+EA ./images/ccs_04.png
 
-F 90,113,152
+WE ./images/ccs_02.png
 
-C 62,150,188
+F 255,186,117
+
+C 80,173,207
 
 111
-101
 1S1
 111

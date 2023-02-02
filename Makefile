@@ -51,7 +51,7 @@ OBJ = $(addprefix $(OBJ_DIR), $(OBJS))
 HEADERS = $(addprefix $(HEADER_DIR), $(HEADERS_I))
 
 #NAME OF EXECUTABlE
-NAME = cub3d
+NAME = cub3D
 
 # RULES OF COMPILE
 CC = gcc

@@ -28,7 +28,7 @@ void	init_env(char *path, t_env *env)
 	env->height = 0;
 	env->width = 0;
 	take_h_w(path, env);
-	if (env->height < 3 || env->width == 0)
+	if (env->height < 2 || env->width == 0)
 	{
 		printf("Error\nNot Map in the file\n");
 		exit (1);

@@ -43,6 +43,8 @@ static void	check_walls(char *str, int check, t_env *env)
 				print_error_map(check, read.i, 0, env);
 			read.i++;
 		}
+		if (is_fillspace(str) || str[0] == '\0')
+			print_error_map(check, 0, 6, env);
 	}
 	else
 	{

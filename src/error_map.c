@@ -67,7 +67,7 @@ void	take_h_w(char *name, t_env *env)
 	{
 		if (ft_strlen(line) > env->width)
 			env->width = ft_strlen(line);
-		if (line[0] != '\n' && ft_strlen(line) > 0)
+		if (line[0] != '\n' && !ft_strlen(line))
 			env->height += 1;
 		free(line);
 	}

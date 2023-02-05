@@ -6,7 +6,7 @@
 #    By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/20 18:16:18 by jmatute-          #+#    #+#              #
-#    Updated: 2023/01/23 16:24:13 by alsanche         ###   ########lyon.fr    #
+#    Updated: 2023/02/05 17:49:15 by alsanche         ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ NAME = cub3D
 # RULES OF COMPILE
 CC = gcc
 RM = rm -rf
-CFLAGS	= -Wall -Werror -Wextra #-fsanitize=address
+CFLAGS	= -Wall -Werror -Wextra -fsanitize=address
 
 all: libs obj $(NAME)
 

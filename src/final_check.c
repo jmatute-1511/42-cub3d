@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   final_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jmatute- <jmatute-@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/07 19:27:34 by alsanche          #+#    #+#             */
-/*   Updated: 2023/01/20 11:02:48 by jmatute-         ###   ########.fr       */
+/*   Updated: 2023/02/05 17:31:25 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 

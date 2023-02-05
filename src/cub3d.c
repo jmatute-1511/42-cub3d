@@ -6,7 +6,7 @@
 /*   By: alsanche <alsanche@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:32:27 by jmatute-          #+#    #+#             */
-/*   Updated: 2023/02/01 15:32:55 by alsanche         ###   ########lyon.fr   */
+/*   Updated: 2023/02/05 17:33:19 by alsanche         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (0);
 	env.hpb = 256;
-	env.win_height = 720;
+	env.win_height = 800;
 	env.win_width = 1280;
 	read_map(argv[1], &env);
 	get_rgb(&env);

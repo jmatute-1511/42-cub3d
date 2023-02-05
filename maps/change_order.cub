@@ -1,9 +1,9 @@
-SO ./images/ice_wall.png
+SO ./images/jmatute-.png
 EA ./images/moss_wall.png
 WE ./images/rock_grey_wall.png
 
 F    90,113,25        
-NO ./images/gold_wall.png       
+NO ./images/prueba.png       
 C    100,11,85   
 
 
@@ -13,6 +13,5 @@ C    100,11,85
 
 111
 10111111                                 
-10N01 1
+1S001 1
 11111111
- 

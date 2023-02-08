@@ -42,7 +42,7 @@ double	start_step(int height, double line_height, t_env *env)
 	double	start;
 
 	start = 0;
-	if (height >= env->win_height)
+	if (height > env->win_height)
 		start = ((double)height - env->win_height - 1) * line_height / 2;
 	return (start);
 }
@@ -72,7 +72,7 @@ mlx_texture_t	*g_t_c(mlx_texture_t *texture, int column, int hgt, t_env *env)
 		hgt = env->win_height - 1;
 	tex = allocate_tex(hgt);
 	data.top_tex = (texture->width * 4) * texture->height;
-	data.pos_pixel = round(data.step) * (texture->width << 2) + (column << 2);
+	data.pos_pixel = data.step * (texture->width << 2) + (column << 2);
 	while (it < (hgt << 2) && data.pos_pixel + 3 < data.top_tex)
 	{
 		tex->pixels[it] = texture->pixels[data.pos_pixel];

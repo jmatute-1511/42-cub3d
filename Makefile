@@ -56,7 +56,7 @@ NAME = cub3D
 # RULES OF COMPILE
 CC = gcc
 RM = rm -rf
-CFLAGS	= -Wall -Werror -Wextra -fsanitize=address
+CFLAGS	= -Wall -Werror -Wextra #-fsanitize=address 
 
 all: libs obj $(NAME)
 

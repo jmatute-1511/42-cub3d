@@ -21,8 +21,8 @@ typedef struct s_data_tex
 {
 	double			step;		
 	double			c_step;
-	unsigned int				top_tex;
-	unsigned int				pos_pixel;			
+	unsigned int	top_tex;
+	unsigned int	pos_pixel;			
 }				t_data_tex;
 typedef struct s_dcords
 {
